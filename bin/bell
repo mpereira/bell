@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'bell'
+require 'optparse'
+
+usage = <<USAGE
+bell te auxilia no controle de gastos de uma conta da embratel.
+
+Uso:
+USAGE
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = usage
+
+  opts.on("-h", "Mostra essa mensagem") do
+    $stdout.puts opts
+    exit
+  end
+
+  opts.on do
+    $stdout.puts opts
+    exit
+  end
+end.parse!
+
+Bell::CLI.new(options).run
