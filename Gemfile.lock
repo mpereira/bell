@@ -1,10 +1,16 @@
 --- 
 dependencies: 
+  aruba: 
+    group: 
+    - :test
+    version: = 0.2.1
   cucumber: 
     group: 
     - :test
     version: = 0.8.5
 specs: 
+- aruba: 
+    version: 0.2.1
 - builder: 
     version: 2.1.2
 - diff-lcs: 
@@ -19,7 +25,7 @@ specs:
     version: 1.0.5
 - cucumber: 
     version: 0.8.5
-hash: 04fdb0a86be3b23c8009078a660ba995c8c38dad
+hash: 4bc6c3d4b240704ca7f288760d4be35640c862cf
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
