@@ -3,11 +3,11 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'bell'
 
-usage = <<USAGE
-bell te auxilia no controle de gastos de uma conta da embratel.
-
-Comandos:
-  bell user create <USER>
-USAGE
-
-puts usage if ARGV.length == 0
+if ARGV.empty?
+  puts Bell::USAGE
+  exit
+else
+  case ARGV.first
+  when 'user' then Bell::UserHandler.new(ARGV).parse_args
+  end
+end
