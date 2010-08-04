@@ -6,4 +6,4 @@ Feature: Bell command line interface
   Scenario: No arguments
     Given a working directory
     When I run "bell"
-    Then the stdout should contain "-h"
+    Then the stdout should contain "Comandos"
