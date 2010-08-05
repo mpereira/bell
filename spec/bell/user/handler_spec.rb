@@ -29,7 +29,7 @@ describe Bell::User::Handler do
     it "shows the usage" do
       user_handler.stub!(:valid_action?).and_return(false)
       $stdout.should_receive(:puts).with(usage)
-      user_handler.parse_args
+      user_handler.run
     end
   end
 
@@ -38,7 +38,7 @@ describe Bell::User::Handler do
       args.stub!(:first).and_return('create')
       Bell::User::Creator.should_receive(:new).with(args).and_return(user_creator)
       user_creator.should_receive(:run)
-      user_handler.parse_args
+      user_handler.run
     end
   end
 end

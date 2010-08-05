@@ -8,6 +8,6 @@ if ARGV.empty?
   exit
 else
   case ARGV.first
-  when 'user' then Bell::User::Handler.new(ARGV[1..-1]).parse_args
+  when 'user' then Bell::User::Handler.new(ARGV[1..-1]).run
   end
 end
