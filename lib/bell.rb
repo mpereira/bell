@@ -7,20 +7,22 @@ Comandos:
   USAGE
 
   class UserHandler
-    VALID_SECOND_ARGS = %w[create]
-
     def initialize(args)
       @args = args
     end
 
     def parse_args
-      unless valid_args?
+      unless valid_action?
         $stdout.puts Bell::USAGE
       end
     end
 
-    def valid_args?
-      (@args.length == 1) || (VALID_SECOND_ARGS.include? @args[1])
+    def actions
+      %w[create]
+    end
+
+    def valid_action?
+      actions.include?(@args[1])
     end
   end
 end
