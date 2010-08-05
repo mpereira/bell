@@ -13,7 +13,11 @@ Comandos:
       end
 
       def parse_args
-        unless valid_action?
+        if valid_action?
+          case @args[1]
+          when 'create' then Creator.new(@args).run
+          end
+        else
           $stdout.puts Bell::USAGE
         end
       end
@@ -25,6 +29,9 @@ Comandos:
       def valid_action?
         actions.include?(@args[1])
       end
+    end
+
+    class Creator
     end
   end
 end
