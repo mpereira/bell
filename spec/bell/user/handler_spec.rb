@@ -10,7 +10,7 @@ describe Bell::User::Handler do
   describe "#valid_action?" do
     context "when given a valid action" do
       it "returns true" do
-        args.stub!('[]').with(1).and_return('create')
+        args.stub!(:first).and_return('create')
         actions.stub!(:include?).with(args).and_return(true)
         user_handler.valid_action?.should be_true
       end
@@ -18,7 +18,7 @@ describe Bell::User::Handler do
 
     context "when given an invalid action" do
       it "returns false" do
-        args.stub!('[]').with(1).and_return('foo')
+        args.stub!(:first).and_return('foo')
         actions.stub!(:include?).with(args).and_return(false)
         user_handler.valid_action?.should be_false
       end
@@ -35,7 +35,7 @@ describe Bell::User::Handler do
 
   context "handling the 'create' action" do
     it "creates a user creator instance" do
-      args.stub!('[]').with(1).and_return('create')
+      args.stub!(:first).and_return('create')
       Bell::User::Creator.should_receive(:new).with(args).and_return(user_creator)
       user_creator.should_receive(:run)
       user_handler.parse_args

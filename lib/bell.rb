@@ -14,8 +14,8 @@ Comandos:
 
       def parse_args
         if valid_action?
-          case @args[1]
-          when 'create' then Creator.new(@args).run
+          case @args.first
+          when 'create' then Creator.new(@args[1..-1]).run
           end
         else
           $stdout.puts Bell::USAGE
@@ -27,7 +27,7 @@ Comandos:
       end
 
       def valid_action?
-        actions.include?(@args[1])
+        actions.include?(@args.first)
       end
     end
 
