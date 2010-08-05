@@ -1,7 +1,7 @@
 Feature: Command line interface
   As a person using the shell
-  I want to use bell's command line interface
-  In order to split a shared phone line bill painlessly
+  I want to interact with bell's command line interface
+  In order to learn how to use it
 
   Scenario: No arguments
     When I run "bell"
