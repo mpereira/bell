@@ -6,7 +6,7 @@ Comandos:
   bell user create <USER>
   USAGE
 
-  class User
+  module User
     class Handler
       def initialize(args)
         @args = args
