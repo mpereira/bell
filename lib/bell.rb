@@ -7,6 +7,12 @@ Comandos:
   USAGE
 
   module User
+    DATA_PATH = File.join(File.dirname(__FILE__), '..', 'data')
+
+    def data_file(user)
+      File.join(DATA_PATH, "#{user}.yml")
+    end
+
     class Handler
       def initialize(args)
         @args = args
@@ -32,6 +38,24 @@ Comandos:
     end
 
     class Creator
+      include User
+
+      def initialize(args)
+        @args = args
+      end
+
+      def user_exists?(user)
+        File.exists?(data_file(user))
+      end
+
+      def run
+        if @args.length == 1
+          user = @args.first
+          create(user) unless user_exists?(user)
+        else
+          $stdout.puts USAGE
+        end
+      end
     end
   end
 end
