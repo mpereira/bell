@@ -1,13 +1,6 @@
 #!/usr/bin/env ruby
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'bell'
+require 'bell/cli_handler'
 
-if ARGV.empty?
-  puts Bell::USAGE
-  exit
-else
-  case ARGV.first
-  when 'user' then Bell::UserHandler.new(ARGV[1..-1]).run
-  end
-end
+Bell::CliHandler.new(ARGV).run

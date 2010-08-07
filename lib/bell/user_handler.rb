@@ -21,7 +21,7 @@ module Bell
         when 'create' then UserCreator.new(args).run
         end
       else
-        $stdout.puts Bell::USAGE
+        messenger.show_usage
       end
     end
   end

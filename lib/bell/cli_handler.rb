@@ -1,3 +1,6 @@
+$:.unshift File.join(File.dirname(__FILE__))
+require 'messenger'
+
 module Bell
   class CliHandler
     attr_reader :messenger

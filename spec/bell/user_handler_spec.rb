@@ -5,7 +5,7 @@ describe Bell::UserHandler do
   let(:user_handler) { Bell::UserHandler.new(args) }
   let(:user_creator) { mock(Bell::UserCreator) }
   let(:available_actions) { user_handler.available_actions }
-  let(:usage) { Bell::USAGE }
+  let(:messenger) { mock(Bell::Messenger) }
 
   describe "#valid_action?" do
     context "when given a valid action" do
@@ -26,7 +26,8 @@ describe Bell::UserHandler do
   context "handling an invalid action" do
     it "shows the usage" do
       user_handler.stub!(:valid_action?).and_return(false)
-      $stdout.should_receive(:puts).with(usage)
+      user_handler.stub!(:messenger).and_return(messenger)
+      messenger.should_receive(:show_usage)
       user_handler.run
     end
   end
@@ -43,7 +44,8 @@ describe Bell::UserHandler do
     context "when the user is invalid" do
       it "shows the usage" do
         user_handler.stub!(:valid_action?).and_return(false)
-        $stdout.should_receive(:puts).with(usage)
+        user_handler.stub!(:messenger).and_return(messenger)
+        messenger.should_receive(:show_usage)
         user_handler.run
       end
     end

@@ -5,12 +5,12 @@ describe Bell::UserCreator do
   let(:user_creator) { described_class.new(args) }
   let(:user) { mock(Bell::User).as_null_object }
   let(:messenger) { mock(Bell::Messenger) }
-  let(:usage) { Bell::USAGE }
 
   context "when no user name is passed" do
     it "shows the usage" do
       args.stub!(:length).and_return(0)
-      $stdout.should_receive(:puts).with(usage)
+      user_creator.stub!(:messenger).and_return(messenger)
+      messenger.should_receive(:show_usage)
       user_creator.run
     end
   end
@@ -18,7 +18,8 @@ describe Bell::UserCreator do
   context "when the user name is passed together with other arguments" do
     it "shows the usage" do
       args.stub!(:length).and_return(2)
-      $stdout.should_receive(:puts).with(usage)
+      user_creator.stub!(:messenger).and_return(messenger)
+      messenger.should_receive(:show_usage)
       user_creator.run
     end
   end

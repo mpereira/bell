@@ -1,3 +1,6 @@
+$:.unshift File.join(File.dirname(__FILE__))
+require 'messenger'
+
 module Bell
   class UserCreator
     attr_reader :args, :messenger
@@ -17,7 +20,7 @@ module Bell
           messenger.notify_user_creation(user.name)
         end
       else
-        $stdout.puts USAGE
+        messenger.show_usage
       end
     end
   end
