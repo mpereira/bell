@@ -1,5 +1,6 @@
 $:.unshift File.join(File.dirname(__FILE__))
 require 'messenger'
+require 'user'
 
 module Bell
   class UserCreator
