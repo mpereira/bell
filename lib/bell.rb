@@ -1,3 +1,8 @@
+require 'rubygems'
+require 'bundler'
+Bundler.setup
+require 'sequel'
+
 require 'bell/cli_handler'
 require 'bell/messenger'
 require 'bell/user'

@@ -1,6 +1,3 @@
-$:.unshift File.join(File.dirname(__FILE__))
-require 'user_creator'
-
 module Bell
   class UserHandler
     attr_reader :action, :args

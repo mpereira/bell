@@ -1,5 +1,3 @@
-require 'fileutils'
-
 module Bell
   class User
     DATA_PATH = File.join(File.dirname(__FILE__), '..', '..', 'data')

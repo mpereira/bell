@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'bell/cli_handler'
+require 'bell'
 
+DB = Sequel.connect('sqlite://data/bell.db')
 Bell::CliHandler.new(ARGV).run
