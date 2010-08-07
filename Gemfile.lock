@@ -8,6 +8,10 @@ dependencies:
     group: 
     - :test
     version: = 0.8.5
+  sequel: 
+    group: 
+    - :default
+    version: = 3.14.0
 specs: 
 - aruba: 
     version: 0.2.1
@@ -20,12 +24,14 @@ specs:
 - gherkin: 
     version: 2.1.5
 - json_pure: 
-    version: 1.4.3
+    version: 1.4.5
 - term-ansicolor: 
     version: 1.0.5
 - cucumber: 
     version: 0.8.5
-hash: 4bc6c3d4b240704ca7f288760d4be35640c862cf
+- sequel: 
+    version: 3.14.0
+hash: 7e4e0f7680823c14b47f0460616732c581c90950
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
