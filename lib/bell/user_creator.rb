@@ -9,11 +9,12 @@ module Bell
 
     def run
       if args.length == 1
-        user = User.new(args)
-        if user.exists?
-          messenger.notify_user_existence(user.name)
+        user_name = args.first
+        user = User[:name => user_name]
+        if user
+          messenger.notify_user_existence(user_name)
         else
-          user.create
+          User.create { |user| user.name = user_name }
           messenger.notify_user_creation(user.name)
         end
       else

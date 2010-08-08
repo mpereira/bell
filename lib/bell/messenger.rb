@@ -7,11 +7,11 @@ module Bell
     end
 
     def notify_user_existence(name)
-      $stdout.puts "./data/#{name}.yml já existe"
+      $stdout.puts "O usuário #{name} já existe"
     end
 
     def notify_user_creation(name)
-      $stdout.puts "./data/#{name}.yml criado"
+      $stdout.puts "Usuário #{name} criado"
     end
   end
 end
