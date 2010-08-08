@@ -1,12 +1,8 @@
 module Bell
-  class User
+  class User < Sequel::Model
     DATA_PATH = File.join(File.dirname(__FILE__), '..', '..', 'data')
 
     attr_reader :name
-
-    def initialize(name)
-      @name = name
-    end
 
     def data_file
       File.join(DATA_PATH, "#{name}.yml")
