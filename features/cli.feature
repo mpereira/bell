@@ -11,4 +11,4 @@ Feature: Command line interface
     Given no user named "murilo" exists
     When I run "bell user create murilo"
     Then the stdout should contain "Usuário 'murilo' criado"
-    And I should have the file "murilo.yml" on the database
+    And I should have the user "murilo" in the database
