@@ -1,16 +1,13 @@
 module Bell
   class CliHandler
-    attr_reader :messenger
-
-    def initialize(args)
-      @args = args
-      @messenger = Messenger.new
+    def initialize(messenger)
+      @messenger = messenger
     end
 
-    def run
-      case @args.first
-      when 'user' then UserHandler.new(@args[1..-1]).run
-      else messenger.show_usage
+    def run(args)
+      case args.first
+      when 'user' then UserHandler.new(@messenger).run(args[1..-1])
+      else @messenger.puts Messenger.show_usage
       end
     end
   end

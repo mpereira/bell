@@ -1,11 +1,7 @@
 module Bell
   class UserHandler
-    attr_reader :action, :args, :messenger
-
-    def initialize(args)
-      @action = args.first
-      @args = args[1..-1]
-      @messenger = Messenger.new
+    def initialize(messenger)
+      @messenger = messenger
     end
 
     def available_actions
@@ -16,10 +12,10 @@ module Bell
       available_actions.include?(action)
     end
 
-    def run
-      case action
-      when 'create' then UserCreator.new(args).run
-      else messenger.show_usage
+    def run(args)
+      case args.first
+      when 'create' then UserCreator.new(@messenger).run(args[1..-1])
+      else @messenger.puts Messenger.show_usage
       end
     end
   end
