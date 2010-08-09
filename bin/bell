@@ -1,12 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'bundler'
-Bundler.setup
-require 'sequel'
-
-DB = Sequel.connect('sqlite://data/bell.db')
-
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'bell'
 

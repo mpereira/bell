@@ -4,11 +4,11 @@ Feature: Command line interface
   In order to split a shared phone line bill painlessly
 
   Scenario: No arguments
-    When I run "bell"
-    Then the stdout should contain "Comandos"
+    When I run bell with ""
+    Then bell should show the usage
 
   Scenario: Valid user creation
     Given no user named "murilo" exists
-    When I run "bell user create murilo"
-    Then the stdout should contain "Usuário 'murilo' criado"
+    When I run bell with "user create murilo"
+    Then bell should tell that the user "murilo" was created
     And I should have the user "murilo" in the database
