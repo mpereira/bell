@@ -1,5 +1,9 @@
 --- 
 dependencies: 
+  rake: 
+    group: 
+    - :runtime
+    version: = 0.8.7
   sqlite3-ruby: 
     group: 
     - :runtime
@@ -12,6 +16,10 @@ dependencies:
     group: 
     - :development
     version: = 0.2.1
+  bundler: 
+    group: 
+    - :runtime
+    version: = 0.9.26
   cucumber: 
     group: 
     - :development
@@ -21,10 +29,14 @@ dependencies:
     - :runtime
     version: = 3.14.0
 specs: 
+- rake: 
+    version: 0.8.7
 - aruba: 
     version: 0.2.1
 - builder: 
     version: 2.1.2
+- bundler: 
+    version: 0.9.26
 - diff-lcs: 
     version: 1.1.2
 - trollop: 
@@ -43,7 +55,7 @@ specs:
     version: 3.14.0
 - sqlite3-ruby: 
     version: 1.3.1
-hash: 149796b318834feaa1d09b58325bfcf120ff6867
+hash: c7c65ed00038634520d1841b53a7a50d177c9e01
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
