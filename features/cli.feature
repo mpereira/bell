@@ -12,3 +12,8 @@ Feature: Command line interface
     When I run bell with "user create murilo"
     Then bell should tell that the user "murilo" was created
     And I should have the user "murilo" in the database
+
+  Scenario: User creation attempt when given user already exists
+    Given the user named "murilo" exists
+    When I run bell with "user create murilo"
+    Then bell should tell that the user "murilo" already exists
