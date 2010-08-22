@@ -1,17 +1,17 @@
 module Bell
-  class Message
+  class OutputFormatter
     class << self
-      def show_usage
+      def usage
         "bell te auxilia no controle de gastos de uma conta da " <<
         "embratel.\n\nComandos:\n" <<
         "  bell user create <USER>\n"
       end
 
-      def notify_user_existence(name)
+      def user_exists(name)
         "O usuário #{name} já existe\n"
       end
 
-      def notify_user_creation(name)
+      def user_created(name)
         "Usuário #{name} criado\n"
       end
 

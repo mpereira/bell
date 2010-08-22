@@ -9,13 +9,13 @@ module Bell
         user_name = args.first
         user = User[:name => user_name]
         if user
-          @messenger.puts Message.notify_user_existence(user_name)
+          @messenger.puts OutputFormatter.user_exists(user_name)
         else
           User.create { |user| user.name = user_name }
-          @messenger.puts Message.notify_user_creation(user_name)
+          @messenger.puts OutputFormatter.user_created(user_name)
         end
       else
-        @messenger.puts Message.show_usage
+        @messenger.puts OutputFormatter.usage
       end
     end
   end

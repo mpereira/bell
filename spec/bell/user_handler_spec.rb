@@ -10,7 +10,7 @@ describe Bell::UserHandler do
   context "handling an invalid action" do
     it "shows the usage" do
       args.stub!(:first).and_return('foo')
-      messenger.should_receive(:puts).with(Bell::Message.show_usage)
+      messenger.should_receive(:puts).with(Bell::OutputFormatter.usage)
       user_handler.run(args)
     end
   end

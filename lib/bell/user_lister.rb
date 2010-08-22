@@ -7,12 +7,12 @@ module Bell
     def run(args)
       if args.length == 0
         if User.empty?
-          @messenger.puts Message.no_users_in_database
+          @messenger.puts OutputFormatter.no_users_in_database
         else
           @messenger.puts User.all.join('\n')
         end
       else
-        @messenger.puts Message.show_usage
+        @messenger.puts OutputFormatter.usage
       end
     end
   end

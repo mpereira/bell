@@ -10,7 +10,7 @@ describe Bell::UserLister do
   context "when called with extra arguments" do
     it "shows the usage" do
       args.stub!(:length).and_return(1)
-      messenger.should_receive(:puts).with(Bell::Message.show_usage)
+      messenger.should_receive(:puts).with(Bell::OutputFormatter.usage)
       user_lister.run(args)
     end
   end
@@ -19,7 +19,7 @@ describe Bell::UserLister do
     it "tells the user that the database is empty" do
       args.stub!(:length).and_return(0)
       Bell::User.stub!(:empty?).and_return(true)
-      messenger.should_receive(:puts).with(Bell::Message.no_users_in_database)
+      messenger.should_receive(:puts).with(Bell::OutputFormatter.no_users_in_database)
       user_lister.run(args)
     end
   end

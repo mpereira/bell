@@ -7,7 +7,7 @@ module Bell
     def run(args)
       case args.first
       when 'user' then UserHandler.new(@messenger).run(args[1..-1])
-      else @messenger.puts Message.show_usage
+      else @messenger.puts OutputFormatter.usage
       end
     end
   end
