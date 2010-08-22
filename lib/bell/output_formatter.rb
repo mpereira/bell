@@ -4,7 +4,8 @@ module Bell
       def usage
         "bell te auxilia no controle de gastos de uma conta da " <<
         "embratel.\n\nComandos:\n" <<
-        "  bell user create <USER>\n"
+        "  bell user create <USER>\n" <<
+        "  bell user list\n"
       end
 
       def user_exists(name)
