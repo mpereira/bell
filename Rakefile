@@ -19,10 +19,5 @@ require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features) do |features|
   features.cucumber_opts = "features --format progress"
 end
-namespace :features do
-  Cucumber::Rake::Task.new(:pretty) do |features|
-    features.cucumber_opts = "features --format progress"
-  end
-end
 
 task :default => [:features, :spec]
