@@ -10,7 +10,7 @@ end
 require 'rake'
 
 require 'spec/rake/spectask'
-desc "Run all examples"
+desc "Run all specs"
 Spec::Rake::SpecTask.new('spec') do |t|
   t.spec_files = FileList['spec/**/*.rb']
 end
@@ -22,7 +22,7 @@ end
 
 require 'sequel'
 namespace :db do
-  desc "Creates and prepare the database"
+  desc "Creates and prepares the database"
   task :prepare do
     DB = Sequel.sqlite(File.join(File.dirname(__FILE__), 'data', 'bell.db'))
     begin
