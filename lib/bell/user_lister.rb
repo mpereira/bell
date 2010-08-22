@@ -9,7 +9,7 @@ module Bell
         if User.empty?
           @messenger.puts OutputFormatter.no_users_in_database
         else
-          @messenger.puts User.all.join('\n')
+          @messenger.puts User.all.map { |user| user[:name] }
         end
       else
         @messenger.puts OutputFormatter.usage

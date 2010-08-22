@@ -29,7 +29,7 @@ describe Bell::UserLister do
       args.stub!(:length).and_return(0)
       Bell::User.stub!(:empty?).and_return(false)
       Bell::User.should_receive(:all).and_return(all_users)
-      all_users.should_receive(:join).with('\n').and_return(user_names)
+      all_users.should_receive(:map).and_return(user_names)
       messenger.should_receive(:puts).with(user_names)
       user_lister.run(args)
     end
