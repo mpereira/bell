@@ -1,5 +1,5 @@
 module Bell
-  class Messenger
+  class Message
     class << self
       def show_usage
         "bell te auxilia no controle de gastos de uma conta da " <<

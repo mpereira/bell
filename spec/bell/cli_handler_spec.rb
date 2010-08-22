@@ -9,7 +9,7 @@ describe Bell::CliHandler do
   context "when calling for an invalid resource" do
     it "shows the usage" do
       args.stub!(:first).and_return('foo')
-      messenger.should_receive(:puts).with(Bell::Messenger.show_usage)
+      messenger.should_receive(:puts).with(Bell::Message.show_usage)
       cli_handler.run(args)
     end
   end

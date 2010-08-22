@@ -10,7 +10,7 @@ describe Bell::UserCreator do
   context "when no user name is passed" do
     it "shows the usage" do
       args.stub!(:length).and_return(0)
-      messenger.should_receive(:puts).with(Bell::Messenger.show_usage)
+      messenger.should_receive(:puts).with(Bell::Message.show_usage)
       user_creator.run(args)
     end
   end
@@ -18,7 +18,7 @@ describe Bell::UserCreator do
   context "when the user name is passed together with other arguments" do
     it "shows the usage" do
       args.stub!(:length).and_return(2)
-      messenger.should_receive(:puts).with(Bell::Messenger.show_usage)
+      messenger.should_receive(:puts).with(Bell::Message.show_usage)
       user_creator.run(args)
     end
   end
@@ -29,7 +29,7 @@ describe Bell::UserCreator do
         args.stub!(:length).and_return(1)
         args.stub!(:first).and_return(user_name)
         Bell::User.stub!(:[]).with(:name => user_name).and_return(nil)
-        messenger.should_receive(:puts).with(Bell::Messenger.notify_user_creation(user_name))
+        messenger.should_receive(:puts).with(Bell::Message.notify_user_creation(user_name))
         user_creator.run(args)
       end
     end
@@ -39,7 +39,7 @@ describe Bell::UserCreator do
         args.stub!(:length).and_return(1)
         args.stub!(:first).and_return(user_name)
         Bell::User.stub!(:[]).with(:name => user_name).and_return(user)
-        messenger.should_receive(:puts).with(Bell::Messenger.notify_user_existence(user_name))
+        messenger.should_receive(:puts).with(Bell::Message.notify_user_existence(user_name))
         user_creator.run(args)
       end
     end
