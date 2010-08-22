@@ -1,6 +1,6 @@
 Feature: Users
   As a person using the shell
-  I want to interact with bell's command line interface
+  I want to manage users
   In order to split a shared phone line bill painlessly
 
   Scenario: User creation attempt when given user doesn't exist
