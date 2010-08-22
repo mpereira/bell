@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe Bell::UserCreator do
   let(:args) { mock("args").as_null_object }
-  let(:messenger) { mock(StringIO) }
+  let(:messenger) { mock("messenger") }
   let(:user) { mock(Bell::User) }
   let(:user_name) { mock("user_name") }
   let(:user_creator) { described_class.new(messenger) }
