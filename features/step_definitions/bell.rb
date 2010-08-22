@@ -27,3 +27,11 @@ end
 Then /^I should have the user "([^"]*)" in the database$/ do |user_name|
   Bell::User[:name => user_name].should be_true
 end
+
+Then /^the messenger should contain "([^"]*)"$/ do |text|
+  @messenger.string.should be_include(text)
+end
+
+Given /^no user exists$/ do
+  Bell::User.delete
+end

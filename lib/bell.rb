@@ -12,6 +12,7 @@ require 'bell/messenger'
 require 'bell/cli_handler'
 require 'bell/user_handler'
 require 'bell/user_creator'
+require 'bell/user_lister'
 
 require 'sequel'
 

@@ -14,6 +14,10 @@ module Bell
       def notify_user_creation(name)
         "Usuário #{name} criado\n"
       end
+
+      def no_users_in_database
+        "Não há usuários cadastrados\n"
+      end
     end
   end
 end
