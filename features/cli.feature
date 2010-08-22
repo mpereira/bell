@@ -7,7 +7,7 @@ Feature: Command line interface
     When I run bell with ""
     Then bell should show the usage
 
-  Scenario: Valid user creation
+  Scenario: User creation attempt when given user doesn't exist
     Given no user named "murilo" exists
     When I run bell with "user create murilo"
     Then bell should tell that the user "murilo" was created
@@ -22,3 +22,15 @@ Feature: Command line interface
     Given no user exists
     When I run bell with "user list"
     Then the messenger should contain "Não há usuários cadastrados"
+
+  Scenario: Listing users when there is one user in the database
+    Given the user named "murilo" exists
+    When I run bell with "user list"
+    Then the messenger should contain "murilo"
+
+  Scenario: Listing users when there is more than one user in the database
+    Given the user named "murilo" exists
+    And the user named "augusto" exists
+    When I run bell with "user list"
+    Then the messenger should contain "murilo"
+    And the messenger should contain "augusto"

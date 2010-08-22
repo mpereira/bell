@@ -13,7 +13,7 @@ Given /^no user named "([^"]*)" exists$/ do |user_name|
 end
 
 Given /^the user named "([^"]*)" exists$/ do |user_name|
-  user = Bell::User[:name => user_name]
+  Bell::User.create(:name => user_name)
 end
 
 Then /^bell should tell that the user "([^"]*)" was created$/ do |user_name|
