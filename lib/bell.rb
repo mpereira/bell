@@ -8,7 +8,7 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
-require 'bell/messenger'
+require 'bell/output_formatter'
 require 'bell/cli_handler'
 require 'bell/user_handler'
 require 'bell/user_creator'
