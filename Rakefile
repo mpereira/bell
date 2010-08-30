@@ -1,4 +1,5 @@
 require 'bundler'
+
 begin
   Bundler.setup(:runtime, :development)
 rescue Bundler::BundlerError => e
@@ -32,17 +33,26 @@ namespace :db do
       end
     rescue Sequel::Error
       puts "A tabela para os usuários já foi criada"
+    else
+      puts "Tabela 'users' criada"
+    end
+    begin
+      DB.create_table :contacts do
+        primary_key :id
+        foreign_key :user_id
+        String :name
+        String :phone
+      end
+    rescue Sequel::Error
+      puts "A tabela para os contatos já foi criada"
+    else
+      puts "Tabela 'contacts' criada"
     end
   end
 
   desc "Drops the database"
   task :drop do
-    DB = Sequel.sqlite(File.join(File.dirname(__FILE__), 'data', 'bell.db'))
-    begin
-      DB.drop_table :users
-    rescue Sequel::Error
-      puts "A tabela para os usuários não existe"
-    end
+    FileUtils.rm_f(File.join(File.dirname(__FILE__), 'data', 'bell.db'))
   end
 end
 
