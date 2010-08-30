@@ -5,7 +5,7 @@ describe Bell::UserHandler do
   let(:messenger) { mock("messenger") }
   let(:user_creator) { mock(Bell::UserCreator) }
   let(:user_lister) { mock(Bell::UserLister) }
-  let(:user_handler) { Bell::UserHandler.new(messenger) }
+  let(:user_handler) { described_class.new(messenger) }
 
   context "handling an invalid action" do
     it "shows the usage" do

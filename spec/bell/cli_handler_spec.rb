@@ -5,7 +5,7 @@ describe Bell::CliHandler do
   let(:messenger) { mock("messenger") }
   let(:user_handler) { mock(Bell::UserHandler) }
   let(:contact_handler) { mock(Bell::ContactHandler) }
-  let(:cli_handler) { Bell::CliHandler.new(messenger) }
+  let(:cli_handler) { described_class.new(messenger) }
 
   context "when calling for an invalid resource" do
     it "shows the usage" do
