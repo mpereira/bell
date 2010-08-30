@@ -3,7 +3,9 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 describe Bell::CliHandler do
   let(:args) { mock("args").as_null_object }
   let(:messenger) { mock("messenger") }
+  let(:options) { mock("options") }
   let(:user_handler) { mock(Bell::UserHandler) }
+  let(:contact_handler) { mock(Bell::ContactHandler) }
   let(:cli_handler) { Bell::CliHandler.new(messenger) }
 
   context "when calling for an invalid resource" do
@@ -19,6 +21,15 @@ describe Bell::CliHandler do
       args.stub!(:first).and_return('user')
       Bell::UserHandler.should_receive(:new).with(messenger).and_return(user_handler)
       user_handler.should_receive(:run)
+      cli_handler.run(args)
+    end
+  end
+
+  context "when calling for the contact resource" do
+    it "forwards the arguments to the contact handler" do
+      args.stub!(:first).and_return('contact')
+      Bell::ContactHandler.should_receive(:new).with(messenger, options).and_return(contact_handler)
+      contact_handler.should_receive(:run)
       cli_handler.run(args)
     end
   end
