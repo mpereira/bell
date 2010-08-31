@@ -29,7 +29,7 @@ if defined?(Spec) || defined?(Cucumber)
   DB.create_table :contacts do
     primary_key :id
     foreign_key :user_id
-    String :name
+    String :name, :null => false
     String :number
   end
 else
@@ -38,3 +38,11 @@ end
 
 require 'bell/user'
 require 'bell/contact'
+
+module Bell
+  module Errors
+    exceptions = %w[UserNotFound]
+
+    exceptions.each { |exception| const_set(exception, Class.new(StandardError)) }
+  end
+end

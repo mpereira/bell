@@ -12,19 +12,24 @@ module Bell
 
       contact_attributes = extract_contact_creation_args(args)
 
-      begin
-        user = User[:name => contact_attributes[:user]]
-        contact = Contact.create(
-          :name => contact_attributes[:name],
-          :number => contact_attributes[:number]
-        )
+      user = User.find(:name => contact_attributes[:user])
 
-        user.add_contact(contact)
-      rescue NoMethodError
-        @messenger.puts OutputFormatter.user_does_not_exist(contact_attributes[:user])
-      else
-        @messenger.puts OutputFormatter.contact_created(contact)
-      end
+      raise Bell::Errors::UserNotFound unless user
+
+      contact = Contact.create(
+        :user_id => user.id,
+        :name => contact_attributes[:name],
+        :number => contact_attributes[:number]
+      )
+
+    rescue Sequel::ValidationFailed
+      @messenger.puts OutputFormatter.contact_exists(contact_attributes[:name])
+    rescue Bell::Errors::UserNotFound
+      @messenger.puts OutputFormatter.user_does_not_exist(contact_attributes[:user])
+    rescue ArgumentError
+      @messenger.puts OutputFormatter.usage
+    else
+      @messenger.puts OutputFormatter.contact_created(contact)
     end
 
     private

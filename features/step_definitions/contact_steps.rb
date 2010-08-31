@@ -1,16 +1,35 @@
 Given /^no contact named "([^"]*)" exists$/ do |contact_name|
-  Bell::Contact.filter(:name => contact_name).delete
+  Bell::Contact.find(:name => contact_name).delete
 end
 
-Then /^the contact "([^"]*)" should belong to "([^"]*)"$/ do |contact_name, user_name|
-  Bell::Contact[:name => contact_name].user.should == Bell::User[:name => user_name]
+Given /^the contact named "([^"]*)" exists$/ do |contact_name|
+  Bell::Contact.create(:name => contact_name)
 end
 
-Then /^bell should tell me that the contact "([^"]*)" was created$/ do |contact_name|
-  contact = Bell::Contact[:name => contact_name]
+Given /^"([^"]*)" has "([^"]*)" in his contacts$/ do |user_name, contact_name|
+  user = Bell::User.find(:name => user_name)
+  contact = Bell::Contact.find_or_create(:name => contact_name)
+  user.add_contact(contact)
+end
+
+Given /^"([^"]*)" doesn't have "([^"]*)" in his contacts$/ do |user_name, contact_name|
+  user = Bell::User.find(:name => user_name)
+  Bell::Contact.find(:name => contact_name, :user_id => user.id).delete
+end
+
+Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contacts$/ do |user_name, contact_name|
+  user = Bell::User.find(:name => user_name)
+  contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
+  @messenger.string.should == Bell::OutputFormatter.contact_exists(contact_name)
+end
+
+Then /^bell should tell me that the contact "([^"]*)" was created for "([^"]*)"$/ do |contact_name, user_name|
+  user = Bell::User.find(:name => user_name)
+  contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
   @messenger.string.should == Bell::OutputFormatter.contact_created(contact)
 end
 
-Then /^I should have the contact "([^"]*)" in the database$/ do |contact_name|
-  Bell::Contact[:name => contact_name].should be_true
+Then /^"([^"]*)" should have the contact "([^"]*)" in his database$/ do |user_name, contact_name|
+  user = Bell::User.find(:name => user_name)
+  user.contacts.find(:name => contact_name).should_not be_nil
 end
