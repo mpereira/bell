@@ -3,7 +3,7 @@ Given /^no user named "([^"]*)" exists$/ do |user_name|
 end
 
 Given /^the user named "([^"]*)" exists$/ do |user_name|
-  Bell::User.create(:name => user_name)
+  Bell::User.find_or_create(:name => user_name)
 end
 
 Then /^bell should tell that the user "([^"]*)" was created$/ do |user_name|
@@ -19,7 +19,7 @@ Then /^bell should tell that the user "([^"]*)" doesn't exist$/ do |user_name|
 end
 
 Then /^I should have the user "([^"]*)" in the database$/ do |user_name|
-  Bell::User[:name => user_name].should be_true
+  Bell::User.find(:name => user_name).should_not be_nil
 end
 
 Given /^no user exists$/ do
