@@ -31,7 +31,7 @@ module Bell
         @messenger.puts "#{user[:name]}"
 
         contacts.each do |contact|
-          @messenger.puts "  #{contact.phone} - #{contact.name}"
+          @messenger.puts "  #{contact.number} - #{contact.name}"
         end
       end
     end

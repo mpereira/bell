@@ -6,6 +6,6 @@ Feature: Manage contacts
   Scenario: User creation attempt when given user doesn't exist
     Given the user named "murilo" exists
     And no contact named "augusto" exists
-    When I run bell with "contact create augusto -p 1234567890 -u murilo"
+    When I run bell with "contact create augusto -n 1234567890 -u murilo"
     Then bell should tell me that the contact "augusto" was created
     And the contact "augusto" should belong to "murilo"

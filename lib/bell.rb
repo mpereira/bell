@@ -30,7 +30,7 @@ if defined?(Spec) || defined?(Cucumber)
     primary_key :id
     foreign_key :user_id
     String :name
-    String :phone
+    String :number
   end
 else
   DB = Sequel.sqlite(File.join(File.dirname(__FILE__), '..', 'data', 'bell.db'))

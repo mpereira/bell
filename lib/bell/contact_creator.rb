@@ -1,6 +1,6 @@
 module Bell
   class ContactCreator
-    PHONE_FLAGS = %w[-p --phone]
+    NUMBER_FLAGS = %w[-n --number]
     USER_FLAGS = %w[-u --user]
 
     def initialize(messenger)
@@ -16,7 +16,7 @@ module Bell
         user = User[:name => contact_attributes[:user]]
         contact = Contact.create(
           :name => contact_attributes[:name],
-          :phone => contact_attributes[:phone]
+          :number => contact_attributes[:number]
         )
 
         user.add_contact(contact)
@@ -28,8 +28,8 @@ module Bell
     end
 
     private
-    def phone_given?(args)
-      !(args & PHONE_FLAGS).empty?
+    def number_given?(args)
+      !(args & NUMBER_FLAGS).empty?
     end
 
     def user_given?(args)
@@ -37,7 +37,7 @@ module Bell
     end
 
     def necessary_arguments_given?(args)
-      phone_given?(args) && user_given?(args)
+      number_given?(args) && user_given?(args)
     end
 
     def valid_contact_creation_args?(args)
@@ -45,14 +45,14 @@ module Bell
     end
 
     def extract_contact_creation_args(args)
-      phone_flag = (args & PHONE_FLAGS).first
+      number_flag = (args & NUMBER_FLAGS).first
       user_flag = (args & USER_FLAGS).first
 
-      phone = args[args.index(phone_flag) + 1]
+      number = args[args.index(number_flag) + 1]
       user = args[args.index(user_flag) + 1]
 
-      args.delete(phone_flag)
-      args.delete(phone)
+      args.delete(number_flag)
+      args.delete(number)
       args.delete(user_flag)
       args.delete(user)
 
@@ -60,7 +60,7 @@ module Bell
 
       contact_attributes = {}
       contact_attributes.merge!(:name => name)
-      contact_attributes.merge!(:phone => phone)
+      contact_attributes.merge!(:number => number)
       contact_attributes.merge!(:user => user)
     end
   end

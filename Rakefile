@@ -41,7 +41,7 @@ namespace :db do
         primary_key :id
         foreign_key :user_id
         String :name
-        String :phone
+        String :number
       end
     rescue Sequel::Error
       puts "A tabela para os contatos já foi criada"
