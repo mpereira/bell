@@ -17,7 +17,7 @@ Given /^"([^"]*)" doesn't have "([^"]*)" in his contacts$/ do |user_name, contac
   Bell::Contact.find(:name => contact_name, :user_id => user.id).delete
 end
 
-Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contacts$/ do |user_name, contact_name|
+Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
   @messenger.string.should == Bell::OutputFormatter.contact_exists(contact_name)
@@ -29,7 +29,7 @@ Then /^bell should tell me that the contact "([^"]*)" was created for "([^"]*)"$
   @messenger.string.should == Bell::OutputFormatter.contact_created(contact)
 end
 
-Then /^"([^"]*)" should have the contact "([^"]*)" in his database$/ do |user_name, contact_name|
+Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   user.contacts.find(:name => contact_name).should_not be_nil
 end

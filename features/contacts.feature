@@ -12,14 +12,14 @@ Feature: Manage contacts
     Given the user named "murilo" exists
     And "murilo" has "augusto" in his contacts
     When I run bell with "contact create augusto -n 1234567890 -u murilo"
-    Then bell should tell me that "murilo" already has "augusto" in his contacts
+    Then bell should tell me that "murilo" already has "augusto" in his contact list
 
   Scenario: Creating contact when it doesn't exist for an existing user
     Given the user named "murilo" exists
     And "murilo" doesn't have "augusto" in his contacts
     When I run bell with "contact create augusto -n 1234567890 -u murilo"
     Then bell should tell me that the contact "augusto" was created for "murilo"
-    And "murilo" should have the contact "augusto" in his database
+    And "murilo" should have "augusto" in his contact list
 
   Scenario: Creating contact for a user when it already exists for another user
     Given the user named "murilo" exists
@@ -27,4 +27,4 @@ Feature: Manage contacts
     And "roberto" has "augusto" in his contacts
     When I run bell with "contact create augusto -n 1234567890 -u murilo"
     Then bell should tell me that the contact "augusto" was created for "murilo"
-    And "murilo" should have the contact "augusto" in his database
+    And "murilo" should have "augusto" in his contact list
