@@ -1,5 +1,5 @@
 Given /^no contact named "([^"]*)" exists$/ do |contact_name|
-  Bell::Contact.find(:name => contact_name).delete
+  Bell::Contact.filter(:name => contact_name).delete
 end
 
 Given /^the contact named "([^"]*)" exists$/ do |contact_name|
