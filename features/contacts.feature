@@ -3,7 +3,7 @@ Feature: Manage contacts
   I want to manage contacts
   In order to associate calls from the phone bill to users
 
-  Scenario: User creation attempt when given user doesn't exist
+  Scenario: Creating contact when it doesn't exist for an existing user
     Given the user named "murilo" exists
     And no contact named "augusto" exists
     When I run bell with "contact create augusto -n 1234567890 -u murilo"
