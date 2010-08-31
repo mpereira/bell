@@ -10,12 +10,12 @@ module Bell
         "  bell contact list\n"
       end
 
-      def user_exists(name)
-        "O usuário #{name} já existe\n"
+      def user_exists(user_name)
+        "O usuário #{user_name} já existe\n"
       end
 
-      def user_created(name)
-        "Usuário #{name} criado\n"
+      def user_created(user_name)
+        "Usuário #{user_name} criado\n"
       end
 
       def no_users_in_database
