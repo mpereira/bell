@@ -26,8 +26,8 @@ module Bell
         "Contato #{contact.name}:#{contact.number} criado para #{contact.user.name}\n"
       end
 
-      def user_does_not_exist(user)
-        "O usuário #{user} não existe\n"
+      def user_does_not_exist(user_name)
+        "O usuário #{user_name} não existe\n"
       end
     end
   end

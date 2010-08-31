@@ -1,6 +1,5 @@
 Given /^no contact named "([^"]*)" exists$/ do |contact_name|
-  contact = Bell::Contact[:name => contact_name]
-  contact.delete if contact
+  Bell::Contact.filter(:name => contact_name).delete
 end
 
 Then /^the contact "([^"]*)" should belong to "([^"]*)"$/ do |contact_name, user_name|

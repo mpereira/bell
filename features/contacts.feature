@@ -9,3 +9,8 @@ Feature: Manage contacts
     When I run bell with "contact create augusto -n 1234567890 -u murilo"
     Then bell should tell me that the contact "augusto" was created
     And the contact "augusto" should belong to "murilo"
+
+  Scenario: Creating contact when it doesn't exist for a non-existing user
+    Given no user named "murilo" exists
+    When I run bell with "contact create augusto -n 1234567890 -u murilo"
+    Then bell should tell that the user "murilo" doesn't exist
