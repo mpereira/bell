@@ -23,7 +23,7 @@ module Bell
       end
 
       def contact_created(contact)
-        "Contato #{contact.name}:#{contact.number} criado para #{contact.user}\n"
+        "Contato #{contact.name}:#{contact.phone} criado para #{contact.user.name}\n"
       end
 
       def user_does_not_exist(user)

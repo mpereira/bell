@@ -22,6 +22,8 @@ module Bell
         user.add_contact(contact)
       rescue NoMethodError
         @messenger.puts OutputFormatter.user_does_not_exist(contact_attributes[:user])
+      else
+        @messenger.puts OutputFormatter.contact_created(contact)
       end
     end
 
