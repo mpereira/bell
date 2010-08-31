@@ -1,7 +1,3 @@
-Given /^no contact named "([^"]*)" exists$/ do |contact_name|
-  Bell::Contact.filter(:name => contact_name).delete
-end
-
 Given /^the contact named "([^"]*)" exists$/ do |contact_name|
   Bell::Contact.create(:name => contact_name)
 end
