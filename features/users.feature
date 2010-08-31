@@ -1,7 +1,7 @@
-Feature: Users
+Feature: Manage users
   As a person using the shell
   I want to manage users
-  In order to split a shared phone line bill painlessly
+  In order to know the owner of a given call in the phone bill
 
   Scenario: User creation attempt when given user doesn't exist
     Given no user named "murilo" exists
