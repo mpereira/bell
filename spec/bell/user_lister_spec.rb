@@ -28,9 +28,7 @@ describe Bell::UserLister do
     it "prints the users' names" do
       args.stub!(:length).and_return(0)
       Bell::User.stub!(:empty?).and_return(false)
-      Bell::User.should_receive(:all).and_return(all_users)
-      all_users.should_receive(:map).and_return(user_names)
-      messenger.should_receive(:puts).with(user_names)
+      messenger.should_receive(:puts).with(Bell::OutputFormatter.user_list)
       user_lister.run(args)
     end
   end

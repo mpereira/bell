@@ -33,6 +33,10 @@ module Bell
       def contact_exists(contact_name)
         "O usuário #{contact_name} já existe\n"
       end
+
+      def user_list
+        User.all.map { |user| user.name }
+      end
     end
   end
 end

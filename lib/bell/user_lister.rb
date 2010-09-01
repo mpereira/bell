@@ -5,15 +5,14 @@ module Bell
     end
 
     def run(args)
-      if args.length == 0
-        if User.empty?
-          @messenger.puts OutputFormatter.no_users_in_database
-        else
-          @messenger.puts User.all.map { |user| user[:name] }
-        end
+      raise ArgumentError unless args.length.zero?
+      if User.empty?
+        @messenger.puts OutputFormatter.no_users_in_database
       else
-        @messenger.puts OutputFormatter.usage
+        @messenger.puts OutputFormatter.user_list
       end
+    rescue ArgumentError
+      @messenger.puts OutputFormatter.usage
     end
   end
 end
