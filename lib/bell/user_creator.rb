@@ -7,11 +7,11 @@ module Bell
     def run(args)
       if args.length == 1
         user_name = args.first
-        user = User[:name => user_name]
+        user = User.find(:name => user_name)
         if user
           @messenger.puts OutputFormatter.user_exists(user_name)
         else
-          User.create { |user| user.name = user_name }
+          User.create(:name => user_name)
           @messenger.puts OutputFormatter.user_created(user_name)
         end
       else
