@@ -29,7 +29,7 @@ namespace :db do
     begin
       DB.create_table :users do
         primary_key :id
-        String :name
+        String :name, :unique => true, :null => false
       end
     rescue Sequel::Error
       puts "A tabela para os usuários já foi criada"

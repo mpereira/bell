@@ -24,7 +24,7 @@ if defined?(Spec) || defined?(Cucumber)
   DB = Sequel.sqlite
   DB.create_table :users do
     primary_key :id
-    String :name
+    String :name, :unique => true, :null => false
   end
   DB.create_table :contacts do
     primary_key :id
