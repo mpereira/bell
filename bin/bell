@@ -3,4 +3,4 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'bell'
 
-Bell::CliHandler.new(STDOUT).run(ARGV)
+Bell::CliHandler.new(STDOUT).run(ARGV) if $0 == __FILE__
