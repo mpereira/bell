@@ -5,14 +5,13 @@ module Bell
     end
 
     def run(args)
-      raise ArgumentError unless args.length.zero?
+      raise Errors::UserListerArgumentError unless args.length.zero?
+
       if User.empty?
         @messenger.puts OutputFormatter.no_users_in_database
       else
         @messenger.puts OutputFormatter.user_list
       end
-    rescue ArgumentError
-      @messenger.puts OutputFormatter.usage
     end
   end
 end

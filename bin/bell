@@ -3,4 +3,10 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'bell'
 
-Bell::CliHandler.new(STDOUT).run(ARGV) if $0 == __FILE__
+if $0 == __FILE__
+  begin
+    Bell::CliHandler.new(STDOUT).run(ARGV)
+  rescue Bell::Errors::CliHandlerArgumentError
+    STDOUT.puts Bell::OutputFormatter.usage
+  end
+end

@@ -6,9 +6,20 @@ module Bell
 
     def run(args)
       case args.first
-      when 'create' then UserCreator.new(@messenger).run(args[1..-1])
-      when 'list' then UserLister.new(@messenger).run(args[1..-1])
-      else @messenger.puts OutputFormatter.usage
+      when 'create' then
+        begin
+          UserCreator.new(@messenger).run(args[1..-1])
+        rescue Errors::UserCreatorArgumentError
+          @messenger.puts OutputFormatter.usage
+        end
+      when 'list' then
+        begin
+          UserLister.new(@messenger).run(args[1..-1])
+        rescue Errors::UserListerArgumentError
+          @messenger.puts OutputFormatter.usage
+        end
+      else
+        raise Errors::UserHandlerArgumentError
       end
     end
   end

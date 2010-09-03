@@ -8,10 +8,10 @@ describe Bell::UserLister do
   let(:user_lister) { described_class.new(messenger) }
 
   context "when called with extra arguments" do
-    it "shows the usage" do
+    it "raises UserListerArgumentError" do
       args.stub!(:length).and_return(1)
-      messenger.should_receive(:puts).with(Bell::OutputFormatter.usage)
-      user_lister.run(args)
+      lambda { user_lister.run(args) }.
+        should raise_error(Bell::Errors::UserListerArgumentError)
     end
   end
 

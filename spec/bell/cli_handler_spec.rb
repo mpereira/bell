@@ -2,16 +2,16 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe Bell::CliHandler do
   let(:args) { mock("args").as_null_object }
-  let(:messenger) { mock("messenger") }
+  let(:messenger) { mock("messenger").as_null_object }
   let(:user_handler) { mock(Bell::UserHandler) }
   let(:contact_handler) { mock(Bell::ContactHandler) }
   let(:cli_handler) { described_class.new(messenger) }
 
   context "when calling for an invalid resource" do
-    it "shows the usage" do
+    it "raises CliHandlerArgumentError" do
       args.stub!(:first).and_return('foo')
-      messenger.should_receive(:puts).with(Bell::OutputFormatter.usage)
-      cli_handler.run(args)
+      lambda { cli_handler.run(args) }.
+        should raise_error(Bell::Errors::CliHandlerArgumentError)
     end
   end
 

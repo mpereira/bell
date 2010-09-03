@@ -41,7 +41,13 @@ require 'bell/contact'
 
 module Bell
   module Errors
-    exceptions = %w[UserNotFound]
+    exceptions = %w[
+      CliHandlerArgumentError
+      UserHandlerArgumentError
+      UserCreatorArgumentError
+      UserListerArgumentError
+      UserNotFound
+    ]
 
     exceptions.each { |exception| const_set(exception, Class.new(StandardError)) }
   end
