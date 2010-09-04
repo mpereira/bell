@@ -4,8 +4,7 @@ end
 
 Given /^"([^"]*)" has "([^"]*)" in his contacts$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
-  contact = Bell::Contact.find_or_create(:name => contact_name)
-  user.add_contact(contact)
+  Bell::Contact.find_or_create(:name => contact_name, :user_id => user.id)
 end
 
 Given /^"([^"]*)" doesn't have "([^"]*)" in his contacts$/ do |user_name, contact_name|
@@ -27,5 +26,5 @@ end
 
 Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
-  user.contacts.find(:name => contact_name).should_not be_nil
+  Bell::Contact.find(:name => contact_name, :user_id => user.id).should_not be_nil
 end

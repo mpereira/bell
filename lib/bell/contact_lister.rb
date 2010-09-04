@@ -43,7 +43,6 @@ module Bell
       if user_contacts.empty?
         @messenger.puts OutputFormatter.user_does_not_have_contacts(user[:name])
       else
-        @messenger.puts "#{user.name}"
         list_contacts(user_contacts)
       end
     end
