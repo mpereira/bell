@@ -31,11 +31,13 @@ Feature: Manage contacts
     And "murilo" should have "augusto" in his contact list
 
   Scenario: Listing all contacts
-    Given the contact named "murilo" exists
-    And the contact named "roberto" exists
+    Given the user named "murilo" exists
+    And the user named "roberto" exists
+    And "murilo" has "augusto" in his contacts
+    And "roberto" has "selma" in his contacts
     When I run bell with "contact list"
-    Then the messenger should contain "murilo"
-    And the messenger should contain "roberto"
+    Then the messenger should contain "augusto"
+    And the messenger should contain "selma"
 
   Scenario: Listing contacts from a given user
     Given the user named "murilo" exists
