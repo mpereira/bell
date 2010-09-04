@@ -34,8 +34,8 @@ module Bell
         "Contato #{contact.name}:#{contact.number} criado para #{contact.user.name}\n"
       end
 
-      def contact_already_exists(contact_name)
-        "O usuário #{contact_name} já existe\n"
+      def contact_already_exists(contact)
+        "O contato #{contact.name} já existe na lista de contatos do usuário #{contact.user.name}\n"
       end
 
       def user_list

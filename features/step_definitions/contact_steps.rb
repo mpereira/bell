@@ -15,7 +15,7 @@ end
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
-  @messenger.string.should == Bell::OutputFormatter.contact_already_exists(contact_name)
+  @messenger.string.should == Bell::OutputFormatter.contact_already_exists(contact)
 end
 
 Then /^bell should tell me that the contact "([^"]*)" was created for "([^"]*)"$/ do |contact_name, user_name|

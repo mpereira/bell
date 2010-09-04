@@ -29,7 +29,7 @@ module Bell
     rescue Errors::UserDoesNotExist
       @messenger.puts OutputFormatter.user_does_not_exist(contact_attributes[:user])
     rescue Errors::ContactAlreadyExists
-      @messenger.puts OutputFormatter.contact_already_exists(contact_attributes[:name])
+      @messenger.puts OutputFormatter.contact_already_exists(contact)
     end
 
     private
