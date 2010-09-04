@@ -46,7 +46,11 @@ module Bell
       UserHandlerArgumentError
       UserCreatorArgumentError
       UserListerArgumentError
-      UserNotFound
+      UserDoesNotExist
+      ContactHandlerArgumentError
+      ContactCreatorArgumentError
+      ContactListerArgumentError
+      ContactAlreadyExists
     ]
 
     exceptions.each { |exception| const_set(exception, Class.new(StandardError)) }

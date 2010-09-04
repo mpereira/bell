@@ -28,7 +28,7 @@ describe Bell::CliHandler do
     it "forwards the arguments to the contact handler" do
       args.stub!(:first).and_return('contact')
       Bell::ContactHandler.should_receive(:new).with(messenger).and_return(contact_handler)
-      contact_handler.should_receive(:run)
+      contact_handler.should_receive(:handle!)
       cli_handler.run(args)
     end
   end

@@ -11,7 +11,7 @@ Then /^bell should tell that the user "([^"]*)" was created$/ do |user_name|
 end
 
 Then /^bell should tell that the user "([^"]*)" already exists$/ do |user_name|
-  @messenger.string.should == Bell::OutputFormatter.user_exists(user_name)
+  @messenger.string.should == Bell::OutputFormatter.user_already_exists(user_name)
 end
 
 Then /^bell should tell that the user "([^"]*)" doesn't exist$/ do |user_name|

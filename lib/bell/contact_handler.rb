@@ -4,13 +4,22 @@ module Bell
       @messenger = messenger
     end
 
-    def run(args)
-      action, args = args.first, args[1..-1]
-
-      case action
-      when 'create' then ContactCreator.new(@messenger).create(args)
-      when 'list' then ContactLister.new(@messenger).list(args)
-      else @messenger.puts OutputFormatter.usage
+    def handle!(args)
+      case args.first
+      when 'create' then
+        begin
+          ContactCreator.new(@messenger).create!(args[1..-1])
+        rescue Errors::ContactCreatorArgumentError
+          @messenger.puts OutputFormatter.usage
+        end
+      when 'list' then
+        begin
+          ContactLister.new(@messenger).list!(args[1..-1])
+        rescue Errors::ContactListerArgumentError
+          @messenger.puts OutputFormatter.usage
+        end
+      else
+        raise Errors::ContactHandlerArgumentError
       end
     end
   end

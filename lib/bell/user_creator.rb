@@ -11,7 +11,7 @@ module Bell
       user = User.find(:name => user_name)
 
       if user
-        @messenger.puts OutputFormatter.user_exists(user_name)
+        @messenger.puts OutputFormatter.user_already_exists(user_name)
       else
         User.create(:name => user_name)
         @messenger.puts OutputFormatter.user_created(user_name)

@@ -39,7 +39,7 @@ describe Bell::UserCreator do
         args.stub!(:length).and_return(1)
         args.stub!(:first).and_return(user_name)
         Bell::User.stub!(:find).with(:name => user_name).and_return(true)
-        messenger.should_receive(:puts).with(Bell::OutputFormatter.user_exists(user_name))
+        messenger.should_receive(:puts).with(Bell::OutputFormatter.user_already_exists(user_name))
         user_creator.run(args)
       end
     end

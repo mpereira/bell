@@ -18,7 +18,7 @@ module Bell
         "Usuário #{user_name} criado\n"
       end
 
-      def user_exists(user_name)
+      def user_already_exists(user_name)
         "O usuário #{user_name} já existe\n"
       end
 
@@ -30,7 +30,7 @@ module Bell
         "Contato #{contact.name}:#{contact.number} criado para #{contact.user.name}\n"
       end
 
-      def contact_exists(contact_name)
+      def contact_already_exists(contact_name)
         "O usuário #{contact_name} já existe\n"
       end
 

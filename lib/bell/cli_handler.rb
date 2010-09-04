@@ -14,7 +14,7 @@ module Bell
         end
       when 'contact' then
         begin
-          ContactHandler.new(@messenger).run(args[1..-1])
+          ContactHandler.new(@messenger).handle!(args[1..-1])
         rescue Errors::ContactHandlerArgumentError
           @messenger.puts OutputFormatter.usage
         end

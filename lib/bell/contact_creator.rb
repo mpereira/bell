@@ -7,29 +7,29 @@ module Bell
       @messenger = messenger
     end
 
-    def create(args)
-      raise ArgumentError unless valid_contact_creation_args?(args)
+    def create!(args)
+      raise Errors::ContactCreatorArgumentError unless valid_contact_creation_args?(args)
 
       contact_attributes = extract_contact_creation_args(args)
-
       user = User.find(:name => contact_attributes[:user])
 
-      raise Bell::Errors::UserNotFound unless user
+      raise Errors::UserDoesNotExist unless user
 
-      contact = Contact.create(
-        :user_id => user.id,
-        :name => contact_attributes[:name],
-        :number => contact_attributes[:number]
-      )
+      contact = Contact.find(:name => contact_attributes[:name], :user_id => user.id)
 
-    rescue Sequel::ValidationFailed
-      @messenger.puts OutputFormatter.contact_exists(contact_attributes[:name])
-    rescue Bell::Errors::UserNotFound
+      if contact
+        raise Errors::ContactAlreadyExists
+      else
+        contact = user.add_contact(
+          :name => contact_attributes[:name],
+          :number => contact_attributes[:number]
+        )
+        @messenger.puts OutputFormatter.contact_created(contact)
+      end
+    rescue Errors::UserDoesNotExist
       @messenger.puts OutputFormatter.user_does_not_exist(contact_attributes[:user])
-    rescue ArgumentError
-      @messenger.puts OutputFormatter.usage
-    else
-      @messenger.puts OutputFormatter.contact_created(contact)
+    rescue Errors::ContactAlreadyExists
+      @messenger.puts OutputFormatter.contact_already_exists(contact_attributes[:name])
     end
 
     private
