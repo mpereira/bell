@@ -4,17 +4,17 @@ module Bell
       @messenger = messenger
     end
 
-    def run(args)
+    def handle!(args)
       case args.first
       when 'create' then
         begin
-          UserCreator.new(@messenger).run(args[1..-1])
+          UserCreator.new(@messenger).create!(args[1..-1])
         rescue Errors::UserCreatorArgumentError
           @messenger.puts OutputFormatter.usage
         end
       when 'list' then
         begin
-          UserLister.new(@messenger).run(args[1..-1])
+          UserLister.new(@messenger).list!(args[1..-1])
         rescue Errors::UserListerArgumentError
           @messenger.puts OutputFormatter.usage
         end

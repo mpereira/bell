@@ -10,7 +10,7 @@ describe Bell::UserHandler do
   context "handling an invalid action" do
     it "raises UserHandlerArgumentError" do
       args.stub!(:first).and_return('foo')
-      lambda { user_handler.run(args) }.
+      lambda { user_handler.handle!(args) }.
         should raise_error(Bell::Errors::UserHandlerArgumentError)
     end
   end
@@ -19,8 +19,8 @@ describe Bell::UserHandler do
     it "creates a user creator instance" do
       args.stub!(:first).and_return('create')
       Bell::UserCreator.should_receive(:new).with(messenger).and_return(user_creator)
-      user_creator.should_receive(:run)
-      user_handler.run(args)
+      user_creator.should_receive(:create!)
+      user_handler.handle!(args)
     end
   end
 
@@ -29,8 +29,8 @@ describe Bell::UserHandler do
       it "tells the user that the database has no users" do
         args.stub!(:first).and_return('list')
         Bell::UserLister.should_receive(:new).with(messenger).and_return(user_lister)
-        user_lister.should_receive(:run)
-        user_handler.run(args)
+        user_lister.should_receive(:list!)
+        user_handler.handle!(args)
       end
     end
   end

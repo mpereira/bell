@@ -4,7 +4,7 @@ module Bell
       @messenger = messenger
     end
 
-    def run(args)
+    def create!(args)
       raise Errors::UserCreatorArgumentError unless args.length == 1
 
       user_name = args.first

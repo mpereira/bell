@@ -10,7 +10,7 @@ describe Bell::UserLister do
   context "when called with extra arguments" do
     it "raises UserListerArgumentError" do
       args.stub!(:length).and_return(1)
-      lambda { user_lister.run(args) }.
+      lambda { user_lister.list!(args) }.
         should raise_error(Bell::Errors::UserListerArgumentError)
     end
   end
@@ -20,7 +20,7 @@ describe Bell::UserLister do
       args.stub!(:length).and_return(0)
       Bell::User.stub!(:empty?).and_return(true)
       messenger.should_receive(:puts).with(Bell::OutputFormatter.no_users_in_database)
-      user_lister.run(args)
+      user_lister.list!(args)
     end
   end
 
@@ -29,7 +29,7 @@ describe Bell::UserLister do
       args.stub!(:length).and_return(0)
       Bell::User.stub!(:empty?).and_return(false)
       messenger.should_receive(:puts).with(Bell::OutputFormatter.user_list)
-      user_lister.run(args)
+      user_lister.list!(args)
     end
   end
 end

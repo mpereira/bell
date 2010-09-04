@@ -10,7 +10,7 @@ describe Bell::CliHandler do
   context "when calling for an invalid resource" do
     it "raises CliHandlerArgumentError" do
       args.stub!(:first).and_return('foo')
-      lambda { cli_handler.run(args) }.
+      lambda { cli_handler.handle!(args) }.
         should raise_error(Bell::Errors::CliHandlerArgumentError)
     end
   end
@@ -19,8 +19,8 @@ describe Bell::CliHandler do
     it "forwards the arguments to the user handler" do
       args.stub!(:first).and_return('user')
       Bell::UserHandler.should_receive(:new).with(messenger).and_return(user_handler)
-      user_handler.should_receive(:run)
-      cli_handler.run(args)
+      user_handler.should_receive(:handle!)
+      cli_handler.handle!(args)
     end
   end
 
@@ -29,7 +29,7 @@ describe Bell::CliHandler do
       args.stub!(:first).and_return('contact')
       Bell::ContactHandler.should_receive(:new).with(messenger).and_return(contact_handler)
       contact_handler.should_receive(:handle!)
-      cli_handler.run(args)
+      cli_handler.handle!(args)
     end
   end
 end

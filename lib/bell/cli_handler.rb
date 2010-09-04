@@ -4,11 +4,11 @@ module Bell
       @messenger = messenger
     end
 
-    def run(args)
+    def handle!(args)
       case args.first
       when 'user' then
         begin
-          UserHandler.new(@messenger).run(args[1..-1])
+          UserHandler.new(@messenger).handle!(args[1..-1])
         rescue Errors::UserHandlerArgumentError
           @messenger.puts OutputFormatter.usage
         end
