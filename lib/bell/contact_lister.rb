@@ -6,7 +6,12 @@ module Bell
 
     def list!(args)
       case args.length
-      when 0 then list_contacts(Contact.all)
+      when 0 then
+        if Contact.all.empty?
+          @messenger.puts OutputFormatter.no_contacts_in_database
+        else
+          list_contacts(Contact.all)
+        end
       when 1 then
         user_name = args.first
         user = User.find(:name => user_name)

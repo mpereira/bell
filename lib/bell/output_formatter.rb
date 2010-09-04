@@ -26,6 +26,10 @@ module Bell
         "O usuário #{user_name} não existe\n"
       end
 
+      def no_contacts_in_database
+        "Não há contatos cadastrados\n"
+      end
+
       def contact_created(contact)
         "Contato #{contact.name}:#{contact.number} criado para #{contact.user.name}\n"
       end
