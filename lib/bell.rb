@@ -51,6 +51,7 @@ module Bell
       ContactCreatorArgumentError
       ContactListerArgumentError
       ContactAlreadyExists
+      ContactNumberAlreadyTaken
     ]
 
     exceptions.each { |exception| const_set(exception, Class.new(StandardError)) }

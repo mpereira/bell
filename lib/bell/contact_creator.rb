@@ -11,13 +11,19 @@ module Bell
       raise Errors::ContactCreatorArgumentError unless valid_contact_creation_args?(args)
 
       contact_attributes = extract_contact_creation_args(args)
-      user = User.find(:name => contact_attributes[:user])
 
+      user = User.find(:name => contact_attributes[:user])
       raise Errors::UserDoesNotExist unless user
 
-      contact = Contact.find(:name => contact_attributes[:name], :user_id => user.id)
+      contact_found_by_number = Contact.find(:number => contact_attributes[:number])
+      raise Errors::ContactNumberAlreadyTaken if contact_found_by_number
 
-      if contact
+      contact_found_by_name = Contact.find(
+        :user_id => user.id,
+        :name => contact_attributes[:name]
+      )
+
+      if contact_found_by_name
         raise Errors::ContactAlreadyExists
       else
         contact = user.add_contact(
@@ -29,7 +35,9 @@ module Bell
     rescue Errors::UserDoesNotExist
       @messenger.puts OutputFormatter.user_does_not_exist(contact_attributes[:user])
     rescue Errors::ContactAlreadyExists
-      @messenger.puts OutputFormatter.contact_already_exists(contact)
+      @messenger.puts OutputFormatter.contact_already_exists(contact_found_by_name)
+    rescue Errors::ContactNumberAlreadyTaken
+      @messenger.puts OutputFormatter.contact_number_already_taken(contact_found_by_number)
     end
 
     private

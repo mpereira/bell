@@ -1,7 +1,12 @@
-bell te auxilia no controle de gastos de uma conta da embratel.
+bell te auxilia no controle de gastos de uma conta da embratel
 
 Comandos:
   bell user create USER
   bell user list
   bell contact create CONTACT [-n|--number] NUMBER [-u|--user] USER
   bell contact list
+
+Formatos:
+  USER: sequência quaisquer caracteres. Representem o nome do usuário (ex: joao)
+  CONTACT: sequência quaisquer caracteres. Representem o nome do contato (ex: jose)
+  NUMBER: sequência de 10 dígitos, onde os 2 primeiros são o DDD (ex: 1133445566)

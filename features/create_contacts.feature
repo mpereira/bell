@@ -22,7 +22,7 @@ Feature: Create contacts
     Then bell should tell me that the contact "augusto" was created for "murilo"
     And "murilo" should have "augusto" in his contact list
 
-  Scenario: Creating contact for a user when it already exists for another user
+  Scenario: Creating contact when it's in another user contact list
     Given the user named "murilo" exists
     And the user named "roberto" exists
     And "murilo" doesn't have a contact with name "augusto" in his contacts
@@ -30,3 +30,11 @@ Feature: Create contacts
     When I run bell with "contact create augusto -n 1234567890 -u murilo"
     Then bell should tell me that the contact "augusto" was created for "murilo"
     And "murilo" should have "augusto" in his contact list
+
+  Scenario: Creating contact when the number given is already taken
+    Given the user named "murilo" exists
+    And the user named "roberto" exists
+    And "murilo" doesn't have a contact with name "augusto" in his contacts
+    And "roberto" has a contact with name "augusto" and number "1234567890" in his contact list
+    When I run bell with "contact create augusto -n 1234567890 -u murilo"
+    Then bell should tell me that the number "1234567890" was already taken

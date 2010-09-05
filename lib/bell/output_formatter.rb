@@ -38,6 +38,10 @@ module Bell
         "O contato #{contact.name} já existe na lista de contatos do usuário #{contact.user.name}\n"
       end
 
+      def contact_number_already_taken(contact)
+        "O número #{contact.number} já pertence ao contato #{contact.name} do usuário#{contact.user.name}\n"
+      end
+
       def user_list
         User.all.map { |user| user.name }
       end
