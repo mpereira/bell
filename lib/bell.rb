@@ -28,9 +28,9 @@ if defined?(Spec) || defined?(Cucumber)
   end
   DB.create_table :contacts do
     primary_key :id
-    foreign_key :user_id
+    foreign_key :user_id, :null => false
     String :name, :null => false
-    String :number
+    String :number, :unique => true, :null => false
   end
 else
   DB = Sequel.sqlite(File.join(File.dirname(__FILE__), '..', 'data', 'bell.db'))

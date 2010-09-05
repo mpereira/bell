@@ -1,15 +1,23 @@
-Given /^the contact named "([^"]*)" exists$/ do |contact_name|
-  Bell::Contact.create(:name => contact_name)
+Given /^a contact with name "([^"]*)" exists$/ do |contact_name|
+  @contact = Bell::Contact.create(:name => contact_name, :number => random_number)
 end
 
-Given /^"([^"]*)" has "([^"]*)" in his contacts$/ do |user_name, contact_name|
-  user = Bell::User.find(:name => user_name)
-  Bell::Contact.find_or_create(:name => contact_name, :user_id => user.id)
+Given /^a contact with name "([^"]*)" and number "([^"]*)" exists$/ do |contact_name, contact_number|
+  @contact = Bell::Contact.create(:name => contact_name, :number => contact_number)
 end
 
-Given /^"([^"]*)" doesn't have "([^"]*)" in his contacts$/ do |user_name, contact_name|
+Given /^"([^"]*)" has a contact with name "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
-  Bell::Contact.find(:name => contact_name, :user_id => user.id).delete
+  if @contact
+    user.add_contact(@contact)
+  else
+    user.add_contact(:name => contact_name, :number => random_number)
+  end
+end
+
+Given /^"([^"]*)" doesn't have a contact with name "([^"]*)" in his contacts$/ do |user_name, contact_name|
+  user = Bell::User.find(:name => user_name)
+  Bell::Contact.filter(:name => contact_name, :user_id => user.id).delete
 end
 
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|

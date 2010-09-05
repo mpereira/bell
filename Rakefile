@@ -39,9 +39,9 @@ namespace :db do
     begin
       DB.create_table :contacts do
         primary_key :id
-        foreign_key :user_id
-        String :name
-        String :number
+        foreign_key :user_id, :null => false
+        String :name, :null => false
+        String :number, :unique => true, :null => false
       end
     rescue Sequel::Error
       puts "A tabela para os contatos já foi criada"
