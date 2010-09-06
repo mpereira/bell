@@ -10,7 +10,7 @@ module Bell
     def create!(args)
       raise Errors::ContactCreatorArgumentError unless valid_contact_creation_args?(args)
 
-      contact_attributes = extract_contact_creation_args(args)
+      contact_attributes = extract_contact_attributes(args)
 
       user = User.find(:name => contact_attributes[:user])
       raise Errors::UserDoesNotExist unless user
@@ -57,7 +57,7 @@ module Bell
       args.length == 5 && necessary_arguments_given?(args)
     end
 
-    def extract_contact_creation_args(args)
+    def extract_contact_attributes(args)
       number_flag = (args & NUMBER_FLAGS).first
       user_flag = (args & USER_FLAGS).first
 
