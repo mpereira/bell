@@ -4,7 +4,7 @@ module Bell
       @messenger = messenger
     end
 
-    def list!(args)
+    def list!(args = [])
       raise Errors::UserListerArgumentError unless args.length.zero?
 
       if User.empty?

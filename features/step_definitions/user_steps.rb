@@ -10,6 +10,16 @@ Given /^a user with name "([^"]*)" exists$/ do |user_name|
   Bell::User.create(:name => user_name)
 end
 
+When /^I create a user with name "([^"]*)"$/ do |user_name|
+  @messenger = StringIO.new
+  Bell::UserCreator.new(@messenger).create!([user_name])
+end
+
+When /^I list the users$/ do
+  @messenger = StringIO.new
+  Bell::UserLister.new(@messenger).list!
+end
+
 Then /^bell should tell me that a user with name "([^"]*)" was created$/ do |user_name|
   @messenger.string.should == Bell::OutputFormatter.user_created(user_name)
 end
