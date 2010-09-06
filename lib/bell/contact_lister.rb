@@ -4,7 +4,7 @@ module Bell
       @messenger = messenger
     end
 
-    def list!(args)
+    def list!(args = [])
       case args.length
       when 0 then
         if Contact.all.empty?

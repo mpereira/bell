@@ -20,6 +20,25 @@ Given /^"([^"]*)" doesn't have a contact with name "([^"]*)" in his contacts$/ d
   Bell::Contact.filter(:name => contact_name, :user_id => user.id).delete
 end
 
+When /^I create a contact with name "([^"]*)" for the user with name "([^"]*)"$/ do |contact_name, user_name|
+  Given %{I create a contact with name "#{contact_name}" and with number "#{random_number}" for the user with name "#{user_name}"}
+end
+
+When /^I create a contact with name "([^"]*)" and with number "([^"]*)" for the user with name "([^"]*)"$/ do |contact_name, contact_number, user_name|
+  @messenger = StringIO.new
+  Bell::ContactCreator.new(@messenger).create!([contact_name, '-n', contact_number, '-u', user_name])
+end
+
+When /^I list all contacts$/ do
+  @messenger = StringIO.new
+  Bell::ContactLister.new(@messenger).list!
+end
+
+When /^I list the contacts for the user with name "([^"]*)"$/ do |user_name|
+  @messenger = StringIO.new
+  Bell::ContactLister.new(@messenger).list!([user_name])
+end
+
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
