@@ -1,22 +1,18 @@
-Given /^a contact with name "([^"]*)" exists$/ do |contact_name|
-  @contact = Bell::Contact.create(:name => contact_name, :number => random_number)
-end
-
 Given /^a contact with name "([^"]*)" and number "([^"]*)" exists$/ do |contact_name, contact_number|
-  @contact = Bell::Contact.create(:name => contact_name, :number => contact_number)
+  Bell::Contact.create(:name => contact_name, :number => contact_number)
 end
 
-Given /^"([^"]*)" has a contact with name "([^"]*)" in his contact list$/ do |user_name, contact_name|
-  Given %{"#{user_name}" has a contact with name "#{contact_name}" and number "#{random_number}" in his contact list}
+Given /^a contact with name "([^"]*)" exists$/ do |contact_name|
+  Given %{a contact with name "#{contact_name}" and number "#{random_number}" exists}
 end
 
 Given /^"([^"]*)" has a contact with name "([^"]*)" and number "([^"]*)" in his contact list$/ do |user_name, contact_name, contact_number|
   user = Bell::User.find(:name => user_name)
-  if @contact
-    user.add_contact(@contact)
-  else
-    user.add_contact(:name => contact_name, :number => contact_number)
-  end
+  user.add_contact(:name => contact_name, :number => contact_number)
+end
+
+Given /^"([^"]*)" has a contact with name "([^"]*)" in his contact list$/ do |user_name, contact_name|
+  Given %{"#{user_name}" has a contact with name "#{contact_name}" and number "#{random_number}" in his contact list}
 end
 
 Given /^"([^"]*)" doesn't have a contact with name "([^"]*)" in his contacts$/ do |user_name, contact_name|
