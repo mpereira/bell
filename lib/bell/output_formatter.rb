@@ -42,8 +42,20 @@ module Bell
         "O número #{contact.number} já pertence ao contato #{contact.name} do usuário#{contact.user.name}\n"
       end
 
+      def bad_format_for_contact_number(contact_number)
+        sanitize_output(
+          %Q{erro: #{contact_number} não é um número de telefone válido.
+             Veja 'bell --help' para saber mais sobre o formato aceito.}
+        )
+      end
+
       def user_list
         User.all.map { |user| user.name }
+      end
+
+      private
+      def sanitize_output(output)
+        output.gsub(/^\s{2,}/, '')
       end
     end
   end

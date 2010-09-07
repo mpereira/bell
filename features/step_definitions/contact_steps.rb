@@ -60,3 +60,7 @@ Then /^bell should tell me that the number "([^"]*)" was already taken$/ do |con
   contact = Bell::Contact.find(:number => contact_number)
   @messenger.string.should == Bell::OutputFormatter.contact_number_already_taken(contact)
 end
+
+Then /^bell should tell me that the number "([^"]*)" has a bad format$/ do |contact_number|
+  @messenger.string.chomp.should == Bell::OutputFormatter.bad_format_for_contact_number(contact_number)
+end

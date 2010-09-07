@@ -35,3 +35,13 @@ Feature: Shell user creates a contact
     And "roberto" has a contact with name "augusto" and number "1234567890" in his contact list
     When I create a contact with name "augusto" and with number "1234567890" for the user with name "murilo"
     Then bell should tell me that the number "1234567890" was already taken
+
+  Scenario: Creating contact with a short phone number
+    Given a user with name "murilo" exists
+    When I create a contact with name "augusto" and with number "12345678" for the user with name "murilo"
+    Then bell should tell me that the number "12345678" has a bad format
+
+  Scenario: Creating contact with a invalid characters in the phone number
+    Given a user with name "murilo" exists
+    When I create a contact with name "augusto" and with number "12ab56cd78" for the user with name "murilo"
+    Then bell should tell me that the number "12ab56cd78" has a bad format
