@@ -39,7 +39,7 @@ module Bell
     rescue Sequel::ValidationFailed
       @messenger.puts OutputFormatter.bad_format_for_contact_number(contact_attributes[:number])
     rescue Errors::ContactNumberAlreadyTaken
-      @messenger.puts OutputFormatter.contact_number_already_taken(contact_found_by_number)
+      @messenger.puts OutputFormatter.contact_number_taken(contact_found_by_number)
     end
 
     private

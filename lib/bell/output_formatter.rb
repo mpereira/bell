@@ -34,7 +34,7 @@ module Bell
         )
       end
 
-      def contact_number_already_taken(contact)
+      def contact_number_taken(contact)
         sanitize_output(
           %Q{erro: este número já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.
              Crie um contato com número diferente.}
