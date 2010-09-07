@@ -10,13 +10,13 @@ module Bell
         begin
           UserHandler.new(@messenger).handle!(args[1..-1])
         rescue Errors::UserHandlerArgumentError
-          @messenger.puts OutputFormatter.usage
+          @messenger.puts USAGE
         end
       when 'contact' then
         begin
           ContactHandler.new(@messenger).handle!(args[1..-1])
         rescue Errors::ContactHandlerArgumentError
-          @messenger.puts OutputFormatter.usage
+          @messenger.puts USAGE
         end
       else
         raise Errors::CliHandlerArgumentError

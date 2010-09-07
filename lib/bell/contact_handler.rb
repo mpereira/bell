@@ -10,13 +10,13 @@ module Bell
         begin
           ContactCreator.new(@messenger).create!(args[1..-1])
         rescue Errors::ContactCreatorArgumentError
-          @messenger.puts OutputFormatter.usage
+          @messenger.puts USAGE
         end
       when 'list' then
         begin
           ContactLister.new(@messenger).list!(args[1..-1])
         rescue Errors::ContactListerArgumentError
-          @messenger.puts OutputFormatter.usage
+          @messenger.puts USAGE
         end
       else
         raise Errors::ContactHandlerArgumentError

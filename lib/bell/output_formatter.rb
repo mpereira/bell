@@ -1,56 +1,51 @@
 module Bell
   class OutputFormatter
     class << self
-      def usage
-        "bell te auxilia no controle de gastos de uma conta da embratel." <<
-        "\n\nComandos:\n" <<
-        "  bell user create USER\n" <<
-        "  bell user list\n" <<
-        "  bell contact create CONTACT [-n|--number] NUMBER [-u|--user] USER\n" <<
-        "  bell contact list\n"
-      end
-
-      def no_users_in_database
-        "Não há usuários cadastrados\n"
+      def no_created_users
+        %Q{Nenhum usuário criado.}
       end
 
       def user_created(user_name)
-        "Usuário #{user_name} criado\n"
+        sanitize_output(%Q{Usuário '#{user_name}' criado.})
       end
 
       def user_already_exists(user_name)
-        "O usuário #{user_name} já existe\n"
+        sanitize_output(%Q{erro: o usuário '#{user_name}' já existe.})
       end
 
       def user_does_not_exist(user_name)
-        "O usuário #{user_name} não existe\n"
+        sanitize_output(%Q{erro: o usuário '#{user_name}' não existe.})
       end
 
       def no_contacts_in_database
-        "Não há contatos cadastrados\n"
+        %Q{Nenhum contato criado.}
       end
 
       def contact_created(contact)
-        "Contato #{contact.name}:#{contact.number} criado para #{contact.user.name}\n"
+        sanitize_output(
+          %Q{Contato '#{contact.name} (#{contact.number})' adicionado à lista de contatos do usuário  '#{contact.user.name}'.}
+        )
       end
 
       def contact_already_exists(contact)
-        "O contato #{contact.name} já existe na lista de contatos do usuário #{contact.user.name}\n"
+        sanitize_output(
+          %Q{erro: este nome já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.
+             Crie um contato com número diferente.}
+        )
       end
 
       def contact_number_already_taken(contact)
-        "O número #{contact.number} já pertence ao contato #{contact.name} do usuário#{contact.user.name}\n"
+        sanitize_output(
+          %Q{erro: este número já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.
+             Crie um contato com número diferente.}
+        )
       end
 
       def bad_format_for_contact_number(contact_number)
         sanitize_output(
-          %Q{erro: #{contact_number} não é um número de telefone válido.
+          %Q{erro: '#{contact_number}' não é um número de telefone válido.
              Veja 'bell --help' para saber mais sobre o formato aceito.}
         )
-      end
-
-      def user_list
-        User.all.map { |user| user.name }
       end
 
       private

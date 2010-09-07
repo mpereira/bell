@@ -7,7 +7,7 @@ Feature: Shell user lists the users
   Scenario: Listing users when no users are in the database
     Given no user exists
     When I list the users
-    Then the messenger should contain "Não há usuários cadastrados"
+    Then bell should tell me that there are no created users
 
   Scenario: Listing users when there is one user in the database
     Given a user with name "murilo" exists

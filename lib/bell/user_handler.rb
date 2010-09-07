@@ -10,13 +10,13 @@ module Bell
         begin
           UserCreator.new(@messenger).create!(args[1..-1])
         rescue Errors::UserCreatorArgumentError
-          @messenger.puts OutputFormatter.usage
+          @messenger.puts USAGE
         end
       when 'list' then
         begin
           UserLister.new(@messenger).list!(args[1..-1])
         rescue Errors::UserListerArgumentError
-          @messenger.puts OutputFormatter.usage
+          @messenger.puts USAGE
         end
       else
         raise Errors::UserHandlerArgumentError

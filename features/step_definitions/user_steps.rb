@@ -20,16 +20,20 @@ When /^I list the users$/ do
   Bell::UserLister.new(@messenger).list!
 end
 
+Then /^bell should tell me that there are no created users$/ do
+  @messenger.string.chomp.should == Bell::OutputFormatter.no_created_users
+end
+
 Then /^bell should tell me that a user with name "([^"]*)" was created$/ do |user_name|
-  @messenger.string.should == Bell::OutputFormatter.user_created(user_name)
+  @messenger.string.chomp.should == Bell::OutputFormatter.user_created(user_name)
 end
 
 Then /^bell should tell me that the user "([^"]*)" already exists$/ do |user_name|
-  @messenger.string.should == Bell::OutputFormatter.user_already_exists(user_name)
+  @messenger.string.chomp.should == Bell::OutputFormatter.user_already_exists(user_name)
 end
 
 Then /^bell should tell me that there is no user with name "([^"]*)"$/ do |user_name|
-  @messenger.string.should == Bell::OutputFormatter.user_does_not_exist(user_name)
+  @messenger.string.chomp.should == Bell::OutputFormatter.user_does_not_exist(user_name)
 end
 
 Then /^I should have the user "([^"]*)" in the database$/ do |user_name|

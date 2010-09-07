@@ -7,6 +7,6 @@ if $0 == __FILE__
   begin
     Bell::CliHandler.new(STDOUT).handle!(ARGV)
   rescue Bell::Errors::CliHandlerArgumentError
-    STDOUT.puts Bell::OutputFormatter.usage
+    STDOUT.puts Bell::USAGE
   end
 end

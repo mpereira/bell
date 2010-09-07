@@ -4,7 +4,7 @@ When /^I run bell with "([^"]*)"$/ do |args|
 end
 
 Then /^bell should show the usage$/ do
-  @messenger.string.should == Bell::OutputFormatter.usage
+  @messenger.string.should == Bell::USAGE
 end
 
 Then /^the messenger should contain "([^"]*)"$/ do |text|

@@ -8,10 +8,15 @@ module Bell
       raise Errors::UserListerArgumentError unless args.length.zero?
 
       if User.empty?
-        @messenger.puts OutputFormatter.no_users_in_database
+        @messenger.puts OutputFormatter.no_created_users
       else
-        @messenger.puts OutputFormatter.user_list
+        list_users
       end
+    end
+
+    private
+    def list_users
+      @messenger.puts User.all.map(&:name)
     end
   end
 end

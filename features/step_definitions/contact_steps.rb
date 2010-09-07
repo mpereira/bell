@@ -42,13 +42,13 @@ end
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
-  @messenger.string.should == Bell::OutputFormatter.contact_already_exists(contact)
+  @messenger.string.chomp.should == Bell::OutputFormatter.contact_already_exists(contact)
 end
 
 Then /^bell should tell me that the contact "([^"]*)" was created for "([^"]*)"$/ do |contact_name, user_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
-  @messenger.string.should == Bell::OutputFormatter.contact_created(contact)
+  @messenger.string.chomp.should == Bell::OutputFormatter.contact_created(contact)
 end
 
 Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, contact_name|
@@ -58,7 +58,7 @@ end
 
 Then /^bell should tell me that the number "([^"]*)" was already taken$/ do |contact_number|
   contact = Bell::Contact.find(:number => contact_number)
-  @messenger.string.should == Bell::OutputFormatter.contact_number_already_taken(contact)
+  @messenger.string.chomp.should == Bell::OutputFormatter.contact_number_already_taken(contact)
 end
 
 Then /^bell should tell me that the number "([^"]*)" has a bad format$/ do |contact_number|

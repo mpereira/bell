@@ -40,6 +40,16 @@ require 'bell/user'
 require 'bell/contact'
 
 module Bell
+  USAGE = <<-USAGE.gsub(/^    /, '')
+    bell te auxilia no controle de gastos de uma conta da embratel.
+
+      Comandos:
+      bell user create USER
+      bell user list
+      bell contact create CONTACT [-n|--number] NUMBER [-u|--user] USER
+      bell contact list
+  USAGE
+
   module Errors
     exceptions = %w[
       CliHandlerArgumentError
