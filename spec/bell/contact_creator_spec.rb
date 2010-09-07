@@ -4,7 +4,7 @@ describe Bell::ContactCreator do
   let(:args) { mock("args").as_null_object }
   let(:messenger) { mock("messenger") }
   let(:user_does_not_exist) { mock("user_does_not_exist") }
-  let(:contact_already_exists) { mock("contact_already_exists") }
+  let(:contact_name_taken) { mock("contact_name_taken") }
   let(:contact_created) { mock("contact_created") }
   let(:user) { mock(Bell::User) }
   let(:contact) { mock(Bell::Contact) }
@@ -35,8 +35,8 @@ describe Bell::ContactCreator do
           contact_creator.stub!(:valid_contact_creation_args?).and_return(true)
           Bell::User.stub!(:find).and_return(user)
           Bell::Contact.stub!(:find).and_return(contact)
-          Bell::OutputFormatter.stub!(:contact_already_exists).and_return(contact_already_exists)
-          messenger.should_receive(:puts).with(contact_already_exists)
+          Bell::OutputFormatter.stub!(:contact_name_taken).and_return(contact_name_taken)
+          messenger.should_receive(:puts).with(contact_name_taken)
           contact_creator.create!(args)
         end
       end

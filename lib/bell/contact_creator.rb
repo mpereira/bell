@@ -35,7 +35,7 @@ module Bell
     rescue Errors::UserDoesNotExist
       @messenger.puts OutputFormatter.user_does_not_exist(contact_attributes[:user])
     rescue Errors::ContactAlreadyExists
-      @messenger.puts OutputFormatter.contact_already_exists(contact_found_by_name)
+      @messenger.puts OutputFormatter.contact_name_taken(contact_found_by_name)
     rescue Sequel::ValidationFailed
       @messenger.puts OutputFormatter.bad_format_for_contact_number(contact_attributes[:number])
     rescue Errors::ContactNumberAlreadyTaken

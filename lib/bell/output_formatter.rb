@@ -23,14 +23,14 @@ module Bell
 
       def contact_created(contact)
         sanitize_output(
-          %Q{Contato '#{contact.name} (#{contact.number})' adicionado à lista de contatos do usuário  '#{contact.user.name}'.}
+          %Q{'#{contact.name} (#{contact.number})' adicionado à lista de contatos do usuário  '#{contact.user.name}'.}
         )
       end
 
-      def contact_already_exists(contact)
+      def contact_name_taken(contact)
         sanitize_output(
           %Q{erro: este nome já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.
-             Crie um contato com número diferente.}
+             Crie um contato com nome diferente.}
         )
       end
 
