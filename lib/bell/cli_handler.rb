@@ -6,21 +6,14 @@ module Bell
 
     def handle!(args)
       case args.first
-      when 'user' then
-        begin
-          UserHandler.new(@messenger).handle!(args[1..-1])
-        rescue Errors::UserHandlerArgumentError
-          @messenger.puts USAGE
-        end
-      when 'contact' then
-        begin
-          ContactHandler.new(@messenger).handle!(args[1..-1])
-        rescue Errors::ContactHandlerArgumentError
-          @messenger.puts USAGE
-        end
-      else
-        raise Errors::CliHandlerArgumentError
+      when 'user' then UserHandler.new(@messenger).handle!(args[1..-1])
+      when 'contact' then ContactHandler.new(@messenger).handle!(args[1..-1])
+      else raise Errors::CliHandlerArgumentError
       end
+    rescue Errors::UserHandlerArgumentError
+      @messenger.puts USAGE
+    rescue Errors::ContactHandlerArgumentError
+      @messenger.puts USAGE
     end
   end
 end

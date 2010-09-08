@@ -5,22 +5,23 @@ module Bell
     end
 
     def handle!(args)
-      case args.first
+      action, args = args.first, args[1..-1]
+
+      case action
       when 'create' then
-        begin
-          UserCreator.new(@messenger).create!(args[1..-1])
-        rescue Errors::UserCreatorArgumentError
-          @messenger.puts USAGE
-        end
+        raise Errors::UserCreatorArgumentError unless UserCreator.valid_args?(args)
+        user_attributes = UserCreator.extract_attributes(args)
+        UserCreator.new(@messenger).create(user_attributes)
       when 'list' then
-        begin
-          UserLister.new(@messenger).list!(args[1..-1])
-        rescue Errors::UserListerArgumentError
-          @messenger.puts USAGE
-        end
+        raise Errors::UserListerArgumentError unless args.length.zero?
+        UserLister.new(@messenger).list
       else
         raise Errors::UserHandlerArgumentError
       end
+    rescue Errors::UserCreatorArgumentError
+      @messenger.puts USAGE
+    rescue Errors::UserListerArgumentError
+      @messenger.puts USAGE
     end
   end
 end

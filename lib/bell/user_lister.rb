@@ -4,9 +4,7 @@ module Bell
       @messenger = messenger
     end
 
-    def list!(args = [])
-      raise Errors::UserListerArgumentError unless args.length.zero?
-
+    def list
       if User.empty?
         @messenger.puts OutputFormatter.no_created_users
       else

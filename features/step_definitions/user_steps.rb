@@ -12,12 +12,12 @@ end
 
 When /^I create a user with name "([^"]*)"$/ do |user_name|
   @messenger = StringIO.new
-  Bell::UserCreator.new(@messenger).create!([user_name])
+  Bell::UserCreator.new(@messenger).create(:name => user_name)
 end
 
 When /^I list the users$/ do
   @messenger = StringIO.new
-  Bell::UserLister.new(@messenger).list!
+  Bell::UserLister.new(@messenger).list
 end
 
 Then /^bell should tell me that there are no created users$/ do

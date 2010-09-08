@@ -4,17 +4,23 @@ module Bell
       @messenger = messenger
     end
 
-    def create!(args)
-      raise Errors::UserCreatorArgumentError unless args.length == 1
-
-      user_name = args.first
-      user = User.find(:name => user_name)
-
-      if user
-        @messenger.puts OutputFormatter.user_already_exists(user_name)
+    def create(user_attributes)
+      if User.find(:name => user_attributes[:name])
+        @messenger.puts OutputFormatter.user_already_exists(user_attributes[:name])
       else
-        User.create(:name => user_name)
-        @messenger.puts OutputFormatter.user_created(user_name)
+        User.create(:name => user_attributes[:name])
+        @messenger.puts OutputFormatter.user_created(user_attributes[:name])
+      end
+    end
+
+    protected
+    class << self
+      def valid_args?(args)
+        args.length == 1
+      end
+
+      def extract_attributes(args)
+        { :name => args.first }
       end
     end
   end
