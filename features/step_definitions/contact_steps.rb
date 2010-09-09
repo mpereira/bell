@@ -36,12 +36,12 @@ end
 
 When /^I list all contacts$/ do
   @messenger = StringIO.new
-  Bell::ContactLister.new(@messenger).list!
+  Bell::ContactLister.new(@messenger).list
 end
 
 When /^I list the contacts for the user with name "([^"]*)"$/ do |user_name|
   @messenger = StringIO.new
-  Bell::ContactLister.new(@messenger).list!([user_name])
+  Bell::ContactLister.new(@messenger).list(:name => user_name)
 end
 
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|

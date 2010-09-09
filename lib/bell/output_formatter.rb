@@ -21,6 +21,10 @@ module Bell
         %Q{Nenhum contato criado.}
       end
 
+      def user_does_not_have_contacts(user_name)
+        %Q{A lista de contatos do usuário '#{user_name}' está vazia.}
+      end
+
       def contact_created(contact)
         sanitize_output(
           %Q{'#{contact.name} (#{contact.number})' adicionado à lista de contatos do usuário  '#{contact.user.name}'.}

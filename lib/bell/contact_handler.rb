@@ -13,11 +13,10 @@ module Bell
         contact_attributes = ContactCreator.extract_attributes(args)
         ContactCreator.new(@messenger).create(contact_attributes)
       when 'list' then
-        begin
-          ContactLister.new(@messenger).list!(args)
-        rescue Errors::ContactListerArgumentError
-          @messenger.puts USAGE
-        end
+        raise Errors::ContactListerArgumentError unless ContactLister.valid_args?(args)
+        user_attributes = {}
+        user_attributes[:name] = args.first unless args.empty?
+        ContactLister.new(@messenger).list(user_attributes)
       else
         raise Errors::ContactHandlerArgumentError
       end

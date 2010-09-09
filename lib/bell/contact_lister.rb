@@ -4,28 +4,28 @@ module Bell
       @messenger = messenger
     end
 
-    def list!(args = [])
-      case args.length
-      when 0 then
-        if Contact.all.empty?
+    def list(user_attributes = {})
+      if user_attributes.empty?
+        if Contact.empty?
           @messenger.puts OutputFormatter.no_contacts_in_database
         else
           list_contacts(Contact.all)
         end
-      when 1 then
-        user_name = args.first
+      else
+        user_name = user_attributes[:name]
         user = User.find(:name => user_name)
-
         if user
           list_user_contacts(user)
         else
-          raise Errors::UserDoesNotExist
+          @messenger.puts OutputFormatter.user_does_not_exist(user_name)
         end
-      else
-        raise Errors::ContactListerArgumentError
       end
-    rescue Errors::UserDoesNotExist
-      @messenger.puts OutputFormatter.user_does_not_exist(user_name)
+    end
+
+    class << self
+      def valid_args?(args)
+        [0, 1].include?(args.length)
+      end
     end
 
     private
@@ -38,12 +38,10 @@ module Bell
     end
 
     def list_user_contacts(user)
-      user_contacts = user.contacts
-
-      if user_contacts.empty?
-        @messenger.puts OutputFormatter.user_does_not_have_contacts(user[:name])
+      if user.contacts.empty?
+        @messenger.puts OutputFormatter.user_does_not_have_contacts(user.name)
       else
-        list_contacts(user_contacts)
+        list_contacts(user.contacts)
       end
     end
   end
