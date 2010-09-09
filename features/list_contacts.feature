@@ -13,8 +13,13 @@ Feature: Shell user lists the contacts
     Then the messenger should contain "augusto"
     And the messenger should contain "selma"
 
-  Scenario: Listing contacts from a given user
+  Scenario: Listing user contacts when his contact list is empty
+    Given a user with name "murilo" exists
+    When I list the contacts for the user with name "murilo"
+    Then bell should tell me that the contact list of the user with name "murilo" is empty
+
+  Scenario: Listing user contacts when his contact list is not empty
     Given a user with name "murilo" exists
     And "murilo" has a contact with name "augusto" in his contact list
     When I list the contacts for the user with name "murilo"
-    And the messenger should contain "augusto"
+    Then the messenger should contain "augusto"

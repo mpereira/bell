@@ -70,3 +70,7 @@ end
 Then /^bell should tell me that the number "([^"]*)" has a bad format$/ do |contact_number|
   @messenger.string.chomp.should == Bell::OutputFormatter.bad_format_for_contact_number(contact_number)
 end
+
+Then /^bell should tell me that the contact list of the user with name "([^"]*)" is empty$/ do |user_name|
+  @messenger.string.chomp.should == Bell::OutputFormatter.contact_list_empty(user_name)
+end

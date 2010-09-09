@@ -39,7 +39,7 @@ module Bell
 
     def list_user_contacts(user)
       if user.contacts.empty?
-        @messenger.puts OutputFormatter.user_does_not_have_contacts(user.name)
+        @messenger.puts OutputFormatter.contact_list_empty(user.name)
       else
         list_contacts(user.contacts)
       end

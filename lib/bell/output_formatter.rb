@@ -21,7 +21,7 @@ module Bell
         %Q{Nenhum contato criado.}
       end
 
-      def user_does_not_have_contacts(user_name)
+      def contact_list_empty(user_name)
         %Q{A lista de contatos do usuário '#{user_name}' está vazia.}
       end
 
