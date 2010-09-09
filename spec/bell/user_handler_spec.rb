@@ -1,36 +1,58 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe Bell::UserHandler do
-  let(:args) { mock("args").as_null_object }
-  let(:messenger) { mock("messenger").as_null_object }
+  let(:messenger) { mock("messenger") }
   let(:user_creator) { mock(Bell::UserCreator) }
   let(:user_lister) { mock(Bell::UserLister) }
   let(:user_handler) { described_class.new(messenger) }
 
-  context "handling an invalid action" do
+  context "when given an invalid action" do
+    let(:invalid_action) { %w[foo] }
+
     it "raises UserHandlerArgumentError" do
-      args.stub!(:first).and_return('foo')
-      lambda { user_handler.handle!(args) }.
+      lambda { user_handler.handle!(invalid_action) }.
         should raise_error(Bell::Errors::UserHandlerArgumentError)
     end
   end
 
-  context "handling the 'create' action" do
-    it "creates a user creator instance" do
-      args.stub!(:first).and_return('create')
-      Bell::UserCreator.should_receive(:new).with(messenger).and_return(user_creator)
-      user_creator.should_receive(:create!)
-      user_handler.handle!(args)
+  context "when given the 'create' action" do
+    context "with valid arguments" do
+      let(:valid_create_action) { %w[create foo] }
+
+      it "creates a user creator instance" do
+        Bell::UserCreator.should_receive(:new).with(messenger).and_return(user_creator)
+        user_creator.should_receive(:create)
+        user_handler.handle!(valid_create_action)
+      end
+    end
+
+    context "with invalid arguments" do
+      let(:invalid_create_action) { %w[create foo bar] }
+
+      it "shows the usage" do
+        messenger.should_receive(:puts).with(Bell::USAGE)
+        user_handler.handle!(invalid_create_action)
+      end
     end
   end
 
-  context "handling the 'list' action" do
-    context "when the database has no users" do
-      it "tells the user that the database has no users" do
-        args.stub!(:first).and_return('list')
+  context "when given the 'list' action" do
+    context "with valid arguments" do
+      let(:valid_list_action) { %w[list] }
+
+      it "creates a user creator instance" do
         Bell::UserLister.should_receive(:new).with(messenger).and_return(user_lister)
-        user_lister.should_receive(:list!)
-        user_handler.handle!(args)
+        user_lister.should_receive(:list)
+        user_handler.handle!(valid_list_action)
+      end
+    end
+
+    context "with invalid arguments" do
+      let(:invalid_list_action) { %w[list foo] }
+
+      it "shows the usage" do
+        messenger.should_receive(:puts).with(Bell::USAGE)
+        user_handler.handle!(invalid_list_action)
       end
     end
   end
