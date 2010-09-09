@@ -33,7 +33,7 @@ if defined?(Spec) || defined?(Cucumber)
     String :number, :unique => true, :null => false
   end
 else
-  DB = Sequel.sqlite(File.join(File.dirname(__FILE__), '..', 'data', 'bell.db'))
+  Sequel.sqlite(File.join(File.dirname(__FILE__), '..', 'data', 'bell.db'))
 end
 
 require 'bell/user'
