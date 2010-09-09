@@ -26,7 +26,7 @@ end
 
 When /^I create a contact with name "([^"]*)" and with number "([^"]*)" for the user with name "([^"]*)"$/ do |contact_name, contact_number, user_name|
   @messenger = StringIO.new
-  Bell::ContactCreator.new(@messenger).create!(
+  Bell::ContactCreator.new(@messenger).create(
     {
       :user => { :name => user_name },
       :contact => { :name => contact_name, :number => contact_number }

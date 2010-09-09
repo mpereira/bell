@@ -11,7 +11,7 @@ module Bell
       when 'create' then
         raise Errors::ContactCreatorArgumentError unless ContactCreator.valid_args?(args)
         contact_attributes = ContactCreator.extract_attributes(args)
-        ContactCreator.new(@messenger).create!(contact_attributes)
+        ContactCreator.new(@messenger).create(contact_attributes)
       when 'list' then
         begin
           ContactLister.new(@messenger).list!(args)

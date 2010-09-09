@@ -7,7 +7,7 @@ module Bell
       @messenger = messenger
     end
 
-    def create!(contact_attributes)
+    def create(contact_attributes)
       user_name = contact_attributes[:user][:name]
       user = User.find(:name => user_name)
       contact = Contact.new(contact_attributes[:contact])
