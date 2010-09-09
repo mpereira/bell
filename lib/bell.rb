@@ -51,19 +51,16 @@ module Bell
   USAGE
 
   module Errors
-    exceptions = %w[
+    errors = %w[
       CliHandlerArgumentError
       UserHandlerArgumentError
       UserCreatorArgumentError
       UserListerArgumentError
-      UserDoesNotExist
       ContactHandlerArgumentError
       ContactCreatorArgumentError
       ContactListerArgumentError
-      ContactAlreadyExists
-      ContactNumberAlreadyTaken
     ]
 
-    exceptions.each { |exception| const_set(exception, Class.new(StandardError)) }
+    errors.each { |error| const_set(error, Class.new(StandardError)) }
   end
 end

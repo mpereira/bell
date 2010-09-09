@@ -27,18 +27,20 @@ module Bell
         )
       end
 
-      def contact_name_taken(contact)
+      def contact_name_taken(contact_name)
+        contact = Contact.find(:name => contact_name)
         sanitize_output(
           %Q{erro: este nome já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.
              Crie um contato com nome diferente.}
-        )
+        ) if contact
       end
 
-      def contact_number_taken(contact)
+      def contact_number_taken(contact_number)
+        contact = Contact.find(:number => contact_number)
         sanitize_output(
           %Q{erro: este número já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.
              Crie um contato com número diferente.}
-        )
+        ) if contact
       end
 
       def bad_format_for_contact_number(contact_number)
