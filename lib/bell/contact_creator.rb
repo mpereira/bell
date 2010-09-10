@@ -9,15 +9,25 @@ module Bell
 
     def create(contact_attributes)
       user_name = contact_attributes[:user][:name]
-      user = User.find(:name => user_name)
-      contact = Contact.new(contact_attributes[:contact])
-      user.add_contact(contact)
-    rescue NoMethodError
-      @messenger.puts OutputFormatter.user_does_not_exist(user_name)
-    rescue Sequel::ValidationFailed
-      contact.errors.each_value { |value| @messenger.puts value }
-    else
-      @messenger.puts OutputFormatter.contact_created(contact)
+      contact_name = contact_attributes[:contact][:name]
+      contact_number = contact_attributes[:contact][:number]
+
+      if user = User.find(:name => user_name)
+        contact = Contact.new(
+                              :name => contact_name,
+                              :number => contact_number,
+                              :user_id => user[:id]
+                             )
+        begin
+          contact.save
+        rescue Sequel::ValidationFailed
+          contact.errors.each_value { |value| @messenger.puts value }
+        else
+          @messenger.puts OutputFormatter.contact_created(contact)
+        end
+      else
+        @messenger.puts OutputFormatter.user_does_not_exist(user_name)
+      end
     end
 
     private
