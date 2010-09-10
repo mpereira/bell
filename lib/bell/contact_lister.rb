@@ -7,7 +7,7 @@ module Bell
     def list(user_attributes = {})
       if user_attributes.empty?
         if Contact.empty?
-          @messenger.puts OutputFormatter.no_contacts_in_database
+          @messenger.puts OutputFormatter.no_contacts_created
         else
           list_contacts(Contact.all)
         end

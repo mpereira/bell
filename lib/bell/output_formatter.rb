@@ -17,7 +17,7 @@ module Bell
         sanitize_output(%Q{erro: o usuário '#{user_name}' não existe.})
       end
 
-      def no_contacts_in_database
+      def no_contacts_created
         %Q{Nenhum contato criado.}
       end
 
