@@ -9,21 +9,23 @@ module Bell
 
       case action
       when 'create' then
-        raise Errors::ContactCreatorArgumentError unless ContactCreator.valid_args?(args)
-        contact_attributes = ContactCreator.extract_attributes(args)
-        ContactCreator.new(@messenger).create(contact_attributes)
+        if ContactCreator.valid_args?(args)
+          contact_attributes = ContactCreator.extract_attributes(args)
+          ContactCreator.new(@messenger).create(contact_attributes)
+        else
+          @messenger.puts USAGE
+        end
       when 'list' then
-        raise Errors::ContactListerArgumentError unless ContactLister.valid_args?(args)
-        user_attributes = {}
-        user_attributes[:name] = args.first unless args.empty?
-        ContactLister.new(@messenger).list(user_attributes)
+        if ContactLister.valid_args?(args)
+          user_attributes = {}
+          user_attributes[:name] = args.first unless args.empty?
+          ContactLister.new(@messenger).list(user_attributes)
+        else
+          @messenger.puts USAGE
+        end
       else
-        raise Errors::ContactHandlerArgumentError
+        @messenger.puts USAGE
       end
-    rescue Errors::ContactCreatorArgumentError
-      @messenger.puts USAGE
-    rescue Errors::ContactListerArgumentError
-      @messenger.puts USAGE
     end
   end
 end

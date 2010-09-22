@@ -40,6 +40,9 @@ require 'bell/user'
 require 'bell/contact'
 
 module Bell
+  DIR_PATH = File.join(ENV['HOME'], '.bell')
+  DB_PATH  = File.join(DIR_PATH, 'bell.db')
+
   USAGE = <<-USAGE.gsub(/^    /, '')
     bell te auxilia no controle de gastos de uma conta da embratel.
 
@@ -50,17 +53,41 @@ module Bell
       bell contact list
   USAGE
 
-  module Errors
-    errors = %w[
-      CliHandlerArgumentError
-      UserHandlerArgumentError
-      UserCreatorArgumentError
-      UserListerArgumentError
-      ContactHandlerArgumentError
-      ContactCreatorArgumentError
-      ContactListerArgumentError
-    ]
+  class << self
+    def bootstrapped?
+      dir_created? && database_created?
+    end
 
-    errors.each { |error| const_set(error, Class.new(StandardError)) }
+    def dir_created?
+      File.exists?(DIR_PATH)
+    end
+
+    def database_created?
+      File.exists?(DB_PATH)
+    end
+
+    def create_tables?
+      Sequel.sqlite(DB_PATH) do |database|
+        database.create_table? :users do
+          primary_key :id
+          String :name, :unique => true, :null => false
+        end
+        database.create_table? :contacts do
+          primary_key :id
+          foreign_key :user_id, :null => false
+          String :name, :null => false
+          String :number, :unique => true, :null => false
+        end
+      end
+    end
+
+    def create_dir!
+      FileUtils.mkdir(DIR_PATH)
+    end
+
+    def bootstrap!
+      create_dir! unless dir_created?
+      create_tables?
+    end
   end
 end

@@ -9,9 +9,9 @@ describe Bell::CliHandler do
   context "when given an invalid resource" do
     let(:invalid_resource) { %w[foo] }
 
-    it "raises CliHandlerArgumentError" do
-      lambda { cli_handler.handle!(invalid_resource) }.
-        should raise_error(Bell::Errors::CliHandlerArgumentError)
+    it "shows the usage" do
+      messenger.should_receive(:puts).with(Bell::USAGE)
+      cli_handler.handle!(invalid_resource)
     end
   end
 

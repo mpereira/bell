@@ -4,9 +4,6 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'bell'
 
 if $0 == __FILE__
-  begin
-    Bell::CliHandler.new(STDOUT).handle!(ARGV)
-  rescue Bell::Errors::CliHandlerArgumentError
-    STDOUT.puts Bell::USAGE
-  end
+  Bell.bootstrap! unless Bell.bootstrapped?
+  Bell::CliHandler.new(STDOUT).handle!(ARGV)
 end

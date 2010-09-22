@@ -9,9 +9,9 @@ describe Bell::ContactHandler do
   context "when given an invalid action" do
     let(:invalid_action) { %w[foo] }
 
-    it "raises ContactHandlerArgumentError" do
-      lambda { contact_handler.handle!(invalid_action) }.should
-        raise_error(Bell::Errors::ContactHandlerArgumentError)
+    it "shows the usage" do
+      messenger.should_receive(:puts).with(Bell::USAGE)
+      contact_handler.handle!(invalid_action)
     end
   end
 

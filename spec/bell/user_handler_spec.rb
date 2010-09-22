@@ -9,9 +9,9 @@ describe Bell::UserHandler do
   context "when given an invalid action" do
     let(:invalid_action) { %w[foo] }
 
-    it "raises UserHandlerArgumentError" do
-      lambda { user_handler.handle!(invalid_action) }.
-        should raise_error(Bell::Errors::UserHandlerArgumentError)
+    it "shows the usage" do
+      messenger.should_receive(:puts).with(Bell::USAGE)
+      user_handler.handle!(invalid_action)
     end
   end
 
