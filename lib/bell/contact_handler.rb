@@ -1,7 +1,7 @@
 module Bell
   class ContactHandler
-    def initialize(messenger)
-      @messenger = messenger
+    def initialize(output)
+      @output = output
     end
 
     def handle!(args)
@@ -11,20 +11,20 @@ module Bell
       when 'create' then
         if ContactCreator.valid_args?(args)
           contact_attributes = ContactCreator.extract_attributes(args)
-          ContactCreator.new(@messenger).create(contact_attributes)
+          ContactCreator.new(@output).create(contact_attributes)
         else
-          @messenger.puts USAGE
+          @output.puts USAGE
         end
       when 'list' then
         if ContactLister.valid_args?(args)
           user_attributes = {}
           user_attributes[:name] = args.first unless args.empty?
-          ContactLister.new(@messenger).list(user_attributes)
+          ContactLister.new(@output).list(user_attributes)
         else
-          @messenger.puts USAGE
+          @output.puts USAGE
         end
       else
-        @messenger.puts USAGE
+        @output.puts USAGE
       end
     end
   end

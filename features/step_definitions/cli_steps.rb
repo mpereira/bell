@@ -1,12 +1,12 @@
 When /^I run bell with "([^"]*)"$/ do |args|
-  @messenger = StringIO.new
-  Bell::CliHandler.new(@messenger).handle!(args.split)
+  @output = StringIO.new
+  Bell::CliHandler.new(@output).handle!(args.split)
 end
 
 Then /^bell should show the usage$/ do
-  @messenger.string.should == Bell::USAGE
+  @output.string.should == Bell::USAGE
 end
 
-Then /^the messenger should contain "([^"]*)"$/ do |text|
-  @messenger.string.should be_include(text)
+Then /^the output should contain "([^"]*)"$/ do |text|
+  @output.string.should be_include(text)
 end

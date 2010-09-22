@@ -1,12 +1,12 @@
 module Bell
   class UserLister
-    def initialize(messenger)
-      @messenger = messenger
+    def initialize(output)
+      @output = output
     end
 
     def list
       if User.empty?
-        @messenger.puts OutputFormatter.no_created_users
+        @output.puts OutputFormatter.no_created_users
       else
         list_users
       end
@@ -14,7 +14,7 @@ module Bell
 
     private
     def list_users
-      @messenger.puts User.all.map(&:name)
+      @output.puts User.all.map(&:name)
     end
   end
 end

@@ -1,9 +1,9 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe Bell::ContactLister do
-  let(:messenger) { mock("messenger").as_null_object }
+  let(:output) { mock("output").as_null_object }
   let(:user) { mock(Bell::User).as_null_object }
-  let(:contact_lister) { described_class.new(messenger) }
+  let(:contact_lister) { described_class.new(output) }
 
   context "when given an empty hash" do
     let(:empty_hash) { {} }
@@ -11,7 +11,7 @@ describe Bell::ContactLister do
     context "when there are no created contacts" do
       it "shows the 'no contacts created' message" do
         Bell::Contact.should_receive(:empty?).and_return(true)
-        messenger.should_receive(:puts).
+        output.should_receive(:puts).
           with(Bell::OutputFormatter.no_contacts_created)
         contact_lister.list(empty_hash)
       end
@@ -40,7 +40,7 @@ describe Bell::ContactLister do
     context "when there are created contacts" do
       it "shows the 'no contacts created' message" do
         Bell::User.should_receive(:find).and_return(nil)
-        messenger.should_receive(:puts).
+        output.should_receive(:puts).
           with(Bell::OutputFormatter.user_does_not_exist('murilo'))
         contact_lister.list(user_attributes)
       end

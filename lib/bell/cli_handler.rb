@@ -1,15 +1,15 @@
 module Bell
   class CliHandler
-    def initialize(messenger)
-      @messenger = messenger
+    def initialize(output)
+      @output = output
     end
 
     def handle!(args)
       case args.first
-      when 'user' then UserHandler.new(@messenger).handle!(args[1..-1])
-      when 'contact' then ContactHandler.new(@messenger).handle!(args[1..-1])
+      when 'user' then UserHandler.new(@output).handle!(args[1..-1])
+      when 'contact' then ContactHandler.new(@output).handle!(args[1..-1])
       when 'implode' then Bell.implode!
-      else @messenger.puts USAGE
+      else @output.puts USAGE
       end
     end
   end

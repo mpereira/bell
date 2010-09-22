@@ -12,11 +12,11 @@ Feature: Shell user lists the users
   Scenario: Listing users when there is one user in the database
     Given a user with name "murilo" exists
     When I list the users
-    Then the messenger should contain "murilo"
+    Then the output should contain "murilo"
 
   Scenario: Listing users when there is more than one user in the database
     Given a user with name "murilo" exists
     And a user with name "augusto" exists
     When I list the users
-    Then the messenger should contain "murilo"
-    And the messenger should contain "augusto"
+    Then the output should contain "murilo"
+    And the output should contain "augusto"

@@ -1,8 +1,8 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe Bell::ContactCreator do
-  let(:messenger) { mock("messenger").as_null_object }
-  let(:contact_creator) { described_class.new(messenger) }
+  let(:output) { mock("output").as_null_object }
+  let(:contact_creator) { described_class.new(output) }
   let(:user) { mock(Bell::User).as_null_object }
   let(:contact) { mock(Bell::Contact).as_null_object }
   let(:contact_attributes) do
@@ -14,7 +14,7 @@ describe Bell::ContactCreator do
   context "when the given user doesn't exist" do
     it "shows the 'user does not exist' message" do
       Bell::User.should_receive(:find).and_return(nil)
-      messenger.should_receive(:puts).
+      output.should_receive(:puts).
         with(Bell::OutputFormatter.user_does_not_exist('murilo'))
       contact_creator.create(contact_attributes)
     end
@@ -33,7 +33,7 @@ describe Bell::ContactCreator do
       end
 
       it "shows the 'contact created' message" do
-        messenger.should_receive(:puts).
+        output.should_receive(:puts).
           with(Bell::OutputFormatter.contact_created(contact))
         contact_creator.create(contact_attributes)
       end

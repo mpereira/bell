@@ -3,8 +3,8 @@ module Bell
     NUMBER_FLAGS = %w[-n --number]
     USER_FLAGS = %w[-u --user]
 
-    def initialize(messenger)
-      @messenger = messenger
+    def initialize(output)
+      @output = output
     end
 
     def create(contact_attributes)
@@ -21,12 +21,12 @@ module Bell
         begin
           contact.save
         rescue Sequel::ValidationFailed
-          contact.errors.each_value { |value| @messenger.puts value }
+          contact.errors.each_value { |value| @output.puts value }
         else
-          @messenger.puts OutputFormatter.contact_created(contact)
+          @output.puts OutputFormatter.contact_created(contact)
         end
       else
-        @messenger.puts OutputFormatter.user_does_not_exist(user_name)
+        @output.puts OutputFormatter.user_does_not_exist(user_name)
       end
     end
 

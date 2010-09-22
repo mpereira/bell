@@ -10,8 +10,8 @@ Feature: Shell user lists the contacts
     And "murilo" has a contact with name "selma" in his contact list
     And "roberto" has a contact with name "augusto" in his contact list
     When I list all contacts
-    Then the messenger should contain "augusto"
-    And the messenger should contain "selma"
+    Then the output should contain "augusto"
+    And the output should contain "selma"
 
   Scenario: Listing user contacts when his contact list is empty
     Given a user with name "murilo" exists
@@ -22,4 +22,4 @@ Feature: Shell user lists the contacts
     Given a user with name "murilo" exists
     And "murilo" has a contact with name "augusto" in his contact list
     When I list the contacts for the user with name "murilo"
-    Then the messenger should contain "augusto"
+    Then the output should contain "augusto"

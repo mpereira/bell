@@ -25,8 +25,8 @@ When /^I create a contact with name "([^"]*)" for the user with name "([^"]*)"$/
 end
 
 When /^I create a contact with name "([^"]*)" and with number "([^"]*)" for the user with name "([^"]*)"$/ do |contact_name, contact_number, user_name|
-  @messenger = StringIO.new
-  Bell::ContactCreator.new(@messenger).create(
+  @output = StringIO.new
+  Bell::ContactCreator.new(@output).create(
     {
       :user => { :name => user_name },
       :contact => { :name => contact_name, :number => contact_number }
@@ -35,13 +35,13 @@ When /^I create a contact with name "([^"]*)" and with number "([^"]*)" for the 
 end
 
 When /^I list all contacts$/ do
-  @messenger = StringIO.new
-  Bell::ContactLister.new(@messenger).list
+  @output = StringIO.new
+  Bell::ContactLister.new(@output).list
 end
 
 When /^I list the contacts for the user with name "([^"]*)"$/ do |user_name|
-  @messenger = StringIO.new
-  Bell::ContactLister.new(@messenger).list(:name => user_name)
+  @output = StringIO.new
+  Bell::ContactLister.new(@output).list(:name => user_name)
 end
 
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
@@ -49,13 +49,13 @@ Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact l
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
   Bell::OutputFormatter.contact_name_taken(contact.name).should ==
     Bell::OutputFormatter.contact_name_taken(contact_name)
-  @messenger.string.chomp.should == Bell::OutputFormatter.contact_name_taken(contact_name)
+  @output.string.chomp.should == Bell::OutputFormatter.contact_name_taken(contact_name)
 end
 
 Then /^bell should tell me that the contact "([^"]*)" was created for "([^"]*)"$/ do |contact_name, user_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
-  @messenger.string.chomp.should == Bell::OutputFormatter.contact_created(contact)
+  @output.string.chomp.should == Bell::OutputFormatter.contact_created(contact)
 end
 
 Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, contact_name|
@@ -64,13 +64,13 @@ Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, cont
 end
 
 Then /^bell should tell me that the number "([^"]*)" was already taken$/ do |contact_number|
-  @messenger.string.chomp.should == Bell::OutputFormatter.contact_number_taken(contact_number)
+  @output.string.chomp.should == Bell::OutputFormatter.contact_number_taken(contact_number)
 end
 
 Then /^bell should tell me that the number "([^"]*)" has a bad format$/ do |contact_number|
-  @messenger.string.chomp.should == Bell::OutputFormatter.bad_format_for_contact_number(contact_number)
+  @output.string.chomp.should == Bell::OutputFormatter.bad_format_for_contact_number(contact_number)
 end
 
 Then /^bell should tell me that the contact list of the user with name "([^"]*)" is empty$/ do |user_name|
-  @messenger.string.chomp.should == Bell::OutputFormatter.contact_list_empty(user_name)
+  @output.string.chomp.should == Bell::OutputFormatter.contact_list_empty(user_name)
 end
