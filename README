@@ -5,6 +5,7 @@ Comandos:
   bell user list
   bell contact create CONTACT [-n|--number] NUMBER [-u|--user] USER
   bell contact list
+  bell implode
 
 Formatos:
   USER: sequência quaisquer caracteres. Representem o nome do usuário (ex: joao)

@@ -8,6 +8,7 @@ module Bell
       case args.first
       when 'user' then UserHandler.new(@messenger).handle!(args[1..-1])
       when 'contact' then ContactHandler.new(@messenger).handle!(args[1..-1])
+      when 'implode' then Bell.implode!
       else @messenger.puts USAGE
       end
     end

@@ -51,6 +51,7 @@ module Bell
       bell user list
       bell contact create CONTACT [-n|--number] NUMBER [-u|--user] USER
       bell contact list
+      bell implode
   USAGE
 
   class << self
@@ -88,6 +89,11 @@ module Bell
     def bootstrap!
       create_dir! unless dir_created?
       create_tables?
+    end
+
+    def implode!
+      [User, Contact].each(&:delete)
+      FileUtils.rm_rf(DIR_PATH)
     end
   end
 end

@@ -22,39 +22,4 @@ Cucumber::Rake::Task.new(:features) do |features|
   features.cucumber_opts = "features --format progress"
 end
 
-require 'sequel'
-namespace :db do
-  desc "Creates and prepares the database"
-  task :prepare do
-    DB = Sequel.sqlite(File.join(File.dirname(__FILE__), 'data', 'bell.db'))
-    begin
-      DB.create_table :users do
-        primary_key :id
-        String :name, :unique => true, :null => false
-      end
-    rescue Sequel::Error
-      puts "A tabela para os usuários já foi criada"
-    else
-      puts "Tabela 'users' criada"
-    end
-    begin
-      DB.create_table :contacts do
-        primary_key :id
-        foreign_key :user_id, :null => false
-        String :name, :null => false
-        String :number, :unique => true, :null => false
-      end
-    rescue Sequel::Error
-      puts "A tabela para os contatos já foi criada"
-    else
-      puts "Tabela 'contacts' criada"
-    end
-  end
-
-  desc "Drops the database"
-  task :drop do
-    FileUtils.rm_f(File.join(File.dirname(__FILE__), 'data', 'bell.db'))
-  end
-end
-
 task :default => [:features, :spec]
