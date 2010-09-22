@@ -8,7 +8,6 @@ group :runtime do
 end
 
 group :development do
-  gem 'aruba', '0.2.1'
   gem 'cucumber', '0.8.5'
   gem 'rspec', '1.3.0'
 end
