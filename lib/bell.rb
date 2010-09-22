@@ -87,8 +87,7 @@ module Bell
     end
 
     def bootstrap!
-      create_dir! unless dir_created?
-      create_tables?
+      create_dir! and create_tables? unless dir_created?
     end
 
     def implode!
