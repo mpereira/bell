@@ -1,14 +1,16 @@
-require 'bundler'
-
 begin
-  Bundler.setup(:runtime, :development)
-rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
+  require 'bundler'
+rescue LoadError
+  STDERR.puts "You need to install bundler"
+  exit 1
+else
+  begin
+    Bundler.setup(:development)
+  rescue Bundler::BundlerError
+    STDERR.puts $!
+    exit 1
+  end
 end
-
-require 'rake'
 
 require 'spec/rake/spectask'
 desc "Run all specs"

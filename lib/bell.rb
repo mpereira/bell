@@ -1,12 +1,17 @@
 require 'rubygems'
-require 'bundler'
 
 begin
-  Bundler.setup(:runtime)
-rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
+  require 'bundler'
+rescue LoadError
+  STDERR.puts "You need to install bundler"
+  exit 1
+else
+  begin
+    Bundler.setup(:runtime)
+  rescue Bundler::BundlerError
+    STDERR.puts $!
+    exit 1
+  end
 end
 
 require 'bell/output_formatter'
