@@ -5,10 +5,8 @@ Feature: Shell user lists the contacts
   In order to see the contacts' names and numbers
 
   Scenario: Listing all contacts
-    Given a user with name "murilo" exists
-    And a user with name "roberto" exists
-    And "murilo" has a contact with name "selma" in his contact list
-    And "roberto" has a contact with name "augusto" in his contact list
+    Given a contact with name "augusto" exists
+    And a contact with name "selma" exists
     When I list all contacts
     Then the output should contain "augusto"
     And the output should contain "selma"
