@@ -25,29 +25,7 @@ require 'bell/contact_lister'
 
 require 'sequel'
 
-if defined?(Spec) || defined?(Cucumber)
-  DB = Sequel.sqlite
-  DB.create_table :users do
-    primary_key :id
-    String :name, :unique => true, :null => false
-  end
-  DB.create_table :contacts do
-    primary_key :id
-    foreign_key :user_id, :null => false
-    String :name, :null => false
-    String :number, :unique => true, :null => false
-  end
-else
-  Sequel.sqlite(File.join(File.dirname(__FILE__), '..', 'data', 'bell.db'))
-end
-
-require 'bell/user'
-require 'bell/contact'
-
 module Bell
-  DIR_PATH = File.join(ENV['HOME'], '.bell')
-  DB_PATH  = File.join(DIR_PATH, 'bell.db')
-
   USAGE = <<-USAGE.gsub(/^    /, '')
     bell te auxilia no controle de gastos de uma conta da embratel.
 
@@ -60,20 +38,68 @@ module Bell
   USAGE
 
   class << self
+    def testing?
+      defined?(Spec) || defined?(Cucumber)
+    end
+
+    def environment
+      testing? ? 'test' : 'runtime'
+    end
+
+    def database
+      @database ||= Database.new(:environment => environment)
+    end
+
+    def database_connection
+      @database_connection ||= database.connect
+    end
+
     def bootstrapped?
-      dir_created? && database_created?
+      Directory.created? && database.created?
     end
 
-    def dir_created?
-      File.exists?(DIR_PATH)
+    def bootstrap
+      Directory.create unless Directory.created?
+      database.create_tables?
     end
 
-    def database_created?
-      File.exists?(DB_PATH)
+    def implode!
+      [User, Contact].each(&:delete)
+      FileUtils.rm_rf(Directory.path)
+    end
+  end
+
+  module Directory
+    class << self
+      def path
+        File.join(ENV['HOME'], '.bell')
+      end
+
+      def created?
+        File.exists?(path)
+      end
+
+      def create
+        FileUtils.mkdir(path)
+      end
+    end
+  end
+
+  class Database
+    def initialize(options = {})
+      @environment = options[:environment]
+    end
+
+    def path
+      File.join(Directory.path, "bell_#{@environment}.db")
+    end
+
+    def created?
+      File.exists?(path)
     end
 
     def create_tables?
-      Sequel.sqlite(DB_PATH) do |database|
+      Sequel.sqlite(path) do |database|
         database.create_table? :users do
           primary_key :id
           String :name, :unique => true, :null => false
@@ -87,17 +113,14 @@ module Bell
       end
     end
 
-    def create_dir!
-      FileUtils.mkdir(DIR_PATH)
-    end
-
-    def bootstrap!
-      create_dir! and create_tables? unless dir_created?
-    end
-
-    def implode!
-      [User, Contact].each(&:delete)
-      FileUtils.rm_rf(DIR_PATH)
+    def connect
+      Sequel.sqlite(path)
     end
   end
 end
+
+DB = Bell.database_connection
+Bell.bootstrap unless Bell.bootstrapped?
+
+require 'bell/user'
+require 'bell/contact'
