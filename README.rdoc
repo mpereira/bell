@@ -1,0 +1,32 @@
+== Bell
+
+Bell te permite criar e manter usuários e suas listas de contatos para gerar
+relatórios de uso de faturas da embratel.
+
+== Comandos:
+Criar usuário de nome USER
+  bell user create USER
+
+Listar usuários
+  bell user list
+
+Remover usuário de nome USER e todos os seus contatos
+  bell user remove USER
+
+Criar contato de nome CONTACT, número NUMBER na lista de contatos do
+usuário de nome USER
+  bell contact create CONTACT [-n|--number] NUMBER [-u|--user] USER
+
+Listar contatos
+  bell contact list
+
+Remover contato de nome CONTACT
+  bell contact remove CONTACT
+
+Remover todos os usuários e contatos
+  bell implode
+
+== Formatos:
+* USER: sequência quaisquer caracteres. Representem o nome do usuário (ex: joao)
+* CONTACT: sequência quaisquer caracteres. Representem o nome do contato (ex: jose)
+* NUMBER: sequência de 10 dígitos, onde os 2 primeiros são o DDD (ex: 1133445566)
