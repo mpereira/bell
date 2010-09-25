@@ -17,6 +17,10 @@ module Bell
         sanitize_output(%Q{erro: o usuário '#{user_name}' não existe.})
       end
 
+      def user_removed(user_name)
+        sanitize_output(%Q{Usuário '#{user_name}' removido.})
+      end
+
       def no_contacts_created
         %Q{Nenhum contato criado.}
       end

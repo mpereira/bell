@@ -74,3 +74,7 @@ end
 Then /^bell should tell me that the contact list of the user with name "([^"]*)" is empty$/ do |user_name|
   @output.string.chomp.should == Bell::OutputFormatter.contact_list_empty(user_name)
 end
+
+Then /^I should not have a contact with name "([^"]*)" in the database$/ do |contact_name|
+  Bell::Contact.find(:name => contact_name).should be_nil
+end

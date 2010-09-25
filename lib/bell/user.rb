@@ -4,6 +4,11 @@ module Bell
 
     plugin :validation_helpers
 
+    def after_destroy
+      super
+      contacts.each(&:delete)
+    end
+
     def validate
       validates_unique :name
     end

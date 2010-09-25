@@ -20,12 +20,21 @@ When /^I list the users$/ do
   Bell::UserLister.new(@output).list
 end
 
+When /^I remove the user with name "([^"]*)"$/ do |user_name|
+  @output = StringIO.new
+  Bell::UserRemover.new(@output).remove(:name => user_name)
+end
+
 Then /^bell should tell me that there are no created users$/ do
   @output.string.chomp.should == Bell::OutputFormatter.no_created_users
 end
 
 Then /^bell should tell me that a user with name "([^"]*)" was created$/ do |user_name|
   @output.string.chomp.should == Bell::OutputFormatter.user_created(user_name)
+end
+
+Then /^bell should tell me that the user "([^"]*)" was removed$/ do |user_name|
+  @output.string.chomp.should == Bell::OutputFormatter.user_removed(user_name)
 end
 
 Then /^bell should tell me that the user "([^"]*)" already exists$/ do |user_name|

@@ -21,6 +21,13 @@ module Bell
         else
           @output.puts USAGE
         end
+      when 'remove' then
+        if UserRemover.valid_args?(args)
+          user_attributes = UserRemover.extract_attributes(args)
+          UserRemover.new(@output).remove(user_attributes)
+        else
+          @output.puts USAGE
+        end
       else
         @output.puts USAGE
       end
