@@ -35,6 +35,14 @@ module Bell
         )
       end
 
+      def contact_removed(contact_name)
+        sanitize_output(%Q{Contaco '#{contact_name}' removido.})
+      end
+
+      def contact_does_not_exist(contact_name)
+        sanitize_output(%Q{erro: não existe contato com nome '#{contact_name}'.})
+      end
+
       def contact_name_taken(contact_name)
         contact = Contact.find(:name => contact_name)
         sanitize_output(

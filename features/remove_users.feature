@@ -2,7 +2,7 @@
 Feature: Shell user removes a user
   As a person using the shell
   I want to remove users
-  In order to keep my contact base updated
+  In order to keep my user base updated
 
   Scenario: User removal attempt when given user name doesn't exist
     Given no user with name "murilo" exists

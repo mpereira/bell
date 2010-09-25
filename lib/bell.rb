@@ -23,6 +23,7 @@ require 'bell/user_remover'
 require 'bell/contact_handler'
 require 'bell/contact_creator'
 require 'bell/contact_lister'
+require 'bell/contact_remover'
 
 require 'sequel'
 

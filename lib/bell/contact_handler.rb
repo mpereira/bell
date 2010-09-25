@@ -23,6 +23,13 @@ module Bell
         else
           @output.puts USAGE
         end
+      when 'remove' then
+        if ContactRemover.valid_args?(args)
+          contact_attributes = ContactRemover.extract_attributes(args)
+          ContactRemover.new(@output).remove(contact_attributes)
+        else
+          @output.puts USAGE
+        end
       else
         @output.puts USAGE
       end
