@@ -4,7 +4,7 @@ module Bell
       @output = output
     end
 
-    def handle!(args)
+    def handle(args)
       action, args = args.first, args[1..-1]
 
       case action

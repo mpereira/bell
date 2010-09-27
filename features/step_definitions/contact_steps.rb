@@ -15,6 +15,10 @@ Given /^"([^"]*)" has a contact with name "([^"]*)" in his contact list$/ do |us
   Given %{"#{user_name}" has a contact with name "#{contact_name}" and number "#{random_number}" in his contact list}
 end
 
+Given /^"([^"]*)" has a contact with number "([^"]*)" in his contact list$/ do |user_name, contact_number|
+  Given %{"#{user_name}" has a contact with name "#{random_name}" and number "#{contact_number}" in his contact list}
+end
+
 Given /^"([^"]*)" doesn't have a contact with name "([^"]*)" in his contacts$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   Bell::Contact.filter(:name => contact_name, :user_id => user.id).delete

@@ -26,6 +26,9 @@ Remover contato de nome CONTACT
 Remover todos os usuários e contatos
   bell implode
 
+Gerar relatório completo
+  bell report /path/to/report
+
 == Formatos:
 * USER: sequência quaisquer caracteres. Representem o nome do usuário (ex: joao)
 * CONTACT: sequência quaisquer caracteres. Representem o nome do contato (ex: jose)

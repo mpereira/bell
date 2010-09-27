@@ -24,6 +24,11 @@ require 'bell/contact_handler'
 require 'bell/contact_creator'
 require 'bell/contact_lister'
 require 'bell/contact_remover'
+require 'bell/report_handler'
+require 'bell/report_creator'
+require 'bell/report'
+
+require 'embratel'
 
 require 'sequel'
 

@@ -12,7 +12,7 @@ describe Bell::ContactHandler do
 
     it "shows the usage" do
       output.should_receive(:puts).with(Bell::USAGE)
-      contact_handler.handle!(invalid_action)
+      contact_handler.handle(invalid_action)
     end
   end
 
@@ -24,7 +24,7 @@ describe Bell::ContactHandler do
         Bell::ContactCreator.should_receive(:new).
           with(output).and_return(contact_creator)
         contact_creator.should_receive(:create)
-        contact_handler.handle!(valid_create_action)
+        contact_handler.handle(valid_create_action)
       end
     end
 
@@ -33,7 +33,7 @@ describe Bell::ContactHandler do
 
       it "shows the usage" do
         output.should_receive(:puts).with(Bell::USAGE)
-        contact_handler.handle!(invalid_create_action)
+        contact_handler.handle(invalid_create_action)
       end
     end
   end
@@ -47,7 +47,7 @@ describe Bell::ContactHandler do
           Bell::ContactLister.should_receive(:new).
             with(output).and_return(contact_lister)
           contact_lister.should_receive(:list).with({})
-          contact_handler.handle!(valid_create_action)
+          contact_handler.handle(valid_create_action)
         end
       end
 
@@ -58,7 +58,7 @@ describe Bell::ContactHandler do
           Bell::ContactLister.should_receive(:new).
             with(output).and_return(contact_lister)
           contact_lister.should_receive(:list).with(:name => 'murilo')
-          contact_handler.handle!(valid_create_action)
+          contact_handler.handle(valid_create_action)
         end
       end
     end
@@ -68,7 +68,7 @@ describe Bell::ContactHandler do
 
       it "shows the usage" do
         output.should_receive(:puts).with(Bell::USAGE)
-        contact_handler.handle!(invalid_list_action)
+        contact_handler.handle(invalid_list_action)
       end
     end
   end
@@ -81,7 +81,7 @@ describe Bell::ContactHandler do
         Bell::ContactRemover.should_receive(:new).
           with(output).and_return(contact_creator)
         contact_creator.should_receive(:remove)
-        contact_handler.handle!(valid_remove_action)
+        contact_handler.handle(valid_remove_action)
       end
     end
 
@@ -90,7 +90,7 @@ describe Bell::ContactHandler do
 
       it "shows the usage" do
         output.should_receive(:puts).with(Bell::USAGE)
-        contact_handler.handle!(invalid_remove_action)
+        contact_handler.handle(invalid_remove_action)
       end
     end
   end

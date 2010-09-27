@@ -66,6 +66,24 @@ module Bell
         )
       end
 
+      def no_such_file_or_directory(path)
+        sanitize_output(
+          %Q{erro: o arquivo/diretório '#{path}' não existe.}
+        )
+      end
+
+      def path_is_a_directory(path)
+        sanitize_output(
+          %Q{erro: '#{path}' é um diretório.}
+        )
+      end
+
+      def invalid_phone_bill_file(path)
+        sanitize_output(
+          %Q{erro: '#{path}' não é uma fatura válida da embratel.}
+        )
+      end
+
       private
       def sanitize_output(output)
         output.gsub(/^\s{2,}/, '')

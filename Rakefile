@@ -12,6 +12,13 @@ else
   end
 end
 
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/*_test.rb'
+  test.verbose = true
+end
+
 require 'spec/rake/spectask'
 desc "Run all specs"
 Spec::Rake::SpecTask.new('spec') do |t|
