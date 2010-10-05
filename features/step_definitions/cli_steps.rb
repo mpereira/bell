@@ -1,6 +1,5 @@
 When /^I run bell with "([^"]*)"$/ do |args|
-  @output = StringIO.new
-  Bell::CliHandler.new(@output).handle(args.split)
+  Bell::Cli.run(args.split)
 end
 
 Then /^bell should show the usage$/ do

@@ -15,7 +15,10 @@ else
 end
 
 require 'bell/output_formatter'
-require 'bell/cli_handler'
+require 'bell/cli'
+require 'bell/command'
+require 'bell/util'
+require 'bell/dispatcher'
 require 'bell/user_handler'
 require 'bell/user_creator'
 require 'bell/user_lister'
