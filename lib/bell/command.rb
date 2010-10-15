@@ -50,6 +50,8 @@ module Bell
         else
           raise ArgumentError
         end
+      else
+        raise ArgumentError
       end
 
       self
@@ -83,6 +85,8 @@ module Bell
         else
           raise ArgumentError
         end
+      else
+        raise ArgumentError
       end
 
       self
@@ -143,6 +147,8 @@ module Bell
         else
           raise ArgumentError
         end
+      else
+        raise ArgumentError
       end
 
       self
@@ -159,6 +165,8 @@ module Bell
       case @args[0]
       when 'implode' then
         @action = 'implode'
+      else
+        raise ArgumentError
       end
 
       self

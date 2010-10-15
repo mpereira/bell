@@ -14,15 +14,13 @@ else
   end
 end
 
-require 'bell/output_formatter'
+require 'bell/message'
+require 'bell/displayable'
 require 'bell/cli'
 require 'bell/command'
 require 'bell/util'
 require 'bell/dispatcher'
-require 'bell/user_handler'
-require 'bell/user_creator'
-require 'bell/user_lister'
-require 'bell/user_remover'
+require 'bell/users_handler'
 require 'bell/contact_handler'
 require 'bell/contact_creator'
 require 'bell/contact_lister'

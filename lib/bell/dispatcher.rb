@@ -1,11 +1,12 @@
 module Bell
-
   class Dispatcher
-  include Util
+    include Util::String
+
     def self.dispatch(command)
       Object.
-        const_get(command[:handler].camelize).
-        send(command[:action], :params => command[:params])
+        const_get(:Bell).
+        const_get(camelize(command[:handler])).
+        send(command[:action], command[:params])
     end
   end
 end
