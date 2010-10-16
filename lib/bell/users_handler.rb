@@ -15,7 +15,7 @@ module Bell
       if User.empty?
         display Message.no_created_users
       else
-        display user_list
+        display formatted_user_list
       end
     end
 
@@ -29,7 +29,7 @@ module Bell
     end
 
     private
-    def self.user_list
+    def self.formatted_user_list
       User.all.map(&:name).join("\n")
     end
   end
