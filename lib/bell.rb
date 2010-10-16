@@ -41,51 +41,51 @@ module Bell
       bell implode
   USAGE
 
-  class << self
-    def testing?
-      defined?(Spec) || defined?(Cucumber)
-    end
+  extend self
 
-    def environment
-      testing? ? 'test' : 'runtime'
-    end
+  def testing?
+    defined?(Spec) || defined?(Cucumber)
+  end
 
-    def database
-      @database ||= Database.new(:environment => environment)
-    end
+  def environment
+    testing? ? 'test' : 'runtime'
+  end
 
-    def database_connection
-      @database_connection ||= database.connect
-    end
+  def database
+    @database ||= Database.new(:environment => environment)
+  end
 
-    def bootstrapped?
-      Directory.created? && database.created?
-    end
+  def database_connection
+    @database_connection ||= database.connect
+  end
 
-    def bootstrap
-      Directory.create unless Directory.created?
-      database.create_tables?
-    end
+  def bootstrapped?
+    Directory.created? && database.created?
+  end
 
-    def implode!
-      [User, Contact].each(&:delete)
-      FileUtils.rm_rf(Directory.path)
-    end
+  def bootstrap
+    Directory.create unless Directory.created?
+    database.create_tables?
+  end
+
+  def implode!
+    [User, Contact].each(&:delete)
+    FileUtils.rm_rf(Directory.path)
   end
 
   module Directory
-    class << self
-      def path
-        File.join(ENV['HOME'], '.bell')
-      end
+    extend self
 
-      def created?
-        File.exists?(path)
-      end
+    def path
+      File.join(ENV['HOME'], '.bell')
+    end
 
-      def create
-        FileUtils.mkdir(path)
-      end
+    def created?
+      File.exists?(path)
+    end
+
+    def create
+      FileUtils.mkdir(path)
     end
   end
 
