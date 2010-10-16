@@ -1,0 +1,66 @@
+* bell
+  Tenha controle sobre as suas faturas de telefone da Embratel.
+
+** Instalando
+#+BEGIN_SRC
+gem install bell
+#+END_SRC
+
+** Comandos:
+#+BEGIN_SRC
+# criar usuário
+$ bell user create <nome do usuário>
+
+# listar usuários
+$ bell user list
+
+# remover usuário (e por consequência todos os seus contatos)
+$ bell user remove <nome do usuário>
+
+# adicionar contato na lista de contatos de um usuário
+$ bell contact create <nome do contato> [-n|--number] <número do contato> [-u|--user] <nome do usuário>
+
+# listar contatos
+$ bell contact list
+
+# listar contatos de um usuário
+$ bell contact list <nome do usuário>
+
+# remover contato
+$ bell contact remove <nome do contato>
+
+# remover todos os usuários e contatos
+$ bell implode
+
+# gerar relatório completo para uma dada fatura da embratel
+$ bell report /path/to/report.csv
+#+END_SRC
+
+*** Formatos:
+    - <nome do usuário>: sequência quaisquer caracteres. (ex: josé)
+    - <nome do contato>: sequência quaisquer caracteres. (ex: joão)
+    - <número do contato>: sequência de 10 dígitos, onde os 2 primeiros são o DDD (ex: 1133445566)
+
+** Para rodar os testes
+*** Pegue o código
+#+BEGIN_SRC
+git clone git://github.com/murilasso/bell.git
+cd bell
+#+END_SRC
+
+*** Instale o bundler e as dependências (se elas já não estiverem instaladas)
+#+BEGIN_SRC
+gem install bundler
+bundle install
+#+END_SRC
+
+*** Rode os testes
+#+BEGIN_SRC
+rake test
+#+END_SRC
+
+** Autor
+   [[http://www.comp.ufscar.br/~murilo][Murilo Soares Pereira]]
+
+** Licença
+   Distribuído sob a [[http://github.com/murilasso/embratel/blob/master/MIT-LICENSE][licença MIT]].
