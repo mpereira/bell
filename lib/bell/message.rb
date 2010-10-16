@@ -34,7 +34,7 @@ module Bell
       end
 
       def contact_removed(contact_name)
-        "Contaco '#{contact_name}' removido."
+        "Contato '#{contact_name}' removido."
       end
 
       def contact_does_not_exist(contact_name)
@@ -48,7 +48,7 @@ module Bell
 
       def contact_number_taken(contact_number)
         contact = Contact.find(:number => contact_number)
-        "erro: este número já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'. Crie um contato com número diferente." if contact
+        "erro: este número já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.\nCrie um contato com número diferente." if contact
       end
 
       def bad_format_for_contact_number(contact_number)
