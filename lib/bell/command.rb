@@ -142,14 +142,9 @@ module Bell
     end
 
     def build
-      case @args[0]
-      when 'create' then
-        @action = 'create'
-        if @args[1]
-          @params = { :path => @args[1] }
-        else
-          raise ArgumentError
-        end
+      @action = 'create'
+      if @args[0]
+        @params = { :path => @args[0] }
       else
         raise ArgumentError
       end
