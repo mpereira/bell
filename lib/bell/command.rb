@@ -72,16 +72,21 @@ module Bell
       when 'create' then
         if @args[1]
           @action = 'create'
-          @params = contact_creation_params if valid_args_for_contact_creation?
+          if valid_args_for_contact_creation?
+            @params = contact_creation_params
+          else
+            raise ArgumentError
+          end
         else
           raise ArgumentError
         end
       when 'list' then
         @action = 'list'
+        @params = { :user => { :name => @args[1] } } if @args[1]
       when 'remove' then
         if @args[1]
           @action = 'remove'
-          @params = { :user => { :name => @args[1] } }
+          @params = { :contact => { :name => @args[1] } }
         else
           raise ArgumentError
         end
