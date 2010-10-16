@@ -8,7 +8,7 @@ describe Bell::UsersHandler do
     Bell::Message.user_already_exists(params[:user][:name])
   end
 
-  describe "#create" do
+  describe ".create" do
     let(:params) { { :user => { :name => 'bob' } } }
 
     context "when there is already a user with the given name" do
@@ -33,7 +33,7 @@ describe Bell::UsersHandler do
     end
   end
 
-  describe "#list" do
+  describe ".list" do
     let(:params) { {} }
 
     context "when there are no created users" do
@@ -57,7 +57,7 @@ describe Bell::UsersHandler do
     end
   end
 
-  describe "#remove" do
+  describe ".remove" do
     let(:params) { { :user => { :name => 'bob' } } }
 
     context "when there are no users with the given name" do
