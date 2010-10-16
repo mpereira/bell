@@ -160,12 +160,7 @@ module Bell
     end
 
     def build
-      case @args[0]
-      when 'implode' then
-        @action = 'implode'
-      else
-        raise ArgumentError
-      end
+      @action = 'implode'
 
       self
     end
