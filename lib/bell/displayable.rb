@@ -11,7 +11,7 @@ module Bell
 
       private
       def sanitize_output(text)
-        text.gsub(/^\s{2,}/, '')
+        text.to_s.gsub(/^\s{2,}/, '')
       end
     end
   end
