@@ -1,33 +1,23 @@
-require 'rubygems'
-
-begin
-  require 'bundler'
-rescue LoadError
-  STDERR.puts "You need to install bundler"
-  exit 1
-else
+%w[embratel sequel sqlite3].each do |gem|
   begin
-    Bundler.setup(:runtime)
-  rescue Bundler::BundlerError
-    STDERR.puts $!
+    require gem
+  rescue LoadError
+    $stderr.puts $!
     exit 1
   end
 end
 
+require 'bell/util'
 require 'bell/message'
 require 'bell/displayable'
-require 'bell/cli'
+
 require 'bell/command'
-require 'bell/util'
 require 'bell/dispatcher'
+require 'bell/cli'
+
 require 'bell/users_handler'
 require 'bell/contacts_handler'
 require 'bell/reports_handler'
-require 'bell/report'
-
-require 'embratel'
-
-require 'sequel'
 
 module Bell
   USAGE = <<-USAGE.gsub(/^    /, '')
@@ -128,3 +118,4 @@ Bell.bootstrap unless Bell.bootstrapped?
 
 require 'bell/user'
 require 'bell/contact'
+require 'bell/report'

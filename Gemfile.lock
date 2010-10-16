@@ -26,7 +26,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (= 1.0.0)
   cucumber (= 0.8.5)
   embratel (= 0.0.1)
   rake (= 0.8.7)

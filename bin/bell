@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'rubygems'
 require 'bell'
 
 Bell::CLI.run(ARGV) if $0 == __FILE__
