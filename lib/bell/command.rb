@@ -8,11 +8,9 @@ module Bell
     end
 
     def hash
-      {
-        :handler => @handler,
+      { :handler => @handler,
         :action => @action,
-        :params => @params
-      }
+        :params => @params }
     end
 
     def build
