@@ -3,7 +3,7 @@ source :gemcutter
 gem 'bundler', '1.0.0'
 
 group :runtime do
-  gem 'fastercsv', '1.5.3'
+  gem 'embratel', '0.0.1'
   gem 'sequel', '3.14.0'
   gem 'sqlite3-ruby', '1.3.1'
 end
