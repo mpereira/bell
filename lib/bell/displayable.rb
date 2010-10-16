@@ -6,12 +6,7 @@ module Bell
 
     module ClassMethods
       def display(text)
-        puts sanitize_output(text)
-      end
-
-      private
-      def sanitize_output(text)
-        text.to_s.gsub(/^\s{2,}/, '')
+        puts text.to_s
       end
     end
   end
