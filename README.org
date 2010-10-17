@@ -56,7 +56,7 @@ bundle install
 
 *** Rode os testes
 #+BEGIN_SRC
-rake test
+rake
 #+END_SRC
 
 ** Autor
