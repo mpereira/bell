@@ -1,7 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', '..', 'lib')
 require 'rubygems'
-require 'bell'
 require 'spec/stubs/cucumber'
+require 'bell'
 
 Before('@no-txn') do
   Given 'a clean slate'

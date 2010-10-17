@@ -84,6 +84,24 @@ module Bell
     FileUtils.rm_rf(Directory.path)
   end
 
+  def output
+    @output ||= Output.new
+  end
+
+  class Output
+    def initialize
+      @outputter = Bell.testing? ? StringIO.new : $stdout
+    end
+
+    def puts(text)
+      Bell.testing? ? @outputter.reopen(text) : @outputter.puts(text)
+    end
+
+    def string
+      @outputter.string
+    end
+  end
+
   module Directory
     extend self
 

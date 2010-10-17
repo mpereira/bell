@@ -6,7 +6,7 @@ module Bell
 
     module ClassMethods
       def display(text)
-        puts text.to_s
+        Bell.output.puts text.to_s
       end
     end
   end

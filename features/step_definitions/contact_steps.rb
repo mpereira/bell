@@ -29,46 +29,43 @@ Given /^no contact with name "([^"]*)" exists$/ do |contact_name|
 end
 
 When /^I create a contact with name "([^"]*)" for the user with name "([^"]*)"$/ do |contact_name, user_name|
-  Given %{I create a contact with name "#{contact_name}" and with number "#{random_number}" for the user with name "#{user_name}"}
+  When %{I create a contact with name "#{contact_name}" and with number "#{random_number}" for the user with name "#{user_name}"}
+end
+
+When /^I create a contact with number "([^"]*)" for the user with name "([^"]*)"$/ do |contact_number, user_name|
+  When %{I create a contact with name "#{random_name}" and with number "#{contact_number}" for the user with name "#{user_name}"}
 end
 
 When /^I create a contact with name "([^"]*)" and with number "([^"]*)" for the user with name "([^"]*)"$/ do |contact_name, contact_number, user_name|
-  @output = StringIO.new
-  Bell::ContactCreator.new(@output).create(
-    {
-      :user => { :name => user_name },
-      :contact => { :name => contact_name, :number => contact_number }
-    }
-  )
+  params = { :user => { :name => user_name },
+             :contact => { :name => contact_name, :number => contact_number } }
+  Bell::ContactsHandler.create(params)
 end
 
 When /^I list all contacts$/ do
-  @output = StringIO.new
-  Bell::ContactLister.new(@output).list
+  Bell::ContactsHandler.list
 end
 
 When /^I list the contacts for the user with name "([^"]*)"$/ do |user_name|
-  @output = StringIO.new
-  Bell::ContactLister.new(@output).list(:name => user_name)
+  params = { :user => { :name => user_name } }
+  Bell::ContactsHandler.list(params)
 end
 
 When /^I remove the contact with name "([^"]*)"$/ do |contact_name|
-  @output = StringIO.new
-  Bell::ContactRemover.new(@output).remove(:name => contact_name)
+  params = { :contact => { :name => contact_name } }
+  Bell::ContactsHandler.remove(params)
 end
 
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
-  Bell::OutputFormatter.contact_name_taken(contact.name).should ==
-    Bell::OutputFormatter.contact_name_taken(contact_name)
-  @output.string.chomp.should == Bell::OutputFormatter.contact_name_taken(contact_name)
+  Bell.output.string.chomp.should == Bell::Message.contact_name_taken(contact_name)
 end
 
 Then /^bell should tell me that the contact "([^"]*)" was created for "([^"]*)"$/ do |contact_name, user_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
-  @output.string.chomp.should == Bell::OutputFormatter.contact_created(contact)
+  Bell.output.string.chomp.should == Bell::Message.contact_created(contact)
 end
 
 Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, contact_name|
@@ -77,15 +74,15 @@ Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, cont
 end
 
 Then /^bell should tell me that the number "([^"]*)" was already taken$/ do |contact_number|
-  @output.string.chomp.should == Bell::OutputFormatter.contact_number_taken(contact_number)
+  Bell.output.string.chomp.should == Bell::Message.contact_number_taken(contact_number)
 end
 
 Then /^bell should tell me that the number "([^"]*)" has a bad format$/ do |contact_number|
-  @output.string.chomp.should == Bell::OutputFormatter.bad_format_for_contact_number(contact_number)
+  Bell.output.string.chomp.should == Bell::Message.bad_format_for_contact_number(contact_number)
 end
 
 Then /^bell should tell me that the contact list of the user with name "([^"]*)" is empty$/ do |user_name|
-  @output.string.chomp.should == Bell::OutputFormatter.contact_list_empty(user_name)
+  Bell.output.string.chomp.should == Bell::Message.contact_list_empty(user_name)
 end
 
 Then /^I should not have a contact with name "([^"]*)" in the database$/ do |contact_name|
@@ -93,9 +90,9 @@ Then /^I should not have a contact with name "([^"]*)" in the database$/ do |con
 end
 
 Then /^bell should tell me that there is no contact with name "([^"]*)"$/ do |contact_name|
-  @output.string.chomp.should == Bell::OutputFormatter.contact_does_not_exist(contact_name)
+  Bell.output.string.chomp.should == Bell::Message.contact_does_not_exist(contact_name)
 end
 
 Then /^bell should tell me that the contact "([^"]*)" was removed$/ do |contact_name|
-  @output.string.chomp.should == Bell::OutputFormatter.contact_removed(contact_name)
+  Bell.output.string.chomp.should == Bell::Message.contact_removed(contact_name)
 end
