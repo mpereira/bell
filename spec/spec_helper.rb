@@ -17,5 +17,6 @@ class Spec::Example::ExampleGroup
       super(*args, &block)
       raise Sequel::Error::Rollback
     end
+    true
   end
 end
