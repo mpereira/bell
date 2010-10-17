@@ -1,6 +1,6 @@
 When /^I request a full report$/ do
   params = { :path => @path }
-  Bell::ReportsHandler.create(params)
+  Bell::Handlers::ReportsHandler.create(params)
 end
 
 When /^I request a full report for a non\-existing file$/ do

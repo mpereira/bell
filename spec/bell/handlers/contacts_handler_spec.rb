@@ -1,6 +1,6 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper')
+require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
 
-describe Bell::ContactsHandler do
+describe Bell::Handlers::ContactsHandler do
   let(:params) { mock("params").as_null_object }
   let(:formatted_contact_list) { mock("formatted_contact_list") }
   let(:user) { mock(Bell::User).as_null_object }

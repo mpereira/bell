@@ -39,21 +39,21 @@ end
 When /^I create a contact with name "([^"]*)" and with number "([^"]*)" for the user with name "([^"]*)"$/ do |contact_name, contact_number, user_name|
   params = { :user => { :name => user_name },
              :contact => { :name => contact_name, :number => contact_number } }
-  Bell::ContactsHandler.create(params)
+  Bell::Handlers::ContactsHandler.create(params)
 end
 
 When /^I list all contacts$/ do
-  Bell::ContactsHandler.list
+  Bell::Handlers::ContactsHandler.list
 end
 
 When /^I list the contacts for the user with name "([^"]*)"$/ do |user_name|
   params = { :user => { :name => user_name } }
-  Bell::ContactsHandler.list(params)
+  Bell::Handlers::ContactsHandler.list(params)
 end
 
 When /^I remove the contact with name "([^"]*)"$/ do |contact_name|
   params = { :contact => { :name => contact_name } }
-  Bell::ContactsHandler.remove(params)
+  Bell::Handlers::ContactsHandler.remove(params)
 end
 
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|

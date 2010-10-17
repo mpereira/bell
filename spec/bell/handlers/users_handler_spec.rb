@@ -1,6 +1,6 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper')
+require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
 
-describe Bell::UsersHandler do
+describe Bell::Handlers::UsersHandler do
   let(:users_handler) { described_class }
   let(:user_created_message) { Bell::Message.user_created(params[:user][:name]) }
   let(:no_created_users_message) { Bell::Message.no_created_users }

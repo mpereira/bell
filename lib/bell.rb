@@ -15,10 +15,7 @@ require 'bell/commands'
 require 'bell/dispatcher'
 require 'bell/cli'
 
-require 'bell/users_handler'
-require 'bell/contacts_handler'
-require 'bell/reports_handler'
-require 'bell/implosions_handler'
+require 'bell/handlers'
 
 module Bell
   USAGE = <<-USAGE.gsub(/^    /, '')

@@ -12,16 +12,16 @@ end
 
 When /^I create a user with name "([^"]*)"$/ do |user_name|
   params = { :user => { :name => user_name } }
-  Bell::UsersHandler.create(params)
+  Bell::Handlers::UsersHandler.create(params)
 end
 
 When /^I list all users$/ do
-  Bell::UsersHandler.list
+  Bell::Handlers::UsersHandler.list
 end
 
 When /^I remove the user with name "([^"]*)"$/ do |user_name|
   params = { :user => { :name => user_name } }
-  Bell::UsersHandler.remove(params)
+  Bell::Handlers::UsersHandler.remove(params)
 end
 
 Then /^bell should tell me that there are no created users$/ do

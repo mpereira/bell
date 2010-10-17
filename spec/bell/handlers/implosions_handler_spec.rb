@@ -1,6 +1,6 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper')
+require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
 
-describe Bell::ImplosionsHandler do
+describe Bell::Handlers::ImplosionsHandler do
   let(:params) { mock("params").as_null_object }
   let(:implosions_handler) { described_class }
 

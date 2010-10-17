@@ -1,6 +1,6 @@
-module Bell
+module Bell::Handlers
   class ImplosionsHandler
-    include Displayable
+    include Bell::Displayable
 
     def self.implode(params = {})
       Bell.implode!
