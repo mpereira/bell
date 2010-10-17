@@ -11,7 +11,7 @@ require 'bell/util'
 require 'bell/message'
 require 'bell/displayable'
 
-require 'bell/command'
+require 'bell/commands'
 require 'bell/dispatcher'
 require 'bell/cli'
 

@@ -1,61 +1,4 @@
-module Bell
-  class Command
-    def initialize(args = [])
-      @args = args
-      @handler ||= nil
-      @action ||= nil
-      @params = {}
-    end
-
-    def hash
-      { :handler => @handler,
-        :action => @action,
-        :params => @params }
-    end
-
-    def build
-      case @args[0]
-      when 'user' then UserCommand.new(@args[1..-1]).build
-      when 'contact' then ContactCommand.new(@args[1..-1]).build
-      when 'report' then ReportCommand.new(@args[1..-1]).build
-      when 'implode' then ImplosionCommand.new(@args[1..-1]).build
-      else raise ArgumentError
-      end
-    end
-  end
-
-  class UserCommand < Command
-    def initialize(args = [])
-      super(args)
-      @handler = 'users_handler'
-    end
-
-    def build
-      case @args[0]
-      when 'create' then
-        if @args[1]
-          @action = 'create'
-          @params = { :user => { :name => @args[1] } }
-        else
-          raise ArgumentError
-        end
-      when 'list' then
-        @action = 'list'
-      when 'remove' then
-        if @args[1]
-          @action = 'remove'
-          @params = { :user => { :name => @args[1] } }
-        else
-          raise ArgumentError
-        end
-      else
-        raise ArgumentError
-      end
-
-      self
-    end
-  end
-
+module Bell::Commands
   class ContactCommand < Command
     CONTACT_NUMBER_FLAGS = %w[-n --number]
     USER_NAME_FLAGS = %w[-u --user]
@@ -132,37 +75,6 @@ module Bell
         :contact => { :name => contact_name, :number => contact_number },
         :user => { :name => user_name }
       }
-    end
-  end
-
-  class ReportCommand < Command
-    def initialize(args = [])
-      super(args)
-      @handler = 'reports_handler'
-    end
-
-    def build
-      @action = 'create'
-      if @args[0]
-        @params = { :path => @args[0] }
-      else
-        raise ArgumentError
-      end
-
-      self
-    end
-  end
-
-  class ImplosionCommand < Command
-    def initialize(args = [])
-      super(args)
-      @handler = 'implosions_handler'
-    end
-
-    def build
-      @action = 'implode'
-
-      self
     end
   end
 end

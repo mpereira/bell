@@ -1,0 +1,5 @@
+require File.join(File.dirname(__FILE__), 'commands', 'command.rb')
+require File.join(File.dirname(__FILE__), 'commands', 'user_command')
+require File.join(File.dirname(__FILE__), 'commands', 'contact_command')
+require File.join(File.dirname(__FILE__), 'commands', 'report_command')
+require File.join(File.dirname(__FILE__), 'commands', 'implosion_command')
