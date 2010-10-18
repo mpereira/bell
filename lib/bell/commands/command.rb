@@ -7,18 +7,18 @@ module Bell::Commands
       @params = {}
     end
 
-    def hash
+    def route
       { :handler => @handler,
         :action => @action,
         :params => @params }
     end
 
-    def build
+    def parse
       case @args[0]
-      when 'user' then UserCommand.new(@args[1..-1]).build
-      when 'contact' then ContactCommand.new(@args[1..-1]).build
-      when 'report' then ReportCommand.new(@args[1..-1]).build
-      when 'implode' then ImplosionCommand.new(@args[1..-1]).build
+      when 'user' then UserCommand.new(@args[1..-1]).parse
+      when 'contact' then ContactCommand.new(@args[1..-1]).parse
+      when 'report' then ReportCommand.new(@args[1..-1]).parse
+      when 'implode' then ImplosionCommand.new(@args[1..-1]).parse
       else raise ArgumentError
       end
     end

@@ -12,7 +12,7 @@ describe Bell::Handlers::ReportsHandler do
     it "shows the 'no such file or directory' message" do
       Embratel::PhoneBill.stub!(:new).and_raise(Errno::ENOENT)
       reports_handler.should_receive(:display).with(no_such_file_or_directory_message)
-      reports_handler.create(params)
+      reports_handler.show(params)
     end
   end
 
@@ -24,7 +24,7 @@ describe Bell::Handlers::ReportsHandler do
     it "shows the 'path is a directory' message" do
       Embratel::PhoneBill.stub!(:new).and_raise(Errno::EISDIR)
       reports_handler.should_receive(:display).with(path_is_a_directory_message)
-      reports_handler.create(params)
+      reports_handler.show(params)
     end
   end
 
@@ -36,7 +36,7 @@ describe Bell::Handlers::ReportsHandler do
     it "shows the 'invalid phone bill file' message" do
       Embratel::PhoneBill.stub!(:new).and_raise(FasterCSV::MalformedCSVError)
       reports_handler.should_receive(:display).with(invalid_phone_bill_file_message)
-      reports_handler.create(params)
+      reports_handler.show(params)
     end
   end
 
@@ -48,7 +48,7 @@ describe Bell::Handlers::ReportsHandler do
     it "shows the 'invalid phone bill file' message" do
       Embratel::PhoneBill.stub!(:new).and_raise(Embratel::InvalidPhoneBillFileError)
       reports_handler.should_receive(:display).with(invalid_phone_bill_file_message)
-      reports_handler.create(params)
+      reports_handler.show(params)
     end
   end
 
@@ -60,7 +60,7 @@ describe Bell::Handlers::ReportsHandler do
       Embratel::PhoneBill.stub!(:new).and_return(phone_bill)
       Bell::Report.should_receive(:new).with(phone_bill).and_return(report)
       reports_handler.should_receive(:display).with(report.to_s)
-      reports_handler.create(params)
+      reports_handler.show(params)
     end
   end
 end

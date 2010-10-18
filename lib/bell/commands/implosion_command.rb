@@ -5,7 +5,7 @@ module Bell::Commands
       @handler = 'implosions_handler'
     end
 
-    def build
+    def parse
       @action = 'implode'
 
       self

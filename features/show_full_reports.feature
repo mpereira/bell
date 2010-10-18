@@ -1,6 +1,6 @@
 Feature: Shell user requests a full report
   As a person using the shell
-  I want to create full reports
+  I want to show full reports
   In order to see how much each user spent on phone calls
 
   Scenario: Requesting a full report for a non-existing file

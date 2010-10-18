@@ -8,7 +8,7 @@ module Bell::Commands
       @handler = 'contacts_handler'
     end
 
-    def build
+    def parse
       case @args[0]
       when 'create' then
         if @args[1]
@@ -71,10 +71,8 @@ module Bell::Commands
 
       contact_name = args.last
 
-      {
-        :contact => { :name => contact_name, :number => contact_number },
-        :user => { :name => user_name }
-      }
+      { :contact => { :name => contact_name, :number => contact_number },
+        :user => { :name => user_name } }
     end
   end
 end

@@ -5,8 +5,8 @@ module Bell::Commands
       @handler = 'reports_handler'
     end
 
-    def build
-      @action = 'create'
+    def parse
+      @action = 'show'
       if @args[0]
         @params = { :path => @args[0] }
       else

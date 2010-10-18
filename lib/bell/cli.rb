@@ -3,8 +3,8 @@ module Bell
     include Displayable
 
     def self.run(args)
-      command = Commands::Command.new(args).build
-      Dispatcher.dispatch(command.hash)
+      command = Commands::Command.new(args).parse
+      Dispatcher.dispatch(command.route)
     rescue ArgumentError
       display USAGE
     end

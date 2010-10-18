@@ -5,7 +5,7 @@ module Bell::Commands
       @handler = 'users_handler'
     end
 
-    def build
+    def parse
       case @args[0]
       when 'create' then
         if @args[1]
