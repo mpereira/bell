@@ -1,10 +1,11 @@
 * bell
   Tenha controle sobre as suas faturas de telefone da Embratel.
 
-** Instalando
+** Instalando (ainda não disponível)
 #+BEGIN_SRC
 gem install bell
 #+END_SRC
+   Você precisa ter o ruby e o rubygems instalados.
 
 ** Comandos:
 #+BEGIN_SRC
@@ -48,7 +49,7 @@ git clone git://github.com/murilasso/bell.git
 cd bell
 #+END_SRC
 
-*** Instale o bundler e as dependências (se elas já não estiverem instaladas)
+*** Instale o bundler e as dependências (se já não estiverem instaladas)
 #+BEGIN_SRC
 gem install bundler
 bundle install
