@@ -46,11 +46,7 @@ module Bell
 
     def known_calls
       @known_calls ||= calls.inject([]) do |known, call|
-        if Contact.find(:number => call.number_called)
-          known << call
-        else
-          known
-        end
+        Contact.find(:number => call.number_called) ? known << call : known
       end
     end
 
