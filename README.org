@@ -7,40 +7,100 @@ gem install bell
 #+END_SRC
    Você precisa ter o ruby e o rubygems instalados.
 
-** Comandos:
+** Como Isso Pode Me Ajudar?
+   Bell permite que você crie e mantenha usuários e suas listas de contatos.
+   Estes dados combinados com um arquivo de fatura da embratel te permitem
+   obter todo o tipo de informação.
+
+   Por exemplo:
+   - mostrar quanto um determinado usuário gastou e para quais números ligou
+   - mostrar quanto foi gasto em ligações para um determinado número e quanto
+     foi gasto em cada uma das ligações
+   - montar relatórios completos, que mostram:
+     - o valor total da fatura
+     - o valor gasto por cada usuário
+     - o valor total, e todas as ligações públicas (feitas por mais de um
+       usuário)
+     - o valor total, e todas as ligações desconhecidas (não presentes em
+       nenhuma lista de contatos)
+
+** Como Usar
+*** Criando Usuários
 #+BEGIN_SRC
-# criar usuário
-$ bell user create <nome do usuário>
-
-# listar usuários
-$ bell user list
-
-# remover usuário (e por consequência todos os seus contatos)
-$ bell user remove <nome do usuário>
-
-# adicionar contato na lista de contatos de um usuário
-$ bell contact create <nome do contato> [-n|--number] <número do contato> [-u|--user] <nome do usuário>
-
-# listar contatos
-$ bell contact list
-
-# listar contatos de um usuário
-$ bell contact list <nome do usuário>
-
-# remover contato
-$ bell contact remove <nome do contato>
-
-# remover todos os usuários e contatos
-$ bell implode
-
-# gerar relatório completo para uma dada fatura da embratel
-$ bell report /path/to/report.csv
+$ bell user create joão
+Usuário 'joão' criado.
 #+END_SRC
 
-*** Formatos:
-    - <nome do usuário>: sequência quaisquer caracteres. (ex: josé)
-    - <nome do contato>: sequência quaisquer caracteres. (ex: joão)
-    - <número do contato>: sequência de 10 dígitos, onde os 2 primeiros são o DDD (ex: 1133445566)
+   Você agora pode ver o joão na lista de usuários
+#+BEGIN_SRC
+$ bell user list
+joão
+#+END_SRC
+
+*** Importando Contatos
+   Com o usuário 'joão' criado você pode importar a lista de contatos dele. A
+   lista de contatos deve ser um arquivo csv, onde cada linha deste arquivo
+   representa um contato, sendo a primeira coluna o nome e a segunda o número
+   de telefone.
+
+   Exemplo:
+#+CAPTION: Lista de contatos
+[[http://content.screencast.com/users/murilasso/folders/Default/media/99ad1dae-ef89-4c8b-9bfe-eeaa7ac5e3aa/2010-10-30-a7e887a6e.png]]
+
+   Repare que o formato do número de telefone deve ser uma sequência de 10
+   dígitos, sendo os dois primeiros o DDD e os oito últimos o número em si.
+
+   Com um arquivo da lista de contatos, podemos importar estes contatos para
+   um usuário
+#+BEGIN_SRC
+$ bell contact import /path/para/lista/de/contatos.csv -u joão
+#+END_SRC
+
+   Agora ao listar os contatos do joão você pode ver os contatos que acabou
+   de importar
+#+BEGIN_SRC
+$ bell contact list joão
+Pedro Silva (1111111111)
+Cássio Cunha (2222222222)
+Jorge Montebello (3333333333)
+Julia Gum (4444444444)
+Cecília Fernandes (5555555555)
+Francisco Côco (6666666666)
+#+END_SRC
+
+   Com um usuário e sua lista de contatos você pode começar
+   a visualizar relatórios, usando os arquivos de fatura da Embratel.
+
+*** Fatura da Embratel
+    A Embratel fornece faturas de conta de telefone em seu
+    [[http://fatura.embratel.net.br/embratel/index.html][serviço online]].
+    Para extrair informações sobre uma fatura, você precisará do arquivo
+    .csv de um dado mês.
+**** Como obter o arquivo da fatura?
+     - [[http://fatura.embratel.net.br/embratel/jsp/selectClientRegister.jsp][cadastre-se]] se você não possui uma conta
+     - logue no site
+     - escolha o mês da fatura
+     - vá em 'Opções' e selecione 'Exportar toda a conta'
+     - exporte como 'Excel - CSV'
+
+    Com usuários e suas respectivas listas de contatos criados você pode
+    visualizar diversos tipos de relatórios para a fatura de um dado mês.
+
+*** Visualizando Relatórios
+    Relatório completo
+#+BEGIN_SRC
+$ bell report /path/para/fatura.csv
+#+END_SRC
+
+    Relatório de usuário
+#+BEGIN_SRC
+$ bell report /path/para/fatura.csv -u joão
+#+END_SRC
+
+    Relatório de ligação
+#+BEGIN_SRC
+$ bell report /path/para/fatura.csv -n 1111111111
+#+END_SRC
 
 ** Para rodar os testes
 *** Pegue o código
@@ -64,4 +124,5 @@ rake
    [[http://www.comp.ufscar.br/~murilo][Murilo Soares Pereira]]
 
 ** Licença
-   Distribuído sob a [[http://github.com/murilasso/embratel/blob/master/MIT-LICENSE][licença MIT]].
+   Distribuído sob a
+   [[http://github.com/murilasso/embratel/blob/master/MIT-LICENSE][licença MIT]].
