@@ -19,34 +19,15 @@ require 'bell/handlers'
 
 module Bell
   USAGE = <<-USAGE.gsub(/^    /, '')
-    Tenha controle sobre as suas faturas de telefone da Embratel.
+    uso: bell [--version] [--help] <comando> [<argumentos>]
 
       Comandos:
-      # criar usuário
-      bell user create <nome do usuário>
+      user     Crie, liste, renomeie ou remova usuários
+      contact  Importe uma lista de contatos ou liste contatos
+      report   Mostre relatórios completos, de usuário ou de ligação
+      implode  Remova todos os usuários e contatos
 
-      # listar usuários
-      bell user list
-
-      # remover usuário (e por consequência todos os seus contatos)
-      bell user remove <nome do usuário>
-
-      bell contact create <nome do contato> [-n|--number] <número do contato> [-u|--user] <nome do usuário>
-
-      # listar contatos
-      bell contact list
-
-      # adicionar contato na lista de contatos de um usuário
-      bell contact list <nome do usuário>
-
-      # remover contato
-      bell contact remove <nome do contato>
-
-      # remover todos os usuários e contatos
-      bell implode
-
-      # gerar relatório completo para uma dada fatura da embratel
-      bell report /path/to/report.csv
+    Veja `bell help <comando>` para mais informações sobre um comando específico
   USAGE
 
   extend self
