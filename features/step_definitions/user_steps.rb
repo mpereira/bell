@@ -10,6 +10,10 @@ Given /^a user with name "([^"]*)" exists$/ do |user_name|
   Bell::User.create(:name => user_name)
 end
 
+Given /^"([^"]*)" have an empty contact list$/ do |user_name|
+  Bell::User.find(:name => user_name).remove_all_contacts
+end
+
 When /^I create a user with name "([^"]*)"$/ do |user_name|
   params = { :user => { :name => user_name } }
   Bell::Handlers::UsersHandler.create(params)

@@ -11,13 +11,16 @@ module Bell::Commands
     def parse
       case @args[0]
       when 'create' then
-        if @args[1]
-          @action = 'create'
-          if valid_args_for_contact_creation?
-            @params = contact_creation_params
-          else
-            raise ArgumentError
-          end
+        @action = 'create'
+        if valid_args_for_contact_creation?
+          @params = contact_creation_params
+        else
+          raise ArgumentError
+        end
+      when 'import' then
+        @action = 'import'
+        if valid_args_for_contact_import?
+          @params = contact_import_params
         else
           raise ArgumentError
         end
@@ -48,12 +51,12 @@ module Bell::Commands
       !(@args & USER_NAME_FLAGS).empty?
     end
 
-    def necessary_arguments_given?
-      number_given? && user_given?
+    def valid_args_for_contact_creation?
+      @args.length == 6 && number_given? && user_given?
     end
 
-    def valid_args_for_contact_creation?
-      @args.length == 6 && necessary_arguments_given?
+    def valid_args_for_contact_import?
+      @args.length == 4 && user_given?
     end
 
     def contact_creation_params
@@ -73,6 +76,20 @@ module Bell::Commands
 
       { :contact => { :name => contact_name, :number => contact_number },
         :user => { :name => user_name } }
+    end
+
+    def contact_import_params
+      user_flag = (@args & USER_NAME_FLAGS).first
+
+      user_name = @args[@args.index(user_flag) + 1]
+
+      args = @args.dup
+      args.delete(user_flag)
+      args.delete(user_name)
+
+      path = args.last
+
+      { :path => path, :user => { :name => user_name } }
     end
   end
 end

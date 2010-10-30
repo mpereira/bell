@@ -10,6 +10,7 @@ module Bell
     end
 
     def validate
+      super
       validates_unique :name
     end
   end

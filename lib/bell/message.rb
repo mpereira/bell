@@ -67,5 +67,21 @@ module Bell
     def invalid_phone_bill_file(path)
       "erro: '#{path}' não é uma fatura válida da embratel."
     end
+
+    def invalid_contacts_file(path)
+      "erro: '#{path}' não é um arquivo de contatos válido."
+    end
+
+    def row_with_extra_columns(row, line_number)
+      "erro: a linha #{line_number}: '#{row.to_s}' tem mais de duas colunas.\nCada linha deve ter duas colunas, sendo a primeira o nome e a segunda o telefone do contato."
+    end
+
+    def row_with_few_columns(row, line_number)
+      "erro: a linha #{line_number}: '#{row.to_s}' tem mais de duas colunas.\nCada linha deve ter duas colunas, sendo a primeira o nome e a segunda o telefone do contato."
+    end
+
+    def row_with_short_number(row, line_number)
+      "erro: o número de telefone #{row.to_s} na linha '#{line_number}' é muito curto.\nNúmeros de telefone devem ter 10 dígitos, sendo os 2 primeiros o DDD."
+    end
   end
 end

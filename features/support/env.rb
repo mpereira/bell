@@ -34,6 +34,14 @@ module Bell::StepDefinitionHelper
     "#{FIXTURES_PATH}/valid_phone_bill_file.csv"
   end
 
+  def invalid_contacts_file_path
+    "#{FIXTURES_PATH}/invalid_contacts_file.csv"
+  end
+
+  def valid_contacts_file_path
+    "#{FIXTURES_PATH}/valid_contacts_file.csv"
+  end
+
   def random_name
     (0...8).map{65.+(rand(25)).chr}.join
   end

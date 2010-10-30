@@ -56,6 +56,32 @@ When /^I remove the contact with name "([^"]*)"$/ do |contact_name|
   Bell::Handlers::ContactsHandler.remove(params)
 end
 
+When /^I request a contact import$/ do
+  params = { :path => @path, :user => { :name => @user_name } }
+  Bell::Handlers::ContactsHandler.import(params)
+end
+
+When /^I request a contact import for a non\-existing file$/ do
+  @path = non_existing_file_path
+  When %{I request a contact import}
+end
+
+When /^I request a contact import for a directory$/ do
+  @path = directory_path
+  When %{I request a contact import}
+end
+
+When /^I request a contact import for an invalid contacts file$/ do
+  @path = invalid_contacts_file_path
+  When %{I request a contact import}
+end
+
+When /^I request a contact import for the user named "([^"]*)"$/ do |user_name|
+  @path = valid_contacts_file_path
+  @user_name = user_name
+  When %{I request a contact import}
+end
+
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
