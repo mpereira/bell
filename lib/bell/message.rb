@@ -38,10 +38,6 @@ module Bell
       "Contato '#{contact_name}' removido."
     end
 
-    def contact_does_not_exist(contact_name)
-      "erro: não existe contato com nome '#{contact_name}'."
-    end
-
     def contact_name_taken(contact_name)
       contact = Contact.find(:name => contact_name)
       "erro: este nome já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.\nCrie um contato com nome diferente." if contact

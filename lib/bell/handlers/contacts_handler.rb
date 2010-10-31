@@ -2,23 +2,6 @@ module Bell::Handlers
   class ContactsHandler
     include Bell::Displayable
 
-    def self.create(params = {})
-      user = Bell::User.find(:name => params[:user][:name])
-      if user
-        contact = Bell::Contact.new(:name => params[:contact][:name],
-                                    :number => params[:contact][:number],
-                                    :user_id => user.id)
-        if contact.valid?
-          contact.save
-          display Bell::Message.contact_created(contact)
-        else
-          display formatted_contact_errors(contact)
-        end
-      else
-        display Bell::Message.user_does_not_exist(params[:user][:name])
-      end
-    end
-
     def self.list(params = {})
       if params.empty?
         if Bell::Contact.empty?
@@ -36,15 +19,6 @@ module Bell::Handlers
         else
           display Bell::Message.user_does_not_exist(params[:user][:name])
         end
-      end
-    end
-
-    def self.remove(params = {})
-      if contact = Bell::Contact.find(:name => params[:contact][:name])
-        contact.destroy
-        display Bell::Message.contact_removed(params[:contact][:name])
-      else
-        display Bell::Message.contact_does_not_exist(params[:contact][:name])
       end
     end
 
