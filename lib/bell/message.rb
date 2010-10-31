@@ -22,6 +22,10 @@ module Bell
       "Usuário '#{user_name}' removido."
     end
 
+    def user_renamed(user)
+      "Usuário '#{user[:source_name]}' renomeado para '#{user[:target_name]}'."
+    end
+
     def no_contacts_created
       "Nenhum contato criado."
     end

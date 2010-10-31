@@ -28,6 +28,11 @@ When /^I remove the user with name "([^"]*)"$/ do |user_name|
   Bell::Handlers::UsersHandler.remove(params)
 end
 
+When /^I rename "([^"]*)" to "([^"]*)"$/ do |source_name, target_name|
+  params = { :user => { :source_name => source_name, :target_name => target_name } }
+  Bell::Handlers::UsersHandler.rename(params)
+end
+
 Then /^bell should tell me that there are no created users$/ do
   Bell.output.string.chomp.should == Bell::Message.no_created_users
 end
@@ -50,4 +55,13 @@ end
 
 Then /^I should have the user "([^"]*)" in the database$/ do |user_name|
   Bell::User.find(:name => user_name).should_not be_nil
+end
+
+Then /^I should not have the user "([^"]*)" in the database$/ do |user_name|
+  Bell::User.find(:name => user_name).should be_nil
+end
+
+Then /^bell should tell me that the user "([^"]*)" was renamed to "([^"]*)"$/ do |source_name, target_name|
+  params = { :source_name => source_name, :target_name => target_name }
+  Bell.output.string.chomp.should == Bell::Message.user_renamed(params)
 end

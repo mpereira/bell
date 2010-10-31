@@ -11,6 +11,20 @@ module Bell::Handlers
       end
     end
 
+    def self.rename(params = {})
+      if user = Bell::User.find(:name => params[:user][:source_name])
+        if Bell::User.find(:name => params[:user][:target_name])
+          display Bell::Message.user_already_exists(params[:user][:target_name])
+        else
+          user.name = params[:user][:target_name]
+          user.save
+          display Bell::Message.user_renamed(params[:user])
+        end
+      else
+        display Bell::Message.user_does_not_exist(params[:user][:source_name])
+      end
+    end
+
     def self.list(params = {})
       if Bell::User.empty?
         display Bell::Message.no_created_users

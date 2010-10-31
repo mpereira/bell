@@ -37,6 +37,40 @@ describe Bell::Commands::UserCommand do
     end
   end
 
+  context "parsing 'rename' commands" do
+    context "without additional arguments" do
+      let(:args) { %w[rename] }
+
+      it "raises ArgumentError" do
+        lambda { described_class.new(args).parse }.should raise_error(ArgumentError)
+      end
+    end
+
+    context "with one additional argument" do
+      let(:args) { %w[rename bob] }
+
+      it "raises ArgumentError" do
+        lambda { described_class.new(args).parse }.should raise_error(ArgumentError)
+      end
+    end
+
+    context "with two additional arguments" do
+      let(:args) { %w[rename bob robert] }
+      let(:user_command_route) do
+        { :handler => 'users_handler',
+          :action => 'rename',
+          :params => { :user => { :source_name => args[1],
+                                  :target_name => args[2] } } }
+      end
+
+      it "assembles the right route" do
+        user_command = described_class.new(args)
+        user_command.parse
+        user_command.route.should == user_command_route
+      end
+    end
+  end
+
   context "parsing 'list' commands" do
     context "without additional arguments" do
       let(:args) { %w[list] }
