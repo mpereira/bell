@@ -14,7 +14,9 @@ module Bell::Handlers
           if user.contacts.empty?
             display Bell::Message.contact_list_empty(user.name)
           else
-            display formatted_contact_list(user.contacts, :user_contacts => true)
+            display formatted_contact_list(user.contacts,
+                                           :user_contacts => true,
+                                           :csv => params[:csv])
           end
         else
           display Bell::Message.user_does_not_exist(params[:user][:name])
@@ -73,12 +75,22 @@ module Bell::Handlers
       end
     end
 
-    def self.formatted_contact_list(contacts, options = {})
+    def self.text_contact_list(contacts, options)
       contacts.inject("") do |list, contact|
         list << "#{contact.name} (#{contact.number})"
         list << " - #{contact.user.name}" unless options[:user_contacts]
         list << "\n"
       end
+    end
+
+    def self.csv_contact_list(contacts)
+      contacts.inject("") do |list, contact|
+        list << "\"#{contact.name}\",#{contact.number}\n"
+      end
+    end
+
+    def self.formatted_contact_list(contacts, options = {})
+      options[:csv] ? csv_contact_list(contacts) : text_contact_list(contacts, options)
     end
   end
 end

@@ -33,8 +33,13 @@ When /^I list all contacts$/ do
 end
 
 When /^I list the contacts for the user with name "([^"]*)"$/ do |user_name|
-  params = { :user => { :name => user_name } }
+  params = { :user => { :name => user_name }, :csv => @csv }
   Bell::Handlers::ContactsHandler.list(params)
+end
+
+When /^I list the contacts for the user with name "([^"]*)" in CSV format$/ do |user_name|
+  @csv = true
+  When %{I list the contacts for the user with name "#{user_name}"}
 end
 
 When /^I request a contact import$/ do

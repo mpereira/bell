@@ -78,7 +78,8 @@ describe Bell::Commands::ContactCommand do
         let(:contact_command_route) do
           { :handler => 'contacts_handler',
             :action => 'list',
-            :params => { :user => { :name => args[2] } } }
+            :params => { :user => { :name => args[2] },
+                         :csv => nil } }
         end
 
         it "assembles the right route" do

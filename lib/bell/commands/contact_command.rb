@@ -79,8 +79,9 @@ module Bell::Commands
       if user_name_given?
         user_flag = (@args & USER_NAME_FLAGS).first
         user_name = @args[@args.index(user_flag) + 1]
+        csv_flag = (@args & CSV_FLAGS).first
 
-        { :user => { :name => user_name } }
+        { :user => { :name => user_name }, :csv => csv_flag }
       else
         {}
       end

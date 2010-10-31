@@ -18,10 +18,10 @@ Feature: Shell user lists the contacts
     When I list the contacts for the user with name "murilo"
     Then bell should tell me that the contact list of the user with name "murilo" is empty
 
-  Scenario: Listing an user's contact list
+  Scenario: Listing an user's contacts in CSV format
     Given a user with name "murilo" exists
     And "murilo" has a contact with name "augusto" and number "1234123412" in his contact list
     And "murilo" has a contact with name "roberto" and number "9876987698" in his contact list
-    When I list the contacts for the user with name "murilo"
-    Then the output should contain "augusto (1234123412)"
-    And the output should contain "roberto (9876987698)"
+    When I list the contacts for the user with name "murilo" in CSV format
+    Then the output should contain /"augusto",1234123412/
+    And the output should contain /"roberto",9876987698/

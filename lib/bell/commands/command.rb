@@ -1,5 +1,6 @@
 module Bell::Commands
   class Command
+    CSV_FLAGS = %w[--csv]
     USER_NAME_FLAGS = %w[-u --user]
     CONTACT_NUMBER_FLAGS = %w[-n --number]
 
@@ -39,6 +40,10 @@ module Bell::Commands
     end
 
     protected
+
+    def csv_given?
+      !(@args & CSV_FLAGS).empty?
+    end
 
     def user_name_given?
       !(@args & USER_NAME_FLAGS).empty?

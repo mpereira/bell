@@ -3,7 +3,11 @@ require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
 describe Bell::Handlers::ContactsHandler do
   let(:params) { mock("params").as_null_object }
   let(:formatted_contact_list) { mock("formatted_contact_list") }
-  let(:user) { mock(Bell::User, :id => 1, :null_object => true) }
+  let(:user) do
+    mock(Bell::User, :id => 1,
+         :null_object => true,
+         :contacts => mock("contacts"))
+  end
   let(:contact) { mock(Bell::Contact).as_null_object }
   let(:contacts_handler) { described_class }
 
@@ -48,7 +52,7 @@ describe Bell::Handlers::ContactsHandler do
         end
       end
 
-      context "when a user with the given exists" do
+      context "when the given user exists" do
         before do
           params.stub!(:empty?).and_return(false)
           Bell::User.stub!(:find).and_return(user)
@@ -73,6 +77,21 @@ describe Bell::Handlers::ContactsHandler do
               and_return(formatted_contact_list)
             contacts_handler.should_receive(:display).with(formatted_contact_list)
             contacts_handler.list(params)
+          end
+
+          context "when asked for the CSV format" do
+            let(:contacts) { mock("contacts", :empty? => false) }
+            let(:user) { mock(Bell::User, :name => 'bob', :contacts => contacts) }
+            let(:params) { { :user => { :name => user.name }, :csv => true } }
+
+            it "shows a list with all the users' contacts" do
+              contacts_handler.should_receive(:formatted_contact_list).
+                with(user.contacts, :user_contacts => true, :csv => true).
+                and_return(formatted_contact_list)
+              contacts_handler.should_receive(:display).
+                with(formatted_contact_list)
+              contacts_handler.list(params)
+            end
           end
         end
       end
