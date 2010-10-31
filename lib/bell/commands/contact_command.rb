@@ -1,7 +1,5 @@
 module Bell::Commands
   class ContactCommand < Command
-    USER_NAME_FLAGS = %w[-u --user]
-
     USAGE = <<-USAGE.gsub(/^      /, '')
       uso: bell contact [<ação>] [<argumentos>]
 
@@ -55,17 +53,13 @@ module Bell::Commands
 
     private
 
-    def user_given?
-      !(@args & USER_NAME_FLAGS).empty?
-    end
-
     def valid_args_for_contact_import?
-      @args.length == 4 && user_given?
+      @args.length == 4 && user_name_given?
     end
 
     def valid_args_for_contact_list?
       args_without_csv = @args.reject { |element| element == '--csv' }
-      user_given? ? args_without_csv.length == 3 : args_without_csv.length == 1
+      user_name_given? ? args_without_csv.length == 3 : args_without_csv.length == 1
     end
 
     def contact_import_params
@@ -82,7 +76,7 @@ module Bell::Commands
     end
 
     def contact_list_params
-      if user_given?
+      if user_name_given?
         user_flag = (@args & USER_NAME_FLAGS).first
         user_name = @args[@args.index(user_flag) + 1]
 

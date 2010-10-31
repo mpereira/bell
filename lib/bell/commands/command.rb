@@ -1,5 +1,8 @@
 module Bell::Commands
   class Command
+    USER_NAME_FLAGS = %w[-u --user]
+    CONTACT_NUMBER_FLAGS = %w[-n --number]
+
     USAGE = <<-USAGE.gsub(/^      /, '')
       uso: bell [--version] [--help] <comando> [<ação>] [<argumentos>]
 
@@ -33,6 +36,16 @@ module Bell::Commands
       when 'implode' then ImplosionCommand.new(@args[1..-1]).parse
       else raise ArgumentError, USAGE
       end
+    end
+
+    protected
+
+    def user_name_given?
+      !(@args & USER_NAME_FLAGS).empty?
+    end
+
+    def contact_number_given?
+      !(@args & USER_NAME_FLAGS).empty?
     end
   end
 end

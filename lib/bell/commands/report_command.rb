@@ -1,8 +1,5 @@
 module Bell::Commands
   class ReportCommand < Command
-    USER_NAME_FLAGS = %w[-u --user]
-    CONTACT_NUMBER_FLAGS = %w[-n --number]
-
     USAGE = <<-USAGE.gsub(/^      /, '')
       uso: bell report /path/fatura.csv [<argumentos>]
 
@@ -36,14 +33,6 @@ module Bell::Commands
     end
 
     private
-
-    def user_name_given?
-      !(@args & USER_NAME_FLAGS).empty?
-    end
-
-    def contact_number_given?
-      !(@args & USER_NAME_FLAGS).empty?
-    end
 
     def full_report?
       !user_name_given? && !contact_number_given?
