@@ -2,7 +2,7 @@ module Bell::Handlers
   class ReportsHandler
     include Bell::Displayable
 
-    def self.show(params = {})
+    def self.full_report(params = {})
       begin
         phone_bill = Embratel::PhoneBill.new(params[:path])
       rescue Errno::ENOENT

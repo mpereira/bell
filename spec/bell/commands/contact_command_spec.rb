@@ -72,11 +72,11 @@ describe Bell::Commands::ContactCommand do
     end
 
     context "with an user name as argument" do
-      let(:args) { %w[list bob] }
+      let(:args) { %w[list -u bob] }
       let(:contact_command_route) do
         { :handler => 'contacts_handler',
           :action => 'list',
-          :params => { :user => { :name => args[1] } } }
+          :params => { :user => { :name => args[2] } } }
       end
 
       it "assembles the right route" do

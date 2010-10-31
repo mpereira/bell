@@ -18,18 +18,6 @@ require 'bell/cli'
 require 'bell/handlers'
 
 module Bell
-  USAGE = <<-USAGE.gsub(/^    /, '')
-    uso: bell [--version] [--help] <comando> [<argumentos>]
-
-      Comandos:
-      user     Crie, liste, renomeie ou remova usuários
-      contact  Importe uma lista de contatos ou liste contatos
-      report   Mostre relatórios completos, de usuário ou de ligação
-      implode  Remova todos os usuários e contatos
-
-    Veja `bell help <comando>` para mais informações sobre um comando específico
-  USAGE
-
   extend self
 
   def testing?

@@ -12,12 +12,12 @@ describe Bell::Commands::ReportCommand do
     end
   end
 
-  context "parsing 'show' commands" do
+  context "parsing 'full_report' commands" do
     context "with additional arguments" do
       let(:args) { %w[fatura.csv] }
       let(:report_command_route) do
         { :handler => 'reports_handler',
-          :action => 'show',
+          :action => 'full_report',
           :params => { :path => args[0] } }
       end
 

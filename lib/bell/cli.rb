@@ -6,7 +6,7 @@ module Bell
       command = Commands::Command.new(args).parse
       Dispatcher.dispatch(command.route)
     rescue ArgumentError
-      display USAGE
+      display $!
     end
   end
 end
