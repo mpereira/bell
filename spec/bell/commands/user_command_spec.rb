@@ -17,7 +17,8 @@ describe Bell::Commands::UserCommand do
       let(:args) { %w[create] }
 
       it "raises ArgumentError" do
-        lambda { described_class.new(args).parse }.should raise_error(ArgumentError)
+        lambda { described_class.new(args).parse }.
+          should raise_error(ArgumentError, described_class::CREATE_USAGE)
       end
     end
 
@@ -42,7 +43,8 @@ describe Bell::Commands::UserCommand do
       let(:args) { %w[rename] }
 
       it "raises ArgumentError" do
-        lambda { described_class.new(args).parse }.should raise_error(ArgumentError)
+        lambda { described_class.new(args).parse }.
+          should raise_error(ArgumentError, described_class::RENAME_USAGE)
       end
     end
 
@@ -50,7 +52,8 @@ describe Bell::Commands::UserCommand do
       let(:args) { %w[rename bob] }
 
       it "raises ArgumentError" do
-        lambda { described_class.new(args).parse }.should raise_error(ArgumentError)
+        lambda { described_class.new(args).parse }.
+          should raise_error(ArgumentError, described_class::RENAME_USAGE)
       end
     end
 
@@ -93,7 +96,8 @@ describe Bell::Commands::UserCommand do
       let(:args) { %w[remove] }
 
       it "raises ArgumentError" do
-        lambda { described_class.new(args).parse }.should raise_error(ArgumentError)
+        lambda { described_class.new(args).parse }.
+          should raise_error(ArgumentError, described_class::REMOVE_USAGE)
       end
     end
 
@@ -117,7 +121,8 @@ describe Bell::Commands::UserCommand do
     let(:args) { %w[foo] }
 
     it "raises ArgumentError" do
-      lambda { described_class.new(args).parse }.should raise_error(ArgumentError)
+      lambda { described_class.new(args).parse }.
+        should raise_error(ArgumentError, described_class::USAGE)
     end
   end
 end

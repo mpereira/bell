@@ -32,7 +32,8 @@ describe Bell::Commands::ReportCommand do
       let(:args) { %w[] }
 
       it "raises ArgumentError" do
-        lambda { described_class.new(args).parse }.should raise_error(ArgumentError)
+        lambda { described_class.new(args).parse }.
+          should raise_error(ArgumentError, described_class::FULL_REPORT_USAGE)
       end
     end
   end

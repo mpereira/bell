@@ -58,5 +58,15 @@ describe Bell::Commands::Command do
         described_class.new(args).parse
       end
     end
+
+    context "an unknown command" do
+      let(:args) { ['foo'] }
+      let(:contact_command) { mock(Bell::Commands::ContactCommand) }
+
+      it "instantiates an implosion command and parses it" do
+        lambda { described_class.new(args).parse }.
+          should raise_error(ArgumentError, described_class::USAGE)
+      end
+    end
   end
 end
