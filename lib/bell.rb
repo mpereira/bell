@@ -7,6 +7,10 @@
   end
 end
 
+# better handling for unicode characters
+$KCODE='u'
+require 'jcode'
+
 require 'bell/util'
 require 'bell/message'
 require 'bell/displayable'
@@ -16,6 +20,9 @@ require 'bell/dispatcher'
 require 'bell/cli'
 
 require 'bell/handlers'
+
+require 'bell/full_report'
+require 'bell/user_report'
 
 module Bell
   extend self
@@ -123,4 +130,3 @@ Bell.bootstrap unless Bell.bootstrapped?
 
 require 'bell/user'
 require 'bell/contact'
-require 'bell/report'

@@ -1,5 +1,5 @@
 module Bell
-  class Report
+  class FullReport
     def initialize(phone_bill)
       @phone_bill = phone_bill
     end
