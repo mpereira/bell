@@ -28,6 +28,10 @@ Given /^no contact with name "([^"]*)" exists$/ do |contact_name|
   Bell::Contact.filter(:name => contact_name).delete
 end
 
+Given /^no created contacts$/ do
+  Bell::Contact.delete
+end
+
 When /^I list all contacts$/ do
   Bell::Handlers::ContactsHandler.list
 end
@@ -97,4 +101,8 @@ end
 
 Then /^bell should tell me that the contact "([^"]*)" was removed$/ do |contact_name|
   Bell.output.string.chomp.should == Bell::Message.contact_removed(contact_name)
+end
+
+Then /^bell should tell me that there are no created contacts$/ do
+  Bell.output.string.chomp.should == Bell::Message.no_contacts_created
 end
