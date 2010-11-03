@@ -10,7 +10,7 @@ Given /^a user with name "([^"]*)" exists$/ do |user_name|
   Bell::User.create(:name => user_name)
 end
 
-Given /^"([^"]*)" have an empty contact list$/ do |user_name|
+Given /^"([^"]*)" has an empty contact list$/ do |user_name|
   Bell::User.find(:name => user_name).remove_all_contacts
 end
 
@@ -64,4 +64,8 @@ end
 Then /^bell should tell me that the user "([^"]*)" was renamed to "([^"]*)"$/ do |source_name, target_name|
   params = { :source_name => source_name, :target_name => target_name }
   Bell.output.string.chomp.should == Bell::Message.user_renamed(params)
+end
+
+Then /^bell should tell me that "([^"]*)" has an empty contact list$/ do |user_name|
+  Bell.output.string.chomp.should == Bell::Message.contact_list_empty(user_name)
 end

@@ -18,7 +18,7 @@ Feature: Shell user imports a csv file of contacts
 
   Scenario: Requesting a contact import for an user
     Given a user with name "earl" exists
-    And "earl" have an empty contact list
+    And "earl" has an empty contact list
     When I request a contact import for the user named "earl"
     Then "earl" should have "john" in his contact list
     And "earl" should have "bob" in his contact list
