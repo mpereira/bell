@@ -2,15 +2,15 @@
 Feature: Shell user creates a user
   As a person using the shell
   I want to create users
-  In order to figure out the owners of phone bill calls
+  In order to associate phone bill calls and contact lists to a name
 
-  Scenario: User creation attempt when given user doesn't exist
+  Scenario: When the given user name isn't taken
     Given no user with name "murilo" exists
     When I create a user with name "murilo"
     Then bell should tell me that a user with name "murilo" was created
     And I should have the user "murilo" in the database
 
-  Scenario: User creation attempt when given user already exists
+  Scenario: When the given user name isn't taken
     Given a user with name "murilo" exists
     When I create a user with name "murilo"
     Then bell should tell me that the user "murilo" already exists

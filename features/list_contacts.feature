@@ -10,8 +10,8 @@ Feature: Shell user lists the contacts
     Given a user with name "roberto" exists
     And "roberto" has a contact with name "selma" and number "9876987698" in his contact list
     When I list all contacts
-    Then the output should contain "augusto (1234123412) - murilo"
-    And the output should contain "selma (9876987698) - roberto"
+    Then bell's output should contain "augusto (1234123412) - murilo"
+    And bell's output should contain "selma (9876987698) - roberto"
 
   Scenario: Listing an user's empty contact list
     Given a user with name "murilo" exists
@@ -23,5 +23,5 @@ Feature: Shell user lists the contacts
     And "murilo" has a contact with name "augusto" and number "1234123412" in his contact list
     And "murilo" has a contact with name "roberto" and number "9876987698" in his contact list
     When I list the contacts for the user with name "murilo" in CSV format
-    Then the output should contain /"augusto",1234123412/
-    And the output should contain /"roberto",9876987698/
+    Then bell's output should contain /"augusto",1234123412/
+    And bell's output should contain /"roberto",9876987698/
