@@ -7,10 +7,6 @@ Before('@no-txn') do
   Given 'a clean slate'
 end
 
-After('@no-txn') do
-  Given 'a clean slate'
-end
-
 module Bell::StepDefinitionHelper
   FIXTURES_PATH = File.join(File.dirname(__FILE__), '..', '..', 'spec', 'fixtures')
 
