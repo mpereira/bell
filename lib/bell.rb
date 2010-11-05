@@ -67,11 +67,15 @@ module Bell
     end
 
     def puts(text)
-      Bell.testing? ? @outputter.reopen(text) : @outputter.puts(text)
+      @outputter.puts(text)
     end
 
     def string
       @outputter.string
+    end
+
+    def reopen
+      @outputter.reopen if Bell.testing?
     end
   end
 

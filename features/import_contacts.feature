@@ -4,21 +4,37 @@ Feature: Shell user imports a csv file of contacts
   I want to import contacts
   In order to associate phone calls to users
 
-  Scenario: Requesting a contact import using a non-existing file
-    When I request a contact import for a non-existing file
-    Then bell should tell me that the path passed does not exist
+  Scenario: Non-existing file
+    When I request a contact import using "/non/existant/path"
+    Then bell should tell me that "/non/existant/path" does not exist
 
-  Scenario: Requesting a contact import using a directory
-    When I request a contact import for a directory
-    Then bell should tell me that the path passed is a directory
+  Scenario: Directory
+    Given a directory named "tmp"
+    When I request a contact import using "tmp"
+    Then bell should tell me that "tmp" is a directory
 
-  Scenario: Requesting a contact import using an invalid contacts file
-    When I request a contact import for an invalid contacts file
-    Then bell should tell me that the path passed is an invalid contacts file
+  Scenario: Invalid contacts file
+    Given a file named "invalid.csv" with:
+    """
+    "john",1234123412
+    "bob
+    """
+    When I request a contact import using "invalid.csv"
+    Then bell should tell me that "invalid.csv" is an invalid contacts file
 
-  Scenario: Requesting a contact import for an user
+  Scenario: Valid contacts file
     Given a user with name "earl" exists
     And "earl" has an empty contact list
-    When I request a contact import for the user named "earl"
-    Then "earl" should have "john" in his contact list
+    And a file named "earl.csv" with:
+    """
+    "john",1234123412
+    "bob",9876987698
+    """
+    When I request a contact import for "earl" using "earl.csv"
+    Then the output should be:
+    """
+    'john (1234123412)' adicionado à lista de contatos do usuário 'earl'.
+    'bob (9876987698)' adicionado à lista de contatos do usuário 'earl'.
+    """
+    And "earl" should have "john" in his contact list
     And "earl" should have "bob" in his contact list

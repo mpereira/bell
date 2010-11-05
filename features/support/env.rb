@@ -3,16 +3,28 @@ require 'rubygems'
 require 'spec/stubs/cucumber'
 require 'bell'
 
-Before('@no-txn') do
-  Given 'a clean slate'
-end
+TMP_PATH = File.join(File.dirname(__FILE__), '..', '..', 'tmp')
 
 After('@no-txn') do
   Given 'a clean slate'
 end
 
+Before do
+  Bell.output.reopen
+  FileUtils.rm_rf(TMP_PATH)
+  FileUtils.mkdir_p(TMP_PATH)
+end
+
+at_exit do
+  FileUtils.rm_rf(TMP_PATH)
+end
+
 module Bell::StepDefinitionHelper
   FIXTURES_PATH = File.join(File.dirname(__FILE__), '..', '..', 'spec', 'fixtures')
+
+  def inside_the_tmp_directory(&block)
+    FileUtils.chdir(TMP_PATH, &block)
+  end
 
   def non_existing_file_path
     "#{FIXTURES_PATH}/non_existing_file.csv"

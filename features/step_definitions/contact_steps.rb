@@ -46,30 +46,15 @@ When /^I list the contacts for the user with name "([^"]*)" in CSV format$/ do |
   When %{I list the contacts for the user with name "#{user_name}"}
 end
 
-When /^I request a contact import$/ do
-  params = { :path => @path, :user => { :name => @user_name } }
+When /^I request a contact import using "([^"]*)"$/ do |path|
+  path = File.join(TMP_PATH, path)
+  params = { :path => path, :user => { :name => @user_name } }
   Bell::Handlers::ContactsHandler.import(params)
 end
 
-When /^I request a contact import for a non\-existing file$/ do
-  @path = non_existing_file_path
-  When %{I request a contact import}
-end
-
-When /^I request a contact import for a directory$/ do
-  @path = directory_path
-  When %{I request a contact import}
-end
-
-When /^I request a contact import for an invalid contacts file$/ do
-  @path = invalid_contacts_file_path
-  When %{I request a contact import}
-end
-
-When /^I request a contact import for the user named "([^"]*)"$/ do |user_name|
-  @path = valid_contacts_file_path
+When /^I request a contact import for "([^"]*)" using "([^"]*)"$/ do |user_name, path|
   @user_name = user_name
-  When %{I request a contact import}
+  When %{I request a contact import using "#{path}"}
 end
 
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
