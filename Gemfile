@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'embratel', '0.0.1'
+gem 'embratel', '0.0.2'
 gem 'sequel', '3.14.0'
 gem 'sqlite3-ruby', '1.3.1'
 
