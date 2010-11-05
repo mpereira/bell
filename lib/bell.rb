@@ -10,6 +10,7 @@ end
 # better handling for unicode characters
 $KCODE='u'
 require 'jcode'
+require 'fileutils'
 
 require 'bell/util'
 require 'bell/message'
