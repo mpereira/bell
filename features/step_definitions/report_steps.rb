@@ -1,5 +1,6 @@
-When /^I request a full report$/ do
-  params = { :path => @path }
+When /^I request a full report using "([^"]*)"$/ do |path|
+  path = File.join(TMP_PATH, path)
+  params = { :path => path }
   Bell::Handlers::ReportsHandler.full_report(params)
 end
 
