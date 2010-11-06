@@ -31,7 +31,6 @@ Then /^bell should tell me that "([^"]*)" is an invalid phone bill file$/ do |pa
   Bell.output.string.chomp.should == Bell::Message.invalid_phone_bill_file(path)
 end
 
-
 Then /^bell's output should contain "(.*)"$/ do |text|
   Bell.output.string.should be_include(text)
 end
