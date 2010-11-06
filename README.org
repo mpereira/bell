@@ -59,7 +59,7 @@ $ bell contact import /path/para/lista/de/contatos.csv -u joão
    Agora ao listar os contatos do joão você pode ver os contatos que acabou
    de importar
 #+BEGIN_SRC
-$ bell contact list joão
+$ bell contact list -u joão
 Pedro Silva (1111111111)
 Cássio Cunha (2222222222)
 Jorge Montebello (3333333333)
