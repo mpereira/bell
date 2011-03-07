@@ -121,7 +121,7 @@ rake
 #+END_SRC
 
 ** Autor
-   [[http://www.comp.ufscar.br/~murilo][Murilo Soares Pereira]]
+   [[http://murilopereira.com][Murilo Soares Pereira]]
 
 ** Licença
    Distribuído sob a
