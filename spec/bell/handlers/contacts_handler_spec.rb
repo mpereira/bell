@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
+require File.expand_path(File.dirname(__FILE__) << '/../../spec_helper')
 
 describe Bell::Handlers::ContactsHandler do
   let(:params) { mock("params").as_null_object }
@@ -105,7 +105,7 @@ describe Bell::Handlers::ContactsHandler do
       end
 
       it "shows the 'no such file or directory' message" do
-        FasterCSV.stub!(:read).and_raise(Errno::ENOENT)
+        Bell::CSV.stub!(:read).and_raise(Errno::ENOENT)
         contacts_handler.should_receive(:display).with(no_such_file_or_directory_message)
         contacts_handler.import(params)
       end
@@ -117,7 +117,7 @@ describe Bell::Handlers::ContactsHandler do
       end
 
       it "shows the 'path is a directory' message" do
-        FasterCSV.stub!(:read).and_raise(Errno::EISDIR)
+        Bell::CSV.stub!(:read).and_raise(Errno::EISDIR)
         contacts_handler.should_receive(:display).with(path_is_a_directory_message)
         contacts_handler.import(params)
       end
@@ -129,7 +129,7 @@ describe Bell::Handlers::ContactsHandler do
       end
 
       it "shows the 'invalid contacts file' message" do
-        FasterCSV.stub!(:read).and_raise(FasterCSV::MalformedCSVError)
+        Bell::CSV.stub!(:read).and_raise(Bell::CSV::MalformedCSVError)
         contacts_handler.should_receive(:display).with(invalid_contacts_file_message)
         contacts_handler.import(params)
       end
@@ -146,7 +146,7 @@ describe Bell::Handlers::ContactsHandler do
         let(:second_row) { ["kennedy"] }
 
         it "shows the 'row with few columns' message" do
-          FasterCSV.stub!(:read).and_return(contacts)
+          Bell::CSV.stub!(:read).and_return(contacts)
           Bell::User.stub!(:find).and_return(user)
           Bell::Message.should_receive(:row_with_few_columns).
             with(second_row, 2).
@@ -163,7 +163,7 @@ describe Bell::Handlers::ContactsHandler do
         let(:second_row) { ["bob", "9876987698"] }
 
         it "shows the 'row with extra columns' message" do
-          FasterCSV.stub!(:read).and_return(contacts)
+          Bell::CSV.stub!(:read).and_return(contacts)
           Bell::User.stub!(:find).and_return(user)
           Bell::Message.should_receive(:row_with_extra_columns).
             with(first_row, 1).
@@ -197,7 +197,7 @@ describe Bell::Handlers::ContactsHandler do
           let(:second_row) { ["bob", "987698769"] }
 
           it "shows the contact's errors" do
-            FasterCSV.stub!(:read).and_return(contacts)
+            Bell::CSV.stub!(:read).and_return(contacts)
             Bell::User.stub!(:find).and_return(user)
             contacts_handler.should_receive(:formatted_contact_errors).
               with(second_contact, :line_number => 2).
@@ -213,7 +213,7 @@ describe Bell::Handlers::ContactsHandler do
           let(:second_row) { ["bob", "98769876989"] }
 
           it "shows the contact's errors" do
-            FasterCSV.stub!(:read).and_return(contacts)
+            Bell::CSV.stub!(:read).and_return(contacts)
             Bell::User.stub!(:find).and_return(user)
             contacts_handler.should_receive(:formatted_contact_errors).
               with(second_contact, :line_number => 2).
@@ -231,7 +231,7 @@ describe Bell::Handlers::ContactsHandler do
           let(:invalid_contact) { mock(Bell::Contact, :valid? => false) }
 
           it "shows the contact's errors" do
-            FasterCSV.stub!(:read).and_return(contact_rows)
+            Bell::CSV.stub!(:read).and_return(contact_rows)
             Bell::User.stub!(:find).and_return(user)
             contact_rows.should_receive(:each_with_index).and_yield(row, index)
             Bell::Contact.should_receive(:new).and_return(invalid_contact)
@@ -249,7 +249,7 @@ describe Bell::Handlers::ContactsHandler do
         let(:user_does_not_exist_message) { mock("user_does_not_exist_message") }
 
         it "shows the 'user does not exist message'" do
-          FasterCSV.stub!(:read).and_raise(nil)
+          Bell::CSV.stub!(:read).and_raise(nil)
           Bell::User.stub!(:find).and_return(nil)
           Bell::Message.should_receive(:user_does_not_exist).
             with(params[:user][:name]).

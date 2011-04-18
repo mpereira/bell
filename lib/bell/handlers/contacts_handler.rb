@@ -25,12 +25,12 @@ module Bell::Handlers
     end
 
     def self.import(params = {})
-      contacts = FasterCSV.read(params[:path])
+      contacts = Bell::CSV.read(params[:path])
     rescue Errno::ENOENT
       display Bell::Message.no_such_file_or_directory(params[:path])
     rescue Errno::EISDIR
       display Bell::Message.path_is_a_directory(params[:path])
-    rescue FasterCSV::MalformedCSVError
+    rescue Bell::CSV::MalformedCSVError
       display Bell::Message.invalid_contacts_file(params[:path])
     else
       user = Bell::User.find(:name => params[:user][:name])

@@ -18,6 +18,10 @@ module Bell
             downcase + camelize(lower_case_and_underscored_word)[1..-1]
         end
       end
+
+      def multibyte_length(string)
+        RUBY_VERSION < '1.9' ? string.jsize : string.size
+      end
     end
   end
 end

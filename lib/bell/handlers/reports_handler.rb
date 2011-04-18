@@ -9,7 +9,7 @@ module Bell::Handlers
         display Bell::Message.no_such_file_or_directory(params[:path])
       rescue Errno::EISDIR
         display Bell::Message.path_is_a_directory(params[:path])
-      rescue FasterCSV::MalformedCSVError, Embratel::InvalidPhoneBillFileError
+      rescue Bell::CSV::MalformedCSVError, Embratel::InvalidPhoneBillFileError
         display Bell::Message.invalid_phone_bill_file(params[:path])
       else
         display Bell::FullReport.new(phone_bill).to_s
@@ -22,7 +22,7 @@ module Bell::Handlers
       display Bell::Message.no_such_file_or_directory(params[:path])
     rescue Errno::EISDIR
       display Bell::Message.path_is_a_directory(params[:path])
-    rescue FasterCSV::MalformedCSVError, Embratel::InvalidPhoneBillFileError
+    rescue Bell::CSV::MalformedCSVError, Embratel::InvalidPhoneBillFileError
       display Bell::Message.invalid_phone_bill_file(params[:path])
     else
       if Bell::User.find(:name => params[:user][:name])

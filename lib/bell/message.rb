@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Bell
   module Message
     extend self

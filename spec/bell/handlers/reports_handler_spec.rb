@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
+require File.expand_path(File.dirname(__FILE__) << '/../../spec_helper')
 
 describe Bell::Handlers::ReportsHandler do
   let(:no_such_file_or_directory_message) do
@@ -42,9 +42,9 @@ describe Bell::Handlers::ReportsHandler do
       end
     end
 
-    context "when given a path to a malformed CSV file" do
+    context "when given a path to a malformed Bell::CSV file" do
       it "shows the 'invalid phone bill file' message" do
-        Embratel::PhoneBill.stub!(:new).and_raise(FasterCSV::MalformedCSVError)
+        Embratel::PhoneBill.stub!(:new).and_raise(Bell::CSV::MalformedCSVError)
         Bell::Message.should_receive(:invalid_phone_bill_file).
           with(params[:path]).
           and_return(invalid_phone_bill_file_message)
@@ -104,9 +104,9 @@ describe Bell::Handlers::ReportsHandler do
       end
     end
 
-    context "when given a path to a malformed CSV file" do
+    context "when given a path to a malformed Bell::CSV file" do
       it "shows the 'invalid phone bill file' message" do
-        Embratel::PhoneBill.stub!(:new).and_raise(FasterCSV::MalformedCSVError)
+        Embratel::PhoneBill.stub!(:new).and_raise(Bell::CSV::MalformedCSVError)
         Bell::Message.should_receive(:invalid_phone_bill_file).
           with(params[:path]).
           and_return(invalid_phone_bill_file_message)

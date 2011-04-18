@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Bell::Commands
   class ContactCommand < Command
     USAGE = <<-USAGE.gsub(/^      /, '')

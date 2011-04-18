@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Bell
   class FullReport
     def initialize(phone_bill)
@@ -25,7 +27,7 @@ module Bell
     end
 
     def formatted_known_total
-      %{#{"De usuários:"}}.ljust(26) << sprintf("%.2f", known_total)
+      %{#{"De usuários:"}}.ljust(25) << sprintf("%.2f", known_total)
     end
 
     def formatted_unknown_total

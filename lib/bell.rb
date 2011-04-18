@@ -7,9 +7,6 @@
   end
 end
 
-# better handling for unicode characters
-$KCODE='u'
-require 'jcode'
 require 'fileutils'
 
 require 'bell/util'
@@ -135,3 +132,13 @@ Bell.bootstrap unless Bell.bootstrapped?
 
 require 'bell/user'
 require 'bell/contact'
+
+if RUBY_VERSION < '1.9'
+  require 'fastercsv'
+  Bell::CSV = FasterCSV
+  require 'jcode'
+  $KCODE = "UTF8"
+else
+  require 'csv'
+  Bell::CSV = CSV
+end

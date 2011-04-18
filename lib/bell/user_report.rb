@@ -1,5 +1,9 @@
+# encoding: utf-8
+
 module Bell
   class UserReport
+    include Bell::Util::String
+
     def initialize(phone_bill, user_name)
       @phone_bill = phone_bill
       @user_name = user_name
@@ -32,8 +36,8 @@ module Bell
     def formatted_header
       "Data".ljust(15) <<
       "Contato".ljust(20) <<
-      "Número".ljust(16) <<
-      "Horário".ljust(21) <<
+      "Número".ljust(15) <<
+      "Horário".ljust(20) <<
       "Custo"
     end
 
@@ -58,8 +62,10 @@ module Bell
         shortened_contact_name = contact_name
       end
 
-      multibyte_characters = shortened_contact_name.size - shortened_contact_name.jsize
-      formatted_contact_name = shortened_contact_name.ljust(20 + multibyte_characters)
+      multibyte_characters = shortened_contact_name.size -
+                               multibyte_length(shortened_contact_name)
+      formatted_contact_name = shortened_contact_name.
+                                 ljust(20 + multibyte_characters)
     end
 
     def formatted_contact_call(contact_call)
