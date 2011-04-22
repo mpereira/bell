@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'embratel', '1.0.0'
+gem 'embratel', '1.1.1'
 gem 'sequel', '3.14.0'
 gem 'sqlite3-ruby', '1.3.1'
 gem('fastercsv', '1.5.3') if RUBY_VERSION < '1.9'
