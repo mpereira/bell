@@ -121,7 +121,7 @@ rake
 #+END_SRC
 
 ** Autor
-   [[http://murilopereira.com][Murilo Soares Pereira]]
+   [[http://murilopereira.com][Murilo Pereira]]
 
 ** Licença
    Distribuído sob a
