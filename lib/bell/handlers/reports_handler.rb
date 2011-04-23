@@ -3,17 +3,19 @@ module Bell::Handlers
     include Bell::Displayable
 
     def self.full_report(params = {})
-      begin
-        phone_bill = Embratel::PhoneBill.new(params[:path])
-      rescue Errno::ENOENT
-        display Bell::Message.no_such_file_or_directory(params[:path])
-      rescue Errno::EISDIR
-        display Bell::Message.path_is_a_directory(params[:path])
-      rescue Bell::CSV::MalformedCSVError, Embratel::InvalidPhoneBillFileError
-        display Bell::Message.invalid_phone_bill_file(params[:path])
-      else
-        display Bell::FullReport.new(phone_bill).to_s
-      end
+      phone_bill = Embratel::PhoneBill.new(params[:path])
+    rescue Errno::ENOENT
+      display Bell::Message.no_such_file_or_directory(params[:path])
+    rescue Errno::EISDIR
+      display Bell::Message.path_is_a_directory(params[:path])
+    rescue Bell::CSV::MalformedCSVError
+      display Bell::Message.malformed_csv_file(params[:path])
+    rescue Embratel::NonCSVFileError
+      display Bell::Message.non_csv_file(params[:path])
+    rescue Embratel::InvalidRowsError
+      display Bell::Message.invalid_rows(params[:path], $!.message)
+    else
+      display Bell::FullReport.new(phone_bill).to_s
     end
 
     def self.user_report(params = {})
@@ -22,8 +24,12 @@ module Bell::Handlers
       display Bell::Message.no_such_file_or_directory(params[:path])
     rescue Errno::EISDIR
       display Bell::Message.path_is_a_directory(params[:path])
-    rescue Bell::CSV::MalformedCSVError, Embratel::InvalidPhoneBillFileError
-      display Bell::Message.invalid_phone_bill_file(params[:path])
+    rescue Bell::CSV::MalformedCSVError
+      display Bell::Message.malformed_csv_file(params[:path])
+    rescue Embratel::NonCSVFileError
+      display Bell::Message.non_csv_file(params[:path])
+    rescue Embratel::InvalidRowsError
+      display Bell::Message.invalid_rows(params[:path], $!.message)
     else
       if Bell::User.find(:name => params[:user][:name])
         display Bell::UserReport.new(phone_bill, params[:user][:name]).to_s

@@ -66,8 +66,19 @@ module Bell
       "erro: '#{path}' é um diretório."
     end
 
-    def invalid_phone_bill_file(path)
-      "erro: '#{path}' não é uma fatura válida da embratel."
+    def malformed_csv_file(path)
+      "erro: '#{path}' é um arquivo CSV danificado."
+    end
+
+    def non_csv_file(path)
+      "erro: '#{path}' não é um arquivo CSV."
+    end
+
+    def invalid_rows(path, message)
+      lines = message.match(/(?:\d+, )*(?:\d+)$/).to_a
+      "erro: '#{path}' tem " <<
+        lines.size == 1 ? 'erro na linha ' : 'erros nas linhas ' <<
+        lines.join(', ')
     end
 
     def invalid_contacts_file(path)

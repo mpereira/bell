@@ -13,36 +13,43 @@ Feature: Shell user requests an user report
     When I request a user report using "tmp"
     Then bell should tell me that "tmp" is a directory
 
-  Scenario: Non phone bill file
-    Given a file named "non_phone_bill.txt" with:
+  Scenario: Non CSV file
+    Given a file named "non_csv_file.txt" with:
     """
     Lorem ipsum dolor sit amet, consectetur adipisicing elit
     """
-    When I request a user report using "non_phone_bill.txt"
-    Then bell should tell me that "non_phone_bill.txt" is an invalid phone bill file
+    When I request a user report using "non_csv_file.txt"
+    Then bell should tell me that "non_csv_file.txt" is not a csv file
 
-
-  Scenario: Invalid phone bill file
-    Given a file named "invalid.csv" with:
+  Scenario: Malformed CSV file
+    Given a file named "malformed_csv_file.csv" with:
     """
-    ,,,,,,,,,,,,,
-    ,,,,,,,,,,,,,
-    "Seq       ","Origem                                            ","Descri��o                                         ","Periodo/Data             ","Terminal_Destino    ","Local Origem","Local Destino       ","Hora Inicio    ","Hora Fim            ","Imp ","Pais      ","Qtde    ","Unid    ","Valor (R$)          "
-    1,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:56:29 AM,"                    ","E   ","          ",500,"MIN     ",0.73
+    "1", 'first"
+    """
+    When I request a full report using "malformed_csv_file.csv"
+    Then bell should tell me that "malformed_csv_file.csv" is a malformed csv file
+
+  Scenario: Phone bill file with invalid rows
+    Given a file named "invalid_rows.csv" with:
+    """
+    Detalhes da fatura
+
+    "Seq       ","Origem                                            ","Descrição                                         ","Periodo/Data             ","Terminal_Destino    ","Local Origem","Local Destino       ","Hora Inicio    ","Hora Fim            ","Imp ","Pais      ","Qtde    ","Unid    ","Valor (R$)          "
+    1,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:56:29 AM,"                    ","E   ","          ",
     2,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:59:03 AM,"                    ","E   ","          ",900,"MIN     ",1.3
     3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  "
 
     """
-    When I request a user report using "invalid.csv"
-    Then bell should tell me that "invalid.csv" is an invalid phone bill file
+    When I request a user report using "invalid_rows.csv"
+    Then bell should tell me that "invalid_rows.csv" has errors on line 4, 6
 
   Scenario: Valid phone bill file
     Given a user with name "bob" exists
     And "bob" has a contact with name "earl" and number "1993692887" in his contact list
     And a file named "fatura.csv" with:
     """
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
+    Detalhes da fatura
+
 "Seq       ","Origem                                            ","Descri��o                                         ","Periodo/Data             ","Terminal_Destino    ","Local Origem","Local Destino       ","Hora Inicio    ","Hora Fim            ","Imp ","Pais      ","Qtde    ","Unid    ","Valor (R$)          "
 1,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:56:29 AM,"                    ","E   ","          ",500,"MIN     ",0.73
 2,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:59:03 AM,"                    ","E   ","          ",900,"MIN     ",1.3

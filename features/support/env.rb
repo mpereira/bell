@@ -38,8 +38,8 @@ module Bell::StepDefinitionHelper
     "#{FIXTURES_PATH}/text_file.txt"
   end
 
-  def invalid_phone_bill_file_path
-    "#{FIXTURES_PATH}/invalid_phone_bill_file.csv"
+  def malformed_csv_file_path
+    "#{FIXTURES_PATH}/malformed_csv_file.csv"
   end
 
   def valid_phone_bill_file_path

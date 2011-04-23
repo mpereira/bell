@@ -26,9 +26,20 @@ Then /^bell should tell me that "([^"]*)" is an invalid contacts file$/ do |path
   Bell.output.string.chomp.should == Bell::Message.invalid_contacts_file(path)
 end
 
-Then /^bell should tell me that "([^"]*)" is an invalid phone bill file$/ do |path|
+Then /^bell should tell me that "([^"]*)" is not a csv file$/ do |path|
   path = File.join(TMP_PATH, path)
-  Bell.output.string.chomp.should == Bell::Message.invalid_phone_bill_file(path)
+  Bell.output.string.chomp.should == Bell::Message.non_csv_file(path)
+end
+
+Then /^bell should tell me that "([^"]*)" has (?:an )?errors? on lines? ((?:\d+, )*(?:\d+))$/ do |path, numbers|
+  path = File.join(TMP_PATH, path)
+  message = numbers.insert(0, numbers.size == 1 ? 'Erro na linha ' : 'Erro nas linhas ')
+  Bell.output.string.chomp.should == Bell::Message.invalid_rows(path, message)
+end
+
+Then /^bell should tell me that "([^"]*)" is a malformed csv file$/ do |path|
+  path = File.join(TMP_PATH, path)
+  Bell.output.string.chomp.should == Bell::Message.malformed_csv_file(path)
 end
 
 Then /^bell's output should contain "(.*)"$/ do |text|
