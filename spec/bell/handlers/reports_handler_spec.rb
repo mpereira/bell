@@ -83,7 +83,7 @@ describe Bell::Handlers::ReportsHandler do
     end
   end
 
-  context ".user_report" do
+  describe ".user_report" do
     let(:params) { { :path => 'fatura.csv', :user => { :name => 'bob' } } }
 
     context "when given a path to a non-existing file or directory" do
