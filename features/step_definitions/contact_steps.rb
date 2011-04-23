@@ -73,7 +73,7 @@ Then /^bell should tell me that the number "([^"]*)" was already taken$/ do |con
 end
 
 Then /^bell should tell me that the number "([^"]*)" has a bad format$/ do |contact_number|
-  Bell.output.string.chomp.should == Bell::Message.bad_format_for_contact_number(contact_number)
+  Bell.output.string.chomp.should == Bell::Message.contact_number_bad_format(contact_number)
 end
 
 Then /^bell should tell me that the contact list of the user with name "([^"]*)" is empty$/ do |user_name|

@@ -54,7 +54,7 @@ module Bell
       "erro: este número já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.\nCrie um contato com número diferente." if contact
     end
 
-    def bad_format_for_contact_number(contact_number)
+    def contact_number_bad_format(contact_number)
       "erro: '#{contact_number}' não é um número de telefone válido.\nVeja 'bell --help' para saber mais sobre o formato aceito."
     end
 
