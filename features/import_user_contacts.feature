@@ -1,7 +1,7 @@
 @no-txn
-Feature: Shell user imports a csv file of contacts
+Feature: Shell user imports a csv file of a user's contacts
   As a person using the shell
-  I want to import contacts
+  I want to import user contacts
   In order to associate phone calls to users
 
   Scenario: Non-existing file
