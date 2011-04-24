@@ -25,24 +25,23 @@ module Bell::Commands
         -f|--force   Ignora a lista de contatos e faz uma importação forçada
     IMPORT_USAGE
 
-    def initialize(args = [])
+    def initialize(args)
       super(args)
       @handler = 'contacts_handler'
+      @action = @args.shift
     end
 
     def parse
-      case @args[0]
+      case @action
       when 'import' then
-        @action = 'import'
-        if valid_args_for_contact_import?
-          @params = contact_import_params
+        if valid_contact_import_args?(@args)
+          @params = extract_contact_import_params(@args)
         else
           raise ArgumentError, IMPORT_USAGE
         end
       when 'list' then
-        @action = 'list'
-        if valid_args_for_contact_list?
-          @params = contact_list_params
+        if valid_contact_list_args?(@args)
+          @params = extract_contact_list_params(@args)
         else
           raise ArgumentError, LIST_USAGE
         end
@@ -55,35 +54,35 @@ module Bell::Commands
 
     private
 
-    def valid_args_for_contact_import?
-      @args.length == 4 && user_name_given?
+    def valid_contact_import_args?(args)
+      (args.length == 3 && user_name_given?) ||
+        (args.length == 2 && args.any? { |e| e == '-p' || e == '--public' })
     end
 
-    def valid_args_for_contact_list?
-      args_without_csv = @args.reject { |element| element == '--csv' }
-      user_name_given? ? args_without_csv.length == 3 : args_without_csv.length == 1
+    def valid_contact_list_args?(args)
+      args_without_csv = args.reject { |element| element == '--csv' }
+      user_name_given? ? args_without_csv.length == 2 : args_without_csv.length == 0
     end
 
-    def contact_import_params
-      user_flag = (@args & USER_NAME_FLAGS).first
-      user_name = @args[@args.index(user_flag) + 1]
-
-      args = @args.dup
-      args.delete(user_flag)
-      args.delete(user_name)
-
-      path = args.last
-
-      { :path => path, :user => { :name => user_name } }
-    end
-
-    def contact_list_params
+    def extract_contact_import_params(args)
       if user_name_given?
-        user_flag = (@args & USER_NAME_FLAGS).first
-        user_name = @args[@args.index(user_flag) + 1]
-        csv_flag = (@args & CSV_FLAGS).first
+        user_name_flag = (args & USER_NAME_FLAGS).first
+        user_name = args[args.index(user_name_flag) + 1]
+        args.reject! { |e| e == user_name_flag || e == user_name }
+        path = args[0]
+        { :path => path, :user => { :name => user_name } }
+      elsif args.any? { |e| e == '-p' || e == '--public' }
+        { :path => args.first, :public => true }
+      end
+    end
 
-        { :user => { :name => user_name }, :csv => csv_flag }
+    def extract_contact_list_params(args)
+      if user_name_given?
+        user_name_flag = (args & USER_NAME_FLAGS).first
+        user_name = args[args.index(user_name_flag) + 1]
+        csv_flag = !((args & CSV_FLAGS).first || []).empty?
+        params = { :user => { :name => user_name } }
+        csv_flag ? params.merge(:csv => csv_flag) : params
       else
         {}
       end

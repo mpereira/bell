@@ -1,96 +1,73 @@
-module Bell::Handlers
-  class ContactsHandler
-    include Bell::Displayable
+module Bell
+  module Handlers
+    class ContactsHandler
+      include Displayable
 
-    def self.list(params = {})
-      if params.empty?
-        if Bell::Contact.empty?
-          display Bell::Message.no_contacts_created
-        else
-          display formatted_contact_list(Bell::Contact.all)
-        end
-      else
-        if user = Bell::User.find(:name => params[:user][:name])
-          if user.contacts.empty?
-            display Bell::Message.contact_list_empty(user.name)
+      def self.list(params = {})
+        if params.empty?
+          if Contact.empty?
+            display Message.no_contacts_created
           else
-            display formatted_contact_list(user.contacts,
-                                           :user_contacts => true,
-                                           :csv => params[:csv])
+            display formatted_contact_list(Contact.all)
           end
         else
-          display Bell::Message.user_does_not_exist(params[:user][:name])
+          if user = User.find(:name => params[:user][:name])
+            if user.contacts.empty?
+              display Message.contact_list_empty(user.name)
+            else
+              display formatted_contact_list(user.contacts,
+                                             :user_contacts => true,
+                                             :csv => params[:csv])
+            end
+          else
+            display Message.user_does_not_exist(params[:user][:name])
+          end
         end
       end
-    end
 
-    def self.import(params = {})
-      contacts = Bell::CSV.read(params[:path])
-    rescue Errno::ENOENT
-      display Bell::Message.no_such_file_or_directory(params[:path])
-    rescue Errno::EISDIR
-      display Bell::Message.path_is_a_directory(params[:path])
-    rescue Bell::CSV::MalformedCSVError
-      display Bell::Message.invalid_contacts_file(params[:path])
-    else
-      user = Bell::User.find(:name => params[:user][:name])
-      if user
-        contacts_to_be_created = []
-        contacts.each_with_index do |row, index|
-          if row.size < 2
-            display Bell::Message.row_with_few_columns(row, index + 1)
-          elsif row.size > 2
-            display Bell::Message.row_with_extra_columns(row, index + 1)
+      def self.import(params)
+        if params[:user]
+          user = User.find(:name => params[:user][:name])
+          if user
+            if contacts = CSVParser.parse_contacts(params)
+              contacts.each do |contact|
+                contact.save && display(Bell::Message.contact_created(contact))
+              end
+            end
           else
-            contact = Bell::Contact.new(:name => row.first,
-                                        :number => row.last,
-                                        :user_id => user.id)
-            if contact.valid?
-              contacts_to_be_created << contact
-            else
-              display formatted_contact_errors(contact, :line_number => index + 1)
+            display(Message.user_does_not_exist(params[:user][:name]))
+          end
+        elsif params[:public]
+          if contacts = CSVParser.parse_contacts(params)
+            contacts.each do |contact|
+              contact.save &&
+                display(Bell::Message.contact_created(contact, :public => true))
             end
           end
         end
+      rescue InvalidContacts
+        display(Message.no_contacts_created)
+      end
 
-        # only create contacts if all of them are valid
-        if contacts.size == contacts_to_be_created.size
-          contacts_to_be_created.each do |contact|
-            contact.save
-            display Bell::Message.contact_created(contact)
-          end
+      private
+
+      def self.text_contact_list(contacts, options)
+        contacts.inject('') do |list, contact|
+          list << "#{contact.name} (#{contact.number})"
+          list << " - #{contact.user.name}" unless options[:user_contacts]
+          list << "\n"
         end
-      else
-        display Bell::Message.user_does_not_exist(params[:user][:name])
       end
-    end
 
-    private
-    def self.formatted_contact_errors(contact, options = {})
-      contact_error = contact.errors.first.last.first
-      if options[:line_number]
-        contact_error.split("\n").first.insert(4, " na linha #{options[:line_number]}")
-      else
-        contact_error
+      def self.csv_contact_list(contacts)
+        contacts.inject('') do |list, contact|
+          list << "\"#{contact.name}\",#{contact.number}\n"
+        end
       end
-    end
 
-    def self.text_contact_list(contacts, options)
-      contacts.inject("") do |list, contact|
-        list << "#{contact.name} (#{contact.number})"
-        list << " - #{contact.user.name}" unless options[:user_contacts]
-        list << "\n"
+      def self.formatted_contact_list(contacts, options = {})
+        options[:csv] ? csv_contact_list(contacts) : text_contact_list(contacts, options)
       end
-    end
-
-    def self.csv_contact_list(contacts)
-      contacts.inject("") do |list, contact|
-        list << "\"#{contact.name}\",#{contact.number}\n"
-      end
-    end
-
-    def self.formatted_contact_list(contacts, options = {})
-      options[:csv] ? csv_contact_list(contacts) : text_contact_list(contacts, options)
     end
   end
 end

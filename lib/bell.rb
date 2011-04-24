@@ -17,6 +17,7 @@ require 'bell/commands'
 require 'bell/dispatcher'
 require 'bell/cli'
 
+require 'bell/csv_parser'
 require 'bell/handlers'
 
 require 'bell/full_report'
@@ -24,6 +25,8 @@ require 'bell/user_report'
 
 module Bell
   extend self
+
+  class InvalidContacts < StandardError; end
 
   def testing?
     defined?(Spec) || defined?(Cucumber)
@@ -108,13 +111,18 @@ module Bell
 
     def create_tables?
       Sequel.sqlite(path) do |database|
-        database.create_table? :users do
+        database.create_table?(:users) do
           primary_key :id
           String :name, :unique => true, :null => false
         end
-        database.create_table? :contacts do
+        database.create_table?(:contacts) do
           primary_key :id
           foreign_key :user_id, :null => false
+          String :name, :null => false
+          String :number, :unique => true, :null => false
+        end
+        database.create_table?(:public_contacts) do
+          primary_key :id
           String :name, :null => false
           String :number, :unique => true, :null => false
         end
@@ -132,6 +140,7 @@ Bell.bootstrap unless Bell.bootstrapped?
 
 require 'bell/user'
 require 'bell/contact'
+require 'bell/public_contact'
 
 if RUBY_VERSION < '1.9'
   require 'fastercsv'

@@ -19,6 +19,10 @@ module Bell
         end
       end
 
+      def sanitize(string)
+        string.unpack("C*").pack("U*")
+      end
+
       def multibyte_length(string)
         RUBY_VERSION < '1.9' ? string.jsize : string.size
       end

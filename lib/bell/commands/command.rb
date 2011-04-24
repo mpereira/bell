@@ -18,7 +18,7 @@ module Bell::Commands
       Veja `bell help <comando>` para mais informações sobre um comando específico
     USAGE
 
-    def initialize(args = [])
+    def initialize(args)
       @args = args
       @handler ||= nil
       @action ||= nil

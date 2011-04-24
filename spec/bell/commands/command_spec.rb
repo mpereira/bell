@@ -1,15 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) << '/../../spec_helper')
 
 describe Bell::Commands::Command do
-  context "when initialized" do
-    let(:command_route) { { :handler => nil, :action => nil, :params => {} } }
-
-    it "has default values" do
-      command = described_class.new
-      command.route.should == command_route
-    end
-  end
-
   context "when parsing" do
     context "a user command" do
       let(:args) { %w[user] }

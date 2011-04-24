@@ -5,21 +5,24 @@ Feature: Shell user imports a csv file of a user's contacts
   In order to associate phone calls to users
 
   Scenario: Non-existing file
-    When I request a contact import using "/non/existant/path"
+    Given a user with name "earl" exists
+    When I request a contact import for "earl" using "/non/existant/path"
     Then bell should tell me that "/non/existant/path" does not exist
 
   Scenario: Directory
     Given a directory named "tmp"
-    When I request a contact import using "tmp"
+    And a user with name "earl" exists
+    When I request a contact import for "earl" using "tmp"
     Then bell should tell me that "tmp" is a directory
 
   Scenario: Invalid contacts file
-    Given a file named "invalid.csv" with:
+    Given a user with name "earl" exists
+    And a file named "invalid.csv" with:
     """
     "john",1234123412
     "bob
     """
-    When I request a contact import using "invalid.csv"
+    When I request a contact import for "earl" using "invalid.csv"
     Then bell should tell me that "invalid.csv" is an invalid contacts file
 
   Scenario: Valid contacts file

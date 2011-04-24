@@ -47,13 +47,16 @@ When /^I list the contacts for the user with name "([^"]*)" in CSV format$/ do |
 end
 
 When /^I request a contact import using "([^"]*)"$/ do |path|
-  path = File.join(TMP_PATH, path)
-  params = { :path => path, :user => { :name => @user_name } }
-  Bell::Handlers::ContactsHandler.import(params)
+  Bell::Handlers::ContactsHandler.import(@params || { :path => File.join(TMP_PATH, path) })
 end
 
 When /^I request a contact import for "([^"]*)" using "([^"]*)"$/ do |user_name, path|
-  @user_name = user_name
+  @params = { :path => File.join(TMP_PATH, path), :user => { :name => user_name } }
+  When %{I request a contact import using "#{path}"}
+end
+
+When /^I request a public contact import using "([^"]*)"$/ do |path|
+  @params = { :path => File.join(TMP_PATH, path), :public => true }
   When %{I request a contact import using "#{path}"}
 end
 
@@ -66,6 +69,10 @@ end
 Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
   Bell::Contact.find(:name => contact_name, :user_id => user.id).should_not be_nil
+end
+
+Then /^"([^"]*)" should be in the public contact list$/ do |contact_name|
+  Bell::PublicContact.find(:name => contact_name).should_not be_nil
 end
 
 Then /^bell should tell me that the number "([^"]*)" was already taken$/ do |contact_number|

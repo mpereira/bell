@@ -3,6 +3,7 @@
 module Bell
   module Message
     extend self
+    include Util
 
     def no_created_users
       "Nenhum usuário criado."
@@ -36,8 +37,13 @@ module Bell
       "A lista de contatos do usuário '#{user_name}' está vazia."
     end
 
-    def contact_created(contact)
-      "'#{contact.name} (#{contact.number})' adicionado à lista de contatos do usuário '#{contact.user.name}'."
+    def contact_created(contact, options = {})
+      "'#{contact.name} (#{contact.number})' adicionado à lista de " <<
+      if options[:public]
+        "contatos públicos."
+      else
+        "contatos do usuário '#{contact.user.name}'."
+      end
     end
 
     def contact_removed(contact_name)
@@ -95,6 +101,15 @@ module Bell
 
     def row_with_short_number(row, line_number)
       "erro: o número de telefone #{row.to_s} na linha '#{line_number}' é muito curto.\nNúmeros de telefone devem ter 10 dígitos, sendo os 2 primeiros o DDD."
+    end
+
+    def formatted_contact_errors(contact, options = {})
+      contact_error = contact.errors.first.last.first
+      if options[:line_number]
+        contact_error.split("\n").first.insert(4, " na linha #{options[:line_number]}")
+      else
+        contact_error
+      end
     end
   end
 end

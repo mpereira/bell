@@ -11,7 +11,7 @@ module Bell
 
     def validate
       super
-      validates_unique :name
+      validates_unique(:name)
     end
   end
 end

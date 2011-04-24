@@ -1,56 +1,51 @@
 require File.expand_path(File.dirname(__FILE__) << '/../../spec_helper')
 
 describe Bell::Commands::ContactCommand do
-  context "when initialized" do
-    let(:contact_command_route) do
-      { :handler => 'contacts_handler', :action => nil, :params => {} }
+  describe ".initialize" do
+    def contact_command_route(action)
+      { :handler => 'contacts_handler', :action => action, :params => {} }
     end
 
-    it "has default values" do
-      contact_command = described_class.new
-      contact_command.route.should == contact_command_route
+    context "when given invalid actions" do
+      it "raises ArgumentError" do
+        lambda { described_class.new(%w[foo]).parse }.
+          should raise_error(ArgumentError, described_class::USAGE)
+      end
+    end
+
+    context "when giver valid actions" do
+      it "sets the handler route key" do
+        %w[import list].each do |action|
+          contact_command = described_class.new([action])
+          contact_command.route.should == contact_command_route(action)
+        end
+      end
     end
   end
 
-  context "parsing 'import' commands" do
-    context "without additional arguments" do
-      let(:args) { %w[import] }
-
+  describe ".import" do
+    context "when given no additional arguments" do
       it "raises ArgumentError" do
-        lambda { described_class.new(args).parse }.
+        lambda { described_class.new(%w[import]).parse }.
           should raise_error(ArgumentError, described_class::IMPORT_USAGE)
       end
     end
 
-    context "with additional arguments" do
-      context "when they are valid" do
-        let(:args) { %w[import path/to/contacts_file.csv -u john] }
-        let(:contact_command_route) do
-          { :handler => 'contacts_handler',
-            :action => 'import',
-            :params => { :path => args[1], :user => { :name => args[3] } } }
-        end
-
-        it "assembles the right route" do
-          contact_command = described_class.new(args)
-          contact_command.parse
-          contact_command.route.should == contact_command_route
-        end
+    context "when given valid arguments" do
+      let(:path) { 'path/to/contacts_file.csv' }
+      let(:user_name) { 'john' }
+      let(:contact_command_route) do
+        { :handler => 'contacts_handler',
+          :action => 'import',
+          :params => { :path => path, :user => { :name => user_name } } }
       end
 
-      context "when there is arguments missing" do
-        let(:args) { %w[path/to/contacts_file.csv -u john] }
-        let(:args_with_one_missing_array) do
-          args.dup.inject([]) { |args_with_one_missing, arg|
-            args_with_one_missing << args.reject { |a| a == arg }
-          }.each { |array| array.unshift('import') }
-        end
-
-        it "raises ArgumentError" do
-          args_with_one_missing_array.each do |args_with_one_missing|
-            lambda { described_class.new(args_with_one_missing).parse }.
-              should raise_error(ArgumentError, described_class::IMPORT_USAGE)
-          end
+      it "assembles the right route" do
+        %w[-u --user].each do |user_name_flag|
+          described_class.
+            new(['import', path, user_name_flag, user_name]).
+            parse.
+            route.should == contact_command_route
         end
       end
     end
@@ -58,7 +53,6 @@ describe Bell::Commands::ContactCommand do
 
   context "parsing 'list' commands" do
     context "without additional arguments" do
-      let(:args) { %w[list] }
       let(:contact_command_route) do
         { :handler => 'contacts_handler',
           :action => 'list',
@@ -66,41 +60,43 @@ describe Bell::Commands::ContactCommand do
       end
 
       it "assembles the right route" do
-        contact_command = described_class.new(args)
-        contact_command.parse
-        contact_command.route.should == contact_command_route
+        described_class.new(%w[list]).parse.route.should == contact_command_route
       end
     end
 
-    context "with user arguments" do
-      context "when all arguments are passed" do
-        let(:args) { %w[list -u bob] }
+    context "when given valid user arguments" do
+      context "when not asking for CSV" do
+        let(:user_name) { 'john' }
         let(:contact_command_route) do
           { :handler => 'contacts_handler',
             :action => 'list',
-            :params => { :user => { :name => args[2] },
-                         :csv => nil } }
+            :params => { :user => { :name => user_name } } }
         end
 
         it "assembles the right route" do
-          contact_command = described_class.new(args)
-          contact_command.parse
-          contact_command.route.should == contact_command_route
+          %w[-u --user].each do |user_name_flag|
+            described_class.
+              new(['list', user_name_flag, user_name]).
+              parse.
+              route.should == contact_command_route
+          end
         end
       end
 
-      context "when there's one argument missing" do
-        let(:args) { %w[-u bob] }
-        let(:args_with_one_missing_array) do
-          args.dup.inject([]) { |args_with_one_missing, arg|
-            args_with_one_missing << args.reject { |a| a == arg }
-          }.each { |array| array.unshift('list') }
+      context "when asking for CSV" do
+        let(:user_name) { 'john' }
+        let(:contact_command_route) do
+          { :handler => 'contacts_handler',
+            :action => 'list',
+            :params => { :user => { :name => user_name }, :csv => true } }
         end
 
-        it "raises ArgumentError" do
-          args_with_one_missing_array.each do |args_with_one_missing|
-            lambda { described_class.new(args_with_one_missing).parse }.
-              should raise_error(ArgumentError, described_class::LIST_USAGE)
+        it "assembles the right route" do
+          %w[-u --user].each do |user_name_flag|
+            described_class.
+              new(['list', user_name_flag, user_name, '--csv']).
+              parse.
+              route.should == contact_command_route
           end
         end
       end
@@ -108,10 +104,9 @@ describe Bell::Commands::ContactCommand do
   end
 
   context "parsing unknown commands" do
-    let(:args) { %w[foo] }
-
     it "raises ArgumentError" do
-      lambda { described_class.new(args).parse }.should raise_error(ArgumentError, described_class::USAGE)
+      lambda { described_class.new(%w[foo]).parse }.
+        should raise_error(ArgumentError, described_class::USAGE)
     end
   end
 end
