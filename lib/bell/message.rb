@@ -51,12 +51,12 @@ module Bell
     end
 
     def contact_name_taken(contact_name)
-      contact = Contact.find(:name => contact_name)
+      contact = UserContact.find(:name => contact_name)
       "erro: este nome já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.\nCrie um contato com nome diferente." if contact
     end
 
     def contact_number_taken(contact_number)
-      contact = Contact.find(:number => contact_number)
+      contact = UserContact.find(:number => contact_number)
       "erro: este número já é usado pelo contato '#{contact.name} (#{contact.number})' do usuário '#{contact.user.name}'.\nCrie um contato com número diferente." if contact
     end
 

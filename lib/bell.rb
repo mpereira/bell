@@ -54,7 +54,7 @@ module Bell
   end
 
   def implode!
-    [User, Contact].each(&:delete)
+    [User, UserContact, PublicContact].each(&:delete)
     FileUtils.rm_rf(Directory.path)
   end
 
@@ -115,7 +115,7 @@ module Bell
           primary_key :id
           String :name, :unique => true, :null => false
         end
-        database.create_table?(:contacts) do
+        database.create_table?(:user_contacts) do
           primary_key :id
           foreign_key :user_id, :null => false
           String :name, :null => false
@@ -138,9 +138,9 @@ end
 DB = Bell.database_connection
 Bell.bootstrap unless Bell.bootstrapped?
 
-require 'bell/user'
-require 'bell/contact'
+require 'bell/user_contact'
 require 'bell/public_contact'
+require 'bell/user'
 
 if RUBY_VERSION < '1.9'
   require 'fastercsv'

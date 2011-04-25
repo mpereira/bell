@@ -1,8 +1,7 @@
 module Bell
-  class Contact < Sequel::Model
-    many_to_one :user
-
-    plugin :validation_helpers
+  class UserContact < Sequel::Model
+    many_to_one(:user)
+    plugin(:validation_helpers)
 
     def validate
       super

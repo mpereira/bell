@@ -1,5 +1,5 @@
 Given /^a contact with name "([^"]*)" and number "([^"]*)" exists$/ do |contact_name, contact_number|
-  Bell::Contact.create(:name => contact_name, :number => contact_number)
+  Bell::UserContact.create(:name => contact_name, :number => contact_number)
 end
 
 Given /^a contact with name "([^"]*)" exists$/ do |contact_name|
@@ -21,7 +21,7 @@ end
 
 Given /^"([^"]*)" doesn't have a contact with name "([^"]*)" in his contacts$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
-  Bell::Contact.filter(:name => contact_name, :user_id => user.id).delete
+  Bell::UserContact.filter(:name => contact_name, :user_id => user.id).delete
 end
 
 Given /^a public contact with number "([^"]*)" and name "([^"]*)"$/ do |contact_number, contact_name|
@@ -29,11 +29,11 @@ Given /^a public contact with number "([^"]*)" and name "([^"]*)"$/ do |contact_
 end
 
 Given /^no contact with name "([^"]*)" exists$/ do |contact_name|
-  Bell::Contact.filter(:name => contact_name).delete
+  Bell::UserContact.filter(:name => contact_name).delete
 end
 
 Given /^no created contacts$/ do
-  Bell::Contact.delete
+  Bell::UserContact.delete
 end
 
 When /^I list all contacts$/ do
@@ -66,13 +66,13 @@ end
 
 Then /^bell should tell me that "([^"]*)" already has "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
-  contact = Bell::Contact.find(:name => contact_name, :user_id => user.id)
+  contact = Bell::UserContact.find(:name => contact_name, :user_id => user.id)
   Bell.output.string.chomp.should == Bell::Message.contact_name_taken(contact_name)
 end
 
 Then /^"([^"]*)" should have "([^"]*)" in his contact list$/ do |user_name, contact_name|
   user = Bell::User.find(:name => user_name)
-  Bell::Contact.find(:name => contact_name, :user_id => user.id).should_not be_nil
+  Bell::UserContact.find(:name => contact_name, :user_id => user.id).should_not be_nil
 end
 
 Then /^"([^"]*)" should be in the public contact list$/ do |contact_name|
@@ -92,7 +92,7 @@ Then /^bell should tell me that the contact list of the user with name "([^"]*)"
 end
 
 Then /^I should not have a contact with name "([^"]*)" in the database$/ do |contact_name|
-  Bell::Contact.find(:name => contact_name).should be_nil
+  Bell::UserContact.find(:name => contact_name).should be_nil
 end
 
 Then /^bell should tell me that the contact "([^"]*)" was removed$/ do |contact_name|

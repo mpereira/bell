@@ -5,10 +5,10 @@ module Bell
 
       def self.list(params = {})
         if params.empty?
-          if Contact.empty?
+          if UserContact.empty?
             display Message.no_contacts_created
           else
-            display formatted_contact_list(Contact.all)
+            display formatted_contact_list(UserContact.all)
           end
         else
           if user = User.find(:name => params[:user][:name])
@@ -31,7 +31,7 @@ module Bell
           if user
             if contacts = CSVParser.parse_contacts(params)
               contacts.each do |contact|
-                contact.save && display(Bell::Message.contact_created(contact))
+                contact.save && display(Message.contact_created(contact))
               end
             end
           else
@@ -41,7 +41,7 @@ module Bell
           if contacts = CSVParser.parse_contacts(params)
             contacts.each do |contact|
               contact.save &&
-                display(Bell::Message.contact_created(contact, :public => true))
+                display(Message.contact_created(contact, :public => true))
             end
           end
         end

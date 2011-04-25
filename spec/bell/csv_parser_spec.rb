@@ -100,7 +100,7 @@ describe Bell::CSVParser do
       context "when there's a row with a short contact number" do
         let(:first_row) { ["john", "1234123412"] }
         let(:second_row) { ["bob", "987698769"] }
-        let(:contact) { Bell::Contact.new(:name => second_row.first,
+        let(:contact) { Bell::UserContact.new(:name => second_row.first,
                                           :number => second_row.last,
                                           :user_id => user.id) }
         let(:formatted_contact_errors_message) do
@@ -121,7 +121,7 @@ describe Bell::CSVParser do
       context "when there's a row with a long contact number" do
         let(:first_row) { ["bob", "98769876989"] }
         let(:second_row) { ["john", "1234123412"] }
-        let(:contact) { Bell::Contact.new(:name => first_row.first,
+        let(:contact) { Bell::UserContact.new(:name => first_row.first,
                                           :number => first_row.last,
                                           :user_id => user.id) }
         let(:formatted_contact_errors_message) do
@@ -149,10 +149,10 @@ describe Bell::CSVParser do
       context "with valid rows" do
         let(:first_row) { ["john", "1234123412"] }
         let(:second_row) { ["bob", "9876987698"] }
-        let(:first_contact) { Bell::Contact.new(:name => first_row.first,
+        let(:first_contact) { Bell::UserContact.new(:name => first_row.first,
                                                 :number => first_row.last,
                                                 :user_id => user.id) }
-        let(:second_contact) { Bell::Contact.new(:name => second_row.first,
+        let(:second_contact) { Bell::UserContact.new(:name => second_row.first,
                                                  :number => second_row.last,
                                                  :user_id => user.id) }
         it "returns an array with the contact instances" do

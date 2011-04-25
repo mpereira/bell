@@ -8,7 +8,7 @@ describe Bell::Handlers::ContactsHandler do
          :null_object => true,
          :contacts => mock("contacts"))
   end
-  let(:contact) { mock(Bell::Contact).as_null_object }
+  let(:contact) { mock(Bell::UserContact).as_null_object }
   let(:contacts_handler) { described_class }
   let(:no_contacts_created_message) { Bell::Message.no_contacts_created }
 
@@ -18,7 +18,7 @@ describe Bell::Handlers::ContactsHandler do
 
         it "shows the 'no contacts created' message" do
           params.stub!(:empty?).and_return(true)
-          Bell::Contact.stub!(:empty?).and_return(true)
+          Bell::UserContact.stub!(:empty?).and_return(true)
           contacts_handler.should_receive(:display).with(no_contacts_created_message)
           contacts_handler.list
         end
@@ -27,7 +27,7 @@ describe Bell::Handlers::ContactsHandler do
       context "there are contacts created" do
         it "shows a list with all contacts" do
           params.stub!(:empty?).and_return(true)
-          Bell::Contact.stub!(:empty?).and_return(false)
+          Bell::UserContact.stub!(:empty?).and_return(false)
           contacts_handler.should_receive(:formatted_contact_list).
             and_return(formatted_contact_list)
           contacts_handler.should_receive(:display).with(formatted_contact_list)

@@ -15,7 +15,7 @@ module Bell
 
     def calls
       @phone_bill.calls.inject([]) do |calls, call|
-        if Bell::Contact.find(:user_id => user.id, :number => call.number_called)
+        if Bell::UserContact.find(:user_id => user.id, :number => call.number_called)
           calls << call
         else
           calls
@@ -43,7 +43,7 @@ module Bell
 
     def contact_calls
       calls.inject([]) do |contact_calls, call|
-        if contact = Bell::Contact.find(:number => call.number_called)
+        if contact = Bell::UserContact.find(:number => call.number_called)
           contact_calls << { :contact => contact, :call => call }
         else
           contact_calls

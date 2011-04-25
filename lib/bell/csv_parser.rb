@@ -21,7 +21,7 @@ module Bell
           display(Message.row_with_extra_columns(row, index + 1))
         else
           contact = if options[:user]
-            Contact.new(:name => sanitize(row.first),
+            UserContact.new(:name => sanitize(row.first),
                         :number => row.last,
                         :user_id => user.id)
           elsif options[:public]
