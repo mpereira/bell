@@ -118,13 +118,14 @@ module Bell
 
     def user_total(user_name)
       user = User.find(:name => user_name)
-      calls.inject(0) do |total, call|
+      subtotal = calls.inject(0) do |total, call|
         if Contact.find(:number => call.number_called, :user_id => user.id)
           total += call.cost.to_f
         else
           total
         end
       end
+      subtotal + (unknown_total + fees_total) / User.all.size
     end
 
     def users
