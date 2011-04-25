@@ -1,3 +1,4 @@
 .bundle
 data/*.db
 TODO.org
+bootstrap.rb
