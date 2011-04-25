@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Bell
   module Handlers
     class ContactsHandler
@@ -8,7 +10,7 @@ module Bell
           if UserContact.empty?
             display Message.no_contacts_created
           else
-            display formatted_contact_list(UserContact.all)
+            display formatted_contact_list(UserContact.all + PublicContact.all)
           end
         else
           if user = User.find(:name => params[:user][:name])
@@ -54,7 +56,11 @@ module Bell
       def self.text_contact_list(contacts, options)
         contacts.inject('') do |list, contact|
           list << "#{contact.name} (#{contact.number})"
-          list << " - #{contact.user.name}" unless options[:user_contacts]
+          if contact.is_a?(PublicContact)
+            list << " - público"
+          else
+            list << " - #{contact.user.name}" unless options[:user_contacts]
+          end
           list << "\n"
         end
       end
