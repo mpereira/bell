@@ -55,11 +55,19 @@ module Bell
     end
 
     def formatted_call(call, options = {})
-      if options[:contact]
-         "#{options[:contact].name} (#{call.number_called})"
+      contact = call.number_called << if options[:contact]
+        " (#{options[:contact].name})"
       else
-        "#{call.number_called}"
-      end.ljust(25) << sprintf("%.2f", call.cost)
+        ''
+      end
+      time = call.start_time.to_s
+      date = call.date[0, 8].to_s
+      cost = sprintf("%.2f", call.cost)
+      contact.ljust(30) << if time.empty?
+        date.empty? ? ' ' * 20 : ' ' * 10 << "#{date}  "
+      else
+        date.empty? ? ' ' * 12 << "#{time}" : "#{time}  #{date}  "
+      end << cost
     end
 
     def calls

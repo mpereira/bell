@@ -57,8 +57,8 @@ Feature: Shell user requests a full report
     1,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:56:29 AM,"                    ","E   ","          ",500,"MIN     ",0.73
     2,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:59:03 AM,"                    ","E   ","          ",900,"MIN     ",1.3
     3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","13/08/10 A  99/99/99     ",1992563321,"SCL -SP   ","CAS -SP             ",09:07:55 PM,"                    ","E   ","          ",5800,"MIN     ",8.47
-    3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","13/08/10 A  99/99/99     ",1634124321,"SCL -SP   ","CAS -SP             ",09:07:55 PM,"                    ","E   ","          ",5800,"MIN     ",18.47
-    3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","13/08/10 A  99/99/99     ",1912341234,"SCL -SP   ","CAS -SP             ",09:07:55 PM,"                    ","E   ","          ",5800,"MIN     ",3.70
+    3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","10/10/10 A  99/99/99     ",1634124321,"SCL -SP   ","CAS -SP             ",10:10:10 PM,"                    ","E   ","          ",5800,"MIN     ",18.47
+    3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","09/09/09 A  99/99/99     ",1912341234,"SCL -SP   ","CAS -SP             ",09:09:09 PM,"                    ","E   ","          ",5800,"MIN     ",3.70
     3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","13/08/10 A  99/99/99     ",,"SCL -SP   ","CAS -SP             ",09:07:55 PM,"                    ","E   ","          ",5800,"MIN     ",1.11
 
     """
@@ -77,8 +77,8 @@ Feature: Shell user requests a full report
     earl                     10.88
 
     [ligações públicas]
-    wig (1634124321)         18.47
+    1634124321 (wig)              10:10:10 PM  10/10/10  18.47
 
     [ligações desconhecidas]
-    1912341234               3.70
+    1912341234                    09:09:09 PM  09/09/09  3.70
     """
