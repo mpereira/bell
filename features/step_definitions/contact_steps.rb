@@ -24,6 +24,10 @@ Given /^"([^"]*)" doesn't have a contact with name "([^"]*)" in his contacts$/ d
   Bell::Contact.filter(:name => contact_name, :user_id => user.id).delete
 end
 
+Given /^a public contact with number "([^"]*)" and name "([^"]*)"$/ do |contact_number, contact_name|
+  Bell::PublicContact.create(:name => contact_name, :number => contact_number)
+end
+
 Given /^no contact with name "([^"]*)" exists$/ do |contact_name|
   Bell::Contact.filter(:name => contact_name).delete
 end

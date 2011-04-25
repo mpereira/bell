@@ -48,6 +48,7 @@ Feature: Shell user requests a full report
     And a user with name "earl" exists
     And "bob" has a contact with number "1993692887" in his contact list
     And "earl" has a contact with number "1992563321" in his contact list
+    And a public contact with number "1634124321" and name "wig"
     And a file named "fatura.csv" with:
     """
     Detalhes da fatura
@@ -56,21 +57,28 @@ Feature: Shell user requests a full report
     1,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:56:29 AM,"                    ","E   ","          ",500,"MIN     ",0.73
     2,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","11/08/10 A  99/99/99     ",1993692887,"SCL -SP   ","CAS -SP             ",02:59:03 AM,"                    ","E   ","          ",900,"MIN     ",1.3
     3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","13/08/10 A  99/99/99     ",1992563321,"SCL -SP   ","CAS -SP             ",09:07:55 PM,"                    ","E   ","          ",5800,"MIN     ",8.47
+    3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","13/08/10 A  99/99/99     ",1634124321,"SCL -SP   ","CAS -SP             ",09:07:55 PM,"                    ","E   ","          ",5800,"MIN     ",18.47
+    3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","13/08/10 A  99/99/99     ",1912341234,"SCL -SP   ","CAS -SP             ",09:07:55 PM,"                    ","E   ","          ",5800,"MIN     ",3.70
+    3,"1634125644-FRANQUIA 01                            ","04 - LIGACOES DDD PARA CELULARES                  ","13/08/10 A  99/99/99     ",,"SCL -SP   ","CAS -SP             ",09:07:55 PM,"                    ","E   ","          ",5800,"MIN     ",1.11
 
     """
     When I request a full report using "fatura.csv"
     Then the output should be:
     """
-
     [resumo]
-    Total:                   10.50
-    De usuários:             10.50
-    Desconhecidas:           0.00
+    Total:                   33.78
+    Usuários:                10.50
+    Públicas:                18.47
+    Desconhecidas:           3.70
+    Taxas:                   1.11
 
     [usuários]
     bob                      2.03
     earl                     8.47
 
-    [ligações desconhecidas]
+    [ligações públicas]
+    wig (1634124321)         18.47
 
+    [ligações desconhecidas]
+    1912341234               3.70
     """
