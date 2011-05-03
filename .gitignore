@@ -2,3 +2,4 @@
 data/*.db
 TODO.org
 bootstrap.rb
+pkg
