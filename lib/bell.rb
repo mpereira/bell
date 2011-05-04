@@ -9,22 +9,10 @@ end
 
 require 'fileutils'
 
-require 'bell/util'
-require 'bell/message'
-require 'bell/displayable'
-
-require 'bell/commands'
-require 'bell/dispatcher'
-require 'bell/cli'
-
-require 'bell/csv_parser'
-require 'bell/handlers'
-
-require 'bell/full_report'
-require 'bell/user_report'
-
 module Bell
   extend self
+
+  VERSION = '0.0.1'
 
   class InvalidContacts < StandardError; end
 
@@ -138,16 +126,32 @@ end
 DB = Bell.database_connection
 Bell.bootstrap unless Bell.bootstrapped?
 
-require 'bell/user_contact'
-require 'bell/public_contact'
-require 'bell/user'
-
 if RUBY_VERSION < '1.9'
-  require 'fastercsv'
-  Bell::CSV = FasterCSV
-  require 'jcode'
-  $KCODE = "UTF8"
+  begin
+    require 'fastercsv'
+  rescue LoadError
+    $stderr.puts $!
+    exit 1
+  else
+    Bell::CSV = FasterCSV
+    require 'jcode'
+    $KCODE = "UTF8"
+  end
 else
   require 'csv'
   Bell::CSV = CSV
 end
+
+%w[util
+   message
+   displayable
+   commands
+   dispatcher
+   cli
+   csv_parser
+   handlers
+   full_report
+   user_report
+   user_contact
+   public_contact
+   user].each { |f| require File.expand_path("../bell/#{f}", __FILE__) }

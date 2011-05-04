@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'rubygems'
-require 'bell'
+require File.expand_path('../../lib/bell', __FILE__)
 
-Bell::CLI.run(ARGV) if $0 == __FILE__
+Bell::CLI.run(ARGV)
