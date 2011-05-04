@@ -1,7 +1,7 @@
 * bell
   Tenha controle sobre as suas faturas de telefone da Embratel.
 
-** Instalando (ainda não disponível)
+** Instalando
 #+BEGIN_SRC
 gem install bell
 #+END_SRC
