@@ -1,6 +1,4 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', '..', 'lib')
-require 'rubygems'
-require 'spec/stubs/cucumber'
 require 'bell'
 
 TMP_PATH = File.join(File.dirname(__FILE__), '..', '..', 'tmp')
