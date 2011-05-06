@@ -3,49 +3,43 @@
 
 ** Instalando
 #+BEGIN_SRC
-gem install bell
+$ gem install bell
 #+END_SRC
    Você precisa ter o ruby e o rubygems instalados.
 
-** Como Isso Pode Me Ajudar?
-   Bell permite que você crie e mantenha usuários e suas listas de contatos.
-   Estes dados combinados com um arquivo de fatura da embratel te permitem
-   obter todo o tipo de informação.
+** Como isso pode me ajudar?
+   bell permite que você crie e mantenha usuários e suas listas de contatos.
+   Estes dados combinados com arquivos de fatura da embratel lhe permitem
+   obter informações como:
 
-   Por exemplo:
-   - mostrar quanto um determinado usuário gastou e para quais números ligou
-   - mostrar quanto foi gasto em ligações para um determinado número e quanto
-     foi gasto em cada uma das ligações
-   - montar relatórios completos, que mostram:
-     - o valor total da fatura
-     - o valor gasto por cada usuário
-     - o valor total, e todas as ligações públicas (feitas por mais de um
-       usuário)
-     - o valor total, e todas as ligações desconhecidas (não presentes em
-       nenhuma lista de contatos)
+   - o total e o valor de ligações feita por usuários, assim como quais os
+     contatos ligados
+   - totais e valores de ligações conhecidas, desconhecidas e públicas
+   - quanto foi gasto em ligações para um determinado número e quanto
+     foi gasto em cada uma das ligações para esse número
 
-** Como Usar
-*** Criando Usuários
+** Como usar
+*** Criando usuários
 #+BEGIN_SRC
 $ bell user create joão
 Usuário 'joão' criado.
 #+END_SRC
 
-   Você agora pode ver o joão na lista de usuários
+    Você agora pode ver o joão na lista de usuários
 #+BEGIN_SRC
 $ bell user list
 joão
 #+END_SRC
 
-*** Importando Contatos
-   Com o usuário 'joão' criado você pode importar a lista de contatos dele. A
-   lista de contatos deve ser um arquivo csv, onde cada linha deste arquivo
-   representa um contato, sendo a primeira coluna o nome e a segunda o número
-   de telefone.
+*** Importando contatos
+    Com o usuário 'joão' criado você pode importar a lista de contatos dele.
+    A lista de contatos deve ser um arquivo CSV, onde cada linha deste arquivo
+    representa um contato, sendo a primeira coluna o nome e a segunda o número
+    de telefone.
 
    Exemplo:
-#+CAPTION: Lista de contatos
-[[http://content.screencast.com/users/murilasso/folders/Default/media/99ad1dae-ef89-4c8b-9bfe-eeaa7ac5e3aa/2010-10-30-a7e887a6e.png]]
+#+CAPTION: Lista de contatos do 'joão'
+[[http://dl.dropbox.com/u/14256545/contact_list.png]]
 
    Repare que o formato do número de telefone deve ser uma sequência de 10
    dígitos, sendo os dois primeiros o DDD e os oito últimos o número em si.
@@ -54,28 +48,40 @@ joão
    um usuário
 #+BEGIN_SRC
 $ bell contact import /path/para/lista/de/contatos.csv -u joão
+'Mãe (1192341234)' adicionado à lista de contatos do usuário 'joão'.
+'Pai (1192344321)' adicionado à lista de contatos do usuário 'joão'.
+'Cecília Meireles (2183219978)' adicionado à lista de contatos do usuário 'joão'.
+'José de Alencar (8581235432)' adicionado à lista de contatos do usuário 'joão'.
+'Clarice Lispector (2183215768)' adicionado à lista de contatos do usuário 'joão'.
+'Euclides da Cunha (1992564132)' adicionado à lista de contatos do usuário 'joão'.
+'Augusto dos Anjos (8382445678)' adicionado à lista de contatos do usuário 'joão'.
+'Graciette Salmon (4191826645)' adicionado à lista de contatos do usuário 'joão'.
+'Machado de Assis (2183218765)' adicionado à lista de contatos do usuário 'joão'.
 #+END_SRC
 
-   Agora ao listar os contatos do joão você pode ver os contatos que acabou
+   Agora ao listar os contatos do 'joão' você pode ver os contatos que acabou
    de importar
 #+BEGIN_SRC
 $ bell contact list -u joão
-Pedro Silva (1111111111)
-Cássio Cunha (2222222222)
-Jorge Montebello (3333333333)
-Julia Gum (4444444444)
-Cecília Fernandes (5555555555)
-Francisco Côco (6666666666)
+Mãe (1192341234)
+Pai (1192344321)
+Cecília Meireles (2183219978)
+José de Alencar (8581235432)
+Clarice Lispector (2183215768)
+Euclides da Cunha (1992564132)
+Augusto dos Anjos (8382445678)
+Graciette Salmon (4191826645)
+Machado de Assis (2183218765)
 #+END_SRC
 
-   Com um usuário e sua lista de contatos você pode começar
-   a visualizar relatórios, usando os arquivos de fatura da Embratel.
+   Com um usuário e sua lista de contatos você já pode visualizar
+   relatórios, usando os arquivos de fatura da Embratel.
 
 *** Fatura da Embratel
     A Embratel fornece faturas de conta de telefone em seu
     [[http://fatura.embratel.net.br/embratel/index.html][serviço online]].
     Para extrair informações sobre uma fatura, você precisará do arquivo
-    .csv de um dado mês.
+    CSV de um dado mês.
 **** Como obter o arquivo da fatura?
      - [[http://fatura.embratel.net.br/embratel/jsp/selectClientRegister.jsp][cadastre-se]] se você não possui uma conta
      - logue no site
@@ -86,18 +92,18 @@ Francisco Côco (6666666666)
     Com usuários e suas respectivas listas de contatos criados você pode
     visualizar diversos tipos de relatórios para a fatura de um dado mês.
 
-*** Visualizando Relatórios
-    Relatório completo
+*** Relatórios
+**** Completo
 #+BEGIN_SRC
 $ bell report /path/para/fatura.csv
 #+END_SRC
 
-    Relatório de usuário
+**** De usuário
 #+BEGIN_SRC
 $ bell report /path/para/fatura.csv -u joão
 #+END_SRC
 
-    Relatório de ligação
+**** De ligação
 #+BEGIN_SRC
 $ bell report /path/para/fatura.csv -n 1111111111
 #+END_SRC
@@ -105,19 +111,19 @@ $ bell report /path/para/fatura.csv -n 1111111111
 ** Para rodar os testes
 *** Pegue o código
 #+BEGIN_SRC
-git clone git://github.com/murilasso/bell.git
-cd bell
+$ git clone git://github.com/murilasso/bell.git
+$ cd bell
 #+END_SRC
 
 *** Instale o bundler e as dependências (se já não estiverem instaladas)
 #+BEGIN_SRC
-gem install bundler
-bundle install
+$ gem install bundler
+$ bundle install
 #+END_SRC
 
 *** Rode os testes
 #+BEGIN_SRC
-rake
+$ rake
 #+END_SRC
 
 ** Autor
