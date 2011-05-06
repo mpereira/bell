@@ -1,11 +1,11 @@
 Given /^a directory named "([^"]*)"$/ do |name|
-  inside_the_tmp_directory do
+  inside_tmp_directory do
     FileUtils.mkdir(name)
   end
 end
 
 Given /^a file named "([^"]*)" with:$/ do |file, content|
-  inside_the_tmp_directory do
+  inside_tmp_directory do
     file = File.new(file, 'w+') << content
     file.flush
   end

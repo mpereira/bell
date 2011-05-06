@@ -72,7 +72,7 @@ module Bell
     extend self
 
     def path
-      File.join(ENV['HOME'], '.bell')
+      File.path("#{ENV['HOME']}/.bell")
     end
 
     def created?
@@ -90,7 +90,7 @@ module Bell
     end
 
     def path
-      File.join(Directory.path, "bell_#{@environment}.db")
+      File.path("#{Directory.path}/bell_#{@environment}.db")
     end
 
     def created?

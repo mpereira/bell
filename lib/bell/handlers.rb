@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'handlers', 'users_handler')
-require File.join(File.dirname(__FILE__), 'handlers', 'contacts_handler')
-require File.join(File.dirname(__FILE__), 'handlers', 'reports_handler')
-require File.join(File.dirname(__FILE__), 'handlers', 'implosions_handler')
+require File.expand_path('../handlers/users_handler', __FILE__)
+require File.expand_path('../handlers/contacts_handler', __FILE__)
+require File.expand_path('../handlers/reports_handler', __FILE__)
+require File.expand_path('../handlers/implosions_handler', __FILE__)

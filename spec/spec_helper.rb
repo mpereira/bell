@@ -1,10 +1,5 @@
-$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'bell'
+require File.expand_path('../../lib/bell', __FILE__)
 require 'spec'
-
-unless defined?(FIXTURES_PATH)
-  FIXTURES_PATH = File.join(File.dirname(__FILE__), 'fixtures')
-end
 
 Spec::Runner.configure do |config|
   config.suppress_deprecation_warnings!

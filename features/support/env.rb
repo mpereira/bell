@@ -1,7 +1,7 @@
-$:.unshift File.join(File.dirname(__FILE__), '..', '..', 'lib')
-require 'bell'
+require File.expand_path('../../../lib/bell', __FILE__)
 
-TMP_PATH = File.join(File.dirname(__FILE__), '..', '..', 'tmp')
+TMP_PATH = File.path('/tmp/bell')
+FIXTURES_PATH = File.expand_path('../../../spec/fixtures', __FILE__)
 
 After('@no-txn') do
   Given 'a clean slate'
@@ -18,9 +18,7 @@ at_exit do
 end
 
 module Bell::StepDefinitionHelper
-  FIXTURES_PATH = File.join(File.dirname(__FILE__), '..', '..', 'spec', 'fixtures')
-
-  def inside_the_tmp_directory(&block)
+  def inside_tmp_directory(&block)
     FileUtils.chdir(TMP_PATH, &block)
   end
 
@@ -53,12 +51,12 @@ module Bell::StepDefinitionHelper
   end
 
   def random_name
-    (0...8).map{65.+(rand(25)).chr}.join
+    (0...8).map { (65 + (rand(25))).chr }.join
   end
 
   def random_number
     charset = %w[0 1 2 3 4 5 6 7 9]
-    (0...10).map{ charset.to_a[rand(charset.size)] }.join
+    (0...10).map { charset.to_a[rand(charset.size)] }.join
   end
 end
 

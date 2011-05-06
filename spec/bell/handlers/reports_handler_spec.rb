@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) << '/../../spec_helper')
+require File.expand_path('../../../spec_helper', __FILE__)
 
 describe Bell::Handlers::ReportsHandler do
   let(:no_such_file_or_directory_message) { mock("no_such_file_or_directory_message") }
