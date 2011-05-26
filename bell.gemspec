@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.author   = 'Murilo Pereira'
   s.email    = 'murilo@murilopereira.com'
-  s.homepage = 'https://github.com/murilasso/bell'
+  s.homepage = 'https://github.com/mpereira/bell'
   s.summary  = 'Tenha controle sobre as suas faturas de telefone da Embratel.'
 
   s.required_rubygems_version = '>= 1.3.6'

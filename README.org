@@ -111,7 +111,7 @@ $ bell report /path/para/fatura.csv -n 1111111111
 ** Para rodar os testes
 *** Pegue o código
 #+BEGIN_SRC
-$ git clone git://github.com/murilasso/bell.git
+$ git clone git://github.com/mpereira/bell.git
 $ cd bell
 #+END_SRC
 
@@ -131,4 +131,4 @@ $ rake
 
 ** Licença
    Distribuído sob a
-   [[http://github.com/murilasso/embratel/blob/master/MIT-LICENSE][licença MIT]].
+   [[http://github.com/mpereira/embratel/blob/master/MIT-LICENSE][licença MIT]].
