@@ -77,6 +77,13 @@ Machado de Assis (2183218765)
    Com um usuário e sua lista de contatos você já pode visualizar
    relatórios, usando os arquivos de fatura da Embratel.
 
+   Para importar a lista de contatos divididos entre todos os usuários
+#+BEGIN_SRC
+$ bell contact import /path/para/lista/de/contatos.csv -p
+#+END_SRC
+#
+#+BEGIN_SRC
+
 *** Fatura da Embratel
     A Embratel fornece faturas de conta de telefone em seu
     [[http://fatura.embratel.net.br/embratel/index.html][serviço online]].

@@ -7,7 +7,7 @@ module Bell::Commands
 
         Ações:
         list [--csv] [-u|--user <usuário>]
-        import [-f|--force] /path/para/lista/de/contatos.csv -u|--user <usuário>
+        import [-f|--force] /path/para/lista/de/contatos.csv [(-u|--user <usuário>)|(-p|--public)]
     USAGE
 
     LIST_USAGE = <<-LIST_USAGE.gsub(/^      /, '')
@@ -19,7 +19,7 @@ module Bell::Commands
     LIST_USAGE
 
     IMPORT_USAGE = <<-IMPORT_USAGE.gsub(/^      /, '')
-      uso: bell contact import /path/contatos.csv -u|--user <usuário> [<argumentos>]
+      uso: bell contact import /path/contatos.csv [(-u|--user <usuário>)|(-p|--public)] [<argumentos>]
 
         Argumentos:
         -f|--force   Ignora a lista de contatos e faz uma importação forçada
