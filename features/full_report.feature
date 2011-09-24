@@ -73,8 +73,8 @@ Feature: Shell user requests a full report
     Taxas:                   1.11
 
     [usuários]
-    bob                      4.44
-    earl                     10.88
+    bob                      2.03
+    earl                     8.47
 
     [ligações públicas]
     1634124321 (wig)              10:10:10 PM  10/10/10  18.47
