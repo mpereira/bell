@@ -1,12 +1,8 @@
-require 'bundler'
-Bundler::GemHelper.install_tasks
+require 'bundler/setup'
+Bundler.setup(:default, :development)
 
-require 'spec/rake/spectask'
-desc "Run RSpec specs"
-Spec::Rake::SpecTask.new('spec') do |t|
-  t.spec_opts  = %w[--backtrace --colour]
-  t.spec_files = FileList['spec/**/*.rb']
-end
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
 
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features) do |features|

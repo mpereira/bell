@@ -12,8 +12,6 @@ require 'fileutils'
 module Bell
   extend self
 
-  VERSION = '0.0.1'
-
   class InvalidContacts < StandardError; end
 
   def testing?

@@ -21,12 +21,13 @@ describe Bell::Handlers::UsersHandler do
 
     context "when there are no users with the given name" do
       it "creates the user" do
-        Bell::User.stub!(:find).and_return(false)
+        Bell::User.stub!(:find).and_return(nil)
         Bell::User.should_receive(:create).with(:name => params[:user][:name])
         users_handler.create(params)
       end
 
       it "shows the 'user created' message" do
+        Bell::User.stub!(:find).and_return(nil)
         users_handler.should_receive(:display).with(user_created_message)
         users_handler.create(params)
       end

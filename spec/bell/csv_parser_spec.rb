@@ -49,7 +49,7 @@ describe Bell::CSVParser do
     end
 
     context "when given a csv file with invalid rows" do
-      let(:user) { mock(Bell::User, :null_object => true) }
+      let(:user) { mock(Bell::User).as_null_object }
 
       before do
         described_module.stub!(:raise).with(Bell::InvalidContacts)
@@ -91,7 +91,7 @@ describe Bell::CSVParser do
     end
 
     context "when given a valid csv file" do
-      let(:user) { mock(Bell::User, :null_object => true) }
+      let(:user) { mock(Bell::User).as_null_object }
 
       before do
         described_module.stub!(:raise).with(Bell::InvalidContacts)

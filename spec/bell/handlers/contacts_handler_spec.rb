@@ -4,9 +4,7 @@ describe Bell::Handlers::ContactsHandler do
   let(:params) { mock("params").as_null_object }
   let(:formatted_contact_list) { mock("formatted_contact_list") }
   let(:user) do
-    mock(Bell::User, :id => 1,
-         :null_object => true,
-         :contacts => mock("contacts"))
+    mock(Bell::User, :id => 1, :contacts => mock("contacts"))
   end
   let(:contact) { mock(Bell::UserContact).as_null_object }
   let(:contacts_handler) { described_class }

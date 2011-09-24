@@ -22,8 +22,8 @@ module Bell
         else
           contact = if options[:user]
             UserContact.new(:name => sanitize(row.first),
-                        :number => row.last,
-                        :user_id => user.id)
+                            :number => row.last,
+                            :user_id => user.id)
           elsif options[:public]
             PublicContact.new(:name => sanitize(row.first), :number => row.last)
           end
