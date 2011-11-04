@@ -10,7 +10,7 @@ Feature: Shell user creates a user
     Then bell should tell me that a user with name "murilo" was created
     And I should have the user "murilo" in the database
 
-  Scenario: When the given user name isn't taken
+  Scenario: When the given user name is already taken
     Given a user with name "murilo" exists
     When I create a user with name "murilo"
     Then bell should tell me that the user "murilo" already exists
